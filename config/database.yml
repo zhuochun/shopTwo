@@ -19,6 +19,7 @@ development:
   encoding: unicode
   database: server-rails_development
   pool: 5
+  host: localhost
   username: server-rails
   password:
 
@@ -48,6 +49,7 @@ test:
   encoding: unicode
   database: server-rails_test
   pool: 5
+  host: localhost
   username: server-rails
   password:
 
