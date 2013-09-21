@@ -17,10 +17,10 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: server-rails_development
+  database: cg3002_dev_rails
   pool: 5
   host: localhost
-  username: server-rails
+  username:
   password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -47,16 +47,16 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: server-rails_test
+  database: cg3002_test_rails
   pool: 5
   host: localhost
-  username: server-rails
+  username:
   password:
 
 production:
   adapter: postgresql
   encoding: unicode
-  database: server-rails_production
+  database: cg3002_production_rails
   pool: 5
-  username: server-rails
+  username: cg3002_user
   password:

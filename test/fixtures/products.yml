@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  category_id: 
+  manufacturer_id: 
+  barcode: 1
+  daily_price: 
+  daily_price: 
+  cost_price: 
+  cost_price: 
+  current_stock: 1
+  minimum_stock: 1
+  bundle_unit: 1
+
+two:
+  name: MyString
+  category_id: 
+  manufacturer_id: 
+  barcode: 1
+  daily_price: 
+  daily_price: 
+  cost_price: 
+  cost_price: 
+  current_stock: 1
+  minimum_stock: 1
+  bundle_unit: 1
