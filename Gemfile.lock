@@ -40,6 +40,7 @@ GEM
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
     builder (3.1.4)
+    cancan (1.6.10)
     carrierwave (0.9.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -145,6 +146,7 @@ PLATFORMS
 DEPENDENCIES
   anjlab-bootstrap-rails!
   better_errors
+  cancan
   carrierwave
   coffee-rails (~> 4.0.0)
   devise
