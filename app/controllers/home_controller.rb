@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
   def index
-    render text: "Hello Heroku!"
+    # index depends on user roles
   end
 end
