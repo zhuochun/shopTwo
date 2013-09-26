@@ -1,7 +1,12 @@
 ServerRails::Application.routes.draw do
   devise_for :users
 
-  resources :products
+  resources :products do
+    collection do
+      get 'batch_new'
+      post 'batch_create'
+    end
+  end
 
   resources :manufacturers
 

@@ -4,7 +4,8 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
+    @products = Product.paginate(:page => params[:page], :per_page => 50)
+                       .order('created_at DESC')
   end
 
   # GET /products/1
@@ -19,6 +20,25 @@ class ProductsController < ApplicationController
 
   # GET /products/1/edit
   def edit
+  end
+
+  # GET /products/upload
+  def batch_new
+  end
+
+  # POST /products/upload
+  def batch_create
+    reader = FileReader.new(params[:inventory], "inventory")
+
+    respond_to do |format|
+      if reader.process
+        format.html { redirect_to products_url, notice: "Products were created." }
+        format.json { render action: 'index', status: :created, location: product }
+      else
+        format.html { redirect_to action: "batch_new", notice: "Invalid file uploaded." }
+        format.json { render json: "Invalid file uploaded", status: :unprocessable_entity }
+      end
+    end
   end
 
   # POST /products

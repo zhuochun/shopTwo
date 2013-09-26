@@ -1,0 +1,14 @@
+<h1>Upload Inventories</h1>
+
+<%= simple_form_for(Product.new,
+                    url: batch_create_products_path,
+                    html: { multipart: true }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-group">
+    <label for="inventories-file">Select Inventory Files</label>
+    <input type="file" id="inventories-file" name="inventory">
+  </div>
+
+  <button type="submit" class="btn btn-default">Upload</button>
+<% end %>
