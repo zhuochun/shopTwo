@@ -9,8 +9,13 @@
       <a class="navbar-brand" href="/">ShopTwo</a>
     </div>
     <div class="navbar-collapse collapse">
-      <%= render "shared/menu/public" %>
-      <%= render true ? "shared/login" : "shared/logout" %>
+      <% if user_signed_in? %>
+        <%= render "shared/menu/#{current_user.role}" %>
+        <%= render "shared/logout" %>
+      <% else %>
+        <%= render "shared/menu/public" %>
+        <%= render "shared/login" %>
+      <% end %>
     </div>
   </div>
 </div>

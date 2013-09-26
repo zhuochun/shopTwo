@@ -1,13 +1,5 @@
-<form class="navbar-form navbar-right hidden-md hidden-sm">
-  <div class="form-group">
-    <input type="text" placeholder="Email" class="form-control">
-  </div>
-  <div class="form-group">
-    <input type="password" placeholder="Password" class="form-control">
-  </div>
-  <button type="submit" class="btn btn-success">Login in</button>
-</form>
-
-<button type="button"
-  class="btn btn-success navbar-btn navbar-right visible-md visible-sm">
-  Login in</button>
+<ul class="nav navbar-nav navbar-right">
+  <li><a href="#">Cart <span class="label label-success">0</span></a></li>
+  <li><%= link_to "Register", new_user_registration_path %></li>
+  <li><%= link_to "Login", new_user_session_path %></li>
+</ul>

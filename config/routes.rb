@@ -1,5 +1,6 @@
 ServerRails::Application.routes.draw do
   devise_for :users
+
   resources :products
 
   resources :manufacturers
