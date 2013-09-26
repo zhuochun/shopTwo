@@ -6,12 +6,24 @@ gem 'rails', '4.0.0'
 # Use postgresql as the database for Active Record
 gem 'pg'
 
+# Use devise to provide authentication
+gem 'devise'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
 # Use Bootstrap with SCSS favors
 gem 'anjlab-bootstrap-rails', require: 'bootstrap-rails',
                               github: 'anjlab/bootstrap-rails'
+
+# Use paginate
+gem 'will_paginate', '~> 3.0'
+
+# Use simple_form for forms
+gem 'simple_form'
+
+# Use carrierwave to handle file uploads
+gem 'carrierwave'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -42,11 +54,13 @@ end
 # Use Heroku Gems
 gem 'rails_12factor', group: :production
 
+group :development do
+  # Better debug
+  gem "better_errors"
+end
+
 # Use unicorn as the app server
 # gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]
