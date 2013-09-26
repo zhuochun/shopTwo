@@ -8,4 +8,8 @@ class User < ActiveRecord::Base
          :lockable, :recoverable, :rememberable,
          :trackable, :validatable
 
+  # Validations
+  validates :username, presence: true, uniqueness: true
+  validates :credits, presence: true
+  validates :phone, uniqueness: true
 end
