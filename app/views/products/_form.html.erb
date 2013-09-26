@@ -1,61 +1,15 @@
-<%= form_for(@product) do |f| %>
-  <% if @product.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
+<%= simple_form_for(@product) do |f| %>
+  <%= f.error_notification %>
 
-      <ul>
-      <% @product.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= f.input :name %><br>
+  <%= f.association :category %><br>
+  <%= f.association :manufacturer %><br>
+  <%= f.input :barcode %><br>
+  <%= f.input :daily_price %><br>
+  <%= f.input :cost_price %><br>
+  <%= f.input :current_stock %><br>
+  <%= f.input :minimum_stock %><br>
+  <%= f.input :bundle_unit %><br>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :category %><br>
-    <%= f.text_field :category %>
-  </div>
-  <div class="field">
-    <%= f.label :manufacturer %><br>
-    <%= f.text_field :manufacturer %>
-  </div>
-  <div class="field">
-    <%= f.label :barcode %><br>
-    <%= f.number_field :barcode %>
-  </div>
-  <div class="field">
-    <%= f.label :daily_price %><br>
-    <%= f.text_field :daily_price %>
-  </div>
-  <div class="field">
-    <%= f.label :daily_price %><br>
-    <%= f.text_field :daily_price %>
-  </div>
-  <div class="field">
-    <%= f.label :cost_price %><br>
-    <%= f.text_field :cost_price %>
-  </div>
-  <div class="field">
-    <%= f.label :cost_price %><br>
-    <%= f.text_field :cost_price %>
-  </div>
-  <div class="field">
-    <%= f.label :current_stock %><br>
-    <%= f.number_field :current_stock %>
-  </div>
-  <div class="field">
-    <%= f.label :minimum_stock %><br>
-    <%= f.number_field :minimum_stock %>
-  </div>
-  <div class="field">
-    <%= f.label :bundle_unit %><br>
-    <%= f.number_field :bundle_unit %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= f.submit %>
 <% end %>

@@ -1,15 +1,14 @@
-<h1>Listing products</h1>
+<h1>Products</h1>
 
-<table>
+<table class="table table-striped table-hover table-responsive">
   <thead>
     <tr>
+      <th>No.</th>
       <th>Name</th>
       <th>Category</th>
       <th>Manufacturer</th>
       <th>Barcode</th>
       <th>Daily price</th>
-      <th>Daily price</th>
-      <th>Cost price</th>
       <th>Cost price</th>
       <th>Current stock</th>
       <th>Minimum stock</th>
@@ -21,15 +20,14 @@
   </thead>
 
   <tbody>
-    <% @products.each do |product| %>
+    <% @products.each_with_index do |product, idx| %>
       <tr>
+        <td><%= idx + 1 %></td>
         <td><%= product.name %></td>
-        <td><%= product.category %></td>
-        <td><%= product.manufacturer %></td>
+        <td><%= product.category.name %></td>
+        <td><%= product.manufacturer.name %></td>
         <td><%= product.barcode %></td>
         <td><%= product.daily_price %></td>
-        <td><%= product.daily_price %></td>
-        <td><%= product.cost_price %></td>
         <td><%= product.cost_price %></td>
         <td><%= product.current_stock %></td>
         <td><%= product.minimum_stock %></td>
@@ -41,6 +39,8 @@
     <% end %>
   </tbody>
 </table>
+
+<%= will_paginate @posts %>
 
 <br>
 
