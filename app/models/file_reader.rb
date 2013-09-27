@@ -21,7 +21,7 @@ class FileReader
     File.foreach(@file.tempfile) do |line|
       name, category, manufacturer, barcode, cost, current_stock, minimum_stock, bundle = line.chomp.split(':')
 
-      product = Product.new name: name,
+      product = Product.new name: name.strip,
                             barcode: barcode.to_i,
                             daily_price: cost.to_i,
                             cost_price: cost.to_i,
@@ -29,8 +29,8 @@ class FileReader
                             minimum_stock: minimum_stock.to_i,
                             bundle_unit: bundle.to_i
 
-      product.category = Category.find_or_create_by_name(category)
-      product.manufacturer = Manufacturer.find_or_create_by_name(manufacturer)
+      product.category = Category.find_or_create_by_name(category.strip)
+      product.manufacturer = Manufacturer.find_or_create_by_name(manufacturer.strip)
 
       count += product.save ? 1 : 0
     end
