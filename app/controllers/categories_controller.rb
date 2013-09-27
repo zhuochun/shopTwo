@@ -4,7 +4,8 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.json
   def index
-    @categories = Category.all
+    @categories = Category.paginate(page: params[:page], per_page: 100)
+                          .order('name ASC')
   end
 
   # GET /categories/1

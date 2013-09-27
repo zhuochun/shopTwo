@@ -4,7 +4,8 @@ class ManufacturersController < ApplicationController
   # GET /manufacturers
   # GET /manufacturers.json
   def index
-    @manufacturers = Manufacturer.all
+    @manufacturers = Manufacturer.paginate(page: params[:page], per_page: 100)
+                                 .order('name ASC')
   end
 
   # GET /manufacturers/1
