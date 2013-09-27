@@ -11,6 +11,9 @@ class ManufacturersController < ApplicationController
   # GET /manufacturers/1
   # GET /manufacturers/1.json
   def show
+    @products = @manufacturer.products
+                             .paginate(page: params[:page], per_page: 50)
+                             .order('name ASC')
   end
 
   # GET /manufacturers/new

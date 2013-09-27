@@ -11,6 +11,9 @@ class CategoriesController < ApplicationController
   # GET /categories/1
   # GET /categories/1.json
   def show
+    @products = @category.products
+                         .paginate(page: params[:page], per_page: 50)
+                         .order('name ASC')
   end
 
   # GET /categories/new
