@@ -1,5 +1,10 @@
 class HomeController < ApplicationController
   def index
-    # index depends on user roles
+  end
+
+  def today_deals
+  end
+
+  def dashboard
   end
 end

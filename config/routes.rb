@@ -12,10 +12,9 @@ ServerRails::Application.routes.draw do
 
   resources :categories
 
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
+  get '/dashboard', to: 'home#dashboard', as: 'dashboard'
+  get '/deals', to: 'home#today_deals', as: 'deals'
 
-  # You can have the root of your site routed with "root"
   root 'home#index'
 
   # Example of regular route:
