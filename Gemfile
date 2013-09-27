@@ -16,8 +16,7 @@ gem "cancan"
 gem 'sass-rails', '~> 4.0.0'
 
 # Use Bootstrap with SCSS favors
-gem 'anjlab-bootstrap-rails', require: 'bootstrap-rails',
-                              github: 'anjlab/bootstrap-rails'
+gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails', :github => 'anjlab/bootstrap-rails'
 
 # Use paginate
 gem 'will_paginate', '~> 3.0'
@@ -48,22 +47,24 @@ gem 'jbuilder', '~> 1.2'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
+  gem 'sdoc', :require => false
 end
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Use Heroku Gems
-gem 'rails_12factor', group: :production
+group :production do
+  gem 'rails_12factor'
+end
 
+# Development only
 group :development do
-  # Better debug
   gem "better_errors"
 end
 
 # Use unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
