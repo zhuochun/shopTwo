@@ -28,7 +28,7 @@ class ProductsController < ApplicationController
 
   # POST /products/upload
   def batch_create
-    reader = FileReader.new(params[:inventory], "inventory")
+    reader = FileReader.new(params[:inventory], FileReader::INVENTORY)
 
     respond_to do |format|
       if reader.process
@@ -89,6 +89,8 @@ class ProductsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:name, :category_id, :manufacturer_id, :barcode, :daily_price, :daily_price, :cost_price, :cost_price, :current_stock, :minimum_stock, :bundle_unit)
+      params.require(:product).permit(:name, :category_id, :manufacturer_id,
+                                      :barcode, :daily_price, :cost_price,
+                                      :current_stock, :minimum_stock, :bundle_unit)
     end
 end

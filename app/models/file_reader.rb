@@ -1,6 +1,6 @@
 class FileReader
   # Type of files supported
-  TYPE = %w(inventory transaction)
+  INVENTORY, TRANSACTION = %i(inventory transaction)
 
   def initialize(file, type)
     @file = file
