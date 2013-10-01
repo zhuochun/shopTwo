@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   # Default roles
   ROLES = %w(customer employee manager administrator)
+  # For each role
+  CUSTOMER, EMPLOYEE, MANAGER, ADMIN = ROLES
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
