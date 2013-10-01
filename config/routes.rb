@@ -14,6 +14,7 @@ ServerRails::Application.routes.draw do
 
   get '/dashboard', to: 'home#dashboard', as: 'dashboard'
   get '/deals', to: 'home#today_deals', as: 'deals'
+  get '/search', to: 'home#search', as: 'search'
 
   root 'home#index'
 

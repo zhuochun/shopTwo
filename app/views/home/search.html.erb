@@ -1,0 +1,16 @@
+<h1>Search for '<%= @query %>'</h1>
+
+<% if @products.empty? %>
+
+  <p>Nothing is found.</p>
+
+<% elsif @products.size == 1 %>
+
+  <%= render @products.first %>
+
+<% else %>
+
+  <%= render template: 'products/index',
+             locals: { products: @products } %>
+
+<% end %>
