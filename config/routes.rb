@@ -16,6 +16,12 @@ ServerRails::Application.routes.draw do
   get '/deals', to: 'home#today_deals', as: 'deals'
   get '/search', to: 'home#search', as: 'search'
 
+  # api gets
+  get '/api/customers', to: 'api#customers'
+  get '/api/price_list', to: 'api#price_list'
+  # api posts
+  post '/api/transaction', to: 'api#transactions'
+
   root 'home#index'
 
   # Example of regular route:
