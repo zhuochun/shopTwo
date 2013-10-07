@@ -1,6 +1,8 @@
 ServerRails::Application.routes.draw do
   devise_for :users
 
+  resources :stores
+
   resources :products do
     collection do
       get 'batch_new'
@@ -9,9 +11,9 @@ ServerRails::Application.routes.draw do
   end
 
   resources :manufacturers
-
   resources :categories
 
+  # custom pages
   get '/dashboard', to: 'home#dashboard', as: 'dashboard'
   get '/deals', to: 'home#today_deals', as: 'deals'
   get '/search', to: 'home#search', as: 'search'
