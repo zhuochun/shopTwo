@@ -14,4 +14,10 @@ class User < ActiveRecord::Base
   validates :username, presence: true, uniqueness: true
   validates :credits, presence: true
   validates :phone, uniqueness: true
+
+  # Scopes
+  default_scope -> { order("username ASC") }
+  scope :customers, -> { where(role: CUSTOMER) }
+  scope :employees, -> { where(role: [EMPLOYEE, MANAGER]) }
+  scope :managers,  -> { where(role: [MANAGER, ADMIN]) }
 end
