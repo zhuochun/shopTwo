@@ -30,7 +30,7 @@ class HomeController < ApplicationController
     when /^\$\d+$/
       Product.where(daily_price: query.slice(1, query.size))
     else
-      Product.where("name LIKE ?", "%#{query}%")
+      Product.where("lower(name) LIKE ?", "%#{query.downcase}%")
     end
   end
 end
