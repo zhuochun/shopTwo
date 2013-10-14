@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :update, :destroy]
   # GET /users
   # GET /users.json
   def index
@@ -25,5 +26,32 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+    if current_user.role == User::MANAGER
+      @user.update(role: User::EMPLOYEE)
+    elsif current_user.role == User::ADMIN
+      @user.update(role: User::MANAGER)
+    end
+
+    respond_to do |format|
+      format.html { redirect_to @user, notice: 'User was successfully promoted.' }
+      format.json { head :no_content }
+    end
   end
+
+  # DELETE /users/1
+  # DELETE /users/1.json
+  def destroy
+    @user.destroy
+
+    respond_to do |format|
+      format.html { redirect_to users_url }
+      format.json { head :no_content }
+    end
+  end
+
+  private
+
+    def set_user
+      @user = User.find(params[:id])
+    end
 end
