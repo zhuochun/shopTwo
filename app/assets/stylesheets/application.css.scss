@@ -22,3 +22,15 @@
 body {
   padding-top: 70px;
 }
+
+/*
+ * home page css
+ */
+.product-item {
+    h3 {
+        height: 53px;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

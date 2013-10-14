@@ -1,2 +1,63 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<% unless current_user.nil? %>
+  <% if current_user.role == User::ADMIN %>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Hi, Admin <%= current_user.username %></h3>
+      </div>
+      <div class="panel-body">
+        View <%= link_to "Global Dashboard", dashboard_path %>
+      </div>
+    </div>
+  <% elsif current_user.role == User::MANAGER %>
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h3 class="panel-title">Hi, Manager <%= current_user.username %></h3>
+      </div>
+      <div class="panel-body">
+        View your <%= link_to "Store Dashboard", dashboard_path %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<h1>New Products</h1>
+
+<div class="row">
+  <% @new_products.each_with_index do |product, idx| %>
+    <div class="col-sm-12 col-md-3">
+      <div class="thumbnail product-item new-product-item">
+        <img data-src="holder.js/300x200" alt="View Details of <%= product.name %>">
+        <div class="caption">
+          <h3><%= product.name.titleize %></h3>
+          <p><%= product.category.name %></p>
+          <p>
+            <%= link_to "Details", product, class: "btn btn-primary" %>
+            <%= link_to "Buy at $#{product.daily_price}", product, class: "btn btn-success" %>
+          </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<h1>Popular Products</h1>
+
+<div class="row">
+  <% @popular_products.each_with_index do |product, idx| %>
+    <div class="col-sm-12 col-md-3">
+      <div class="thumbnail product-item">
+        <img data-src="holder.js/300x200" alt="View Details of <%= product.name %>">
+        <div class="caption">
+          <h3><%= product.name.titleize %></h3>
+          <p><%= product.category.name %></p>
+          <p>
+            <%= link_to "Details", product, class: "btn btn-primary" %>
+            <%= link_to "Buy at $#{product.daily_price}", product, class: "btn btn-success" %>
+          </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%= will_paginate @popular_products %>

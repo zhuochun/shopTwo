@@ -1,6 +1,8 @@
 class HomeController < ApplicationController
   # GET /index
   def index
+    @new_products = Product.new_in_store.paginate(page: params[:page], per_page: 4)
+    @popular_products = Product.popular.paginate(page: params[:page], per_page: 40)
   end
 
   # GET /deals
@@ -14,7 +16,8 @@ class HomeController < ApplicationController
   # GET /search
   def search
     @query = params[:q].strip
-    @products = query_products(@query).paginate(page: params[:page], per_page: 50).order('name ASC')
+    @products = query_products(@query).paginate(page: params[:page], per_page: 50)
+                                      .order('name ASC')
   end
 
   protected
