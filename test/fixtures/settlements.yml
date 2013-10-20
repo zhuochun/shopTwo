@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  store_id: 
+  total_price: 9.99
+  uuid: MyString
+
+two:
+  store_id: 
+  total_price: 9.99
+  uuid: MyString

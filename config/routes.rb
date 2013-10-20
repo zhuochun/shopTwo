@@ -1,4 +1,6 @@
 ServerRails::Application.routes.draw do
+  resources :settlements
+
   devise_for :users
 
   resources :users do

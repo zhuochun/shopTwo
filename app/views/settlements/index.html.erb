@@ -1,0 +1,31 @@
+<h1>Listing settlements</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Store</th>
+      <th>Total price</th>
+      <th>Uuid</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @settlements.each do |settlement| %>
+      <tr>
+        <td><%= settlement.store %></td>
+        <td><%= settlement.total_price %></td>
+        <td><%= settlement.uuid %></td>
+        <td><%= link_to 'Show', settlement %></td>
+        <td><%= link_to 'Edit', edit_settlement_path(settlement) %></td>
+        <td><%= link_to 'Destroy', settlement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Settlement', new_settlement_path %>

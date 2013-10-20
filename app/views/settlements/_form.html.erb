@@ -1,0 +1,13 @@
+<%= simple_form_for(@settlement) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :store %>
+    <%= f.input :total_price %>
+    <%= f.input :uuid %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
