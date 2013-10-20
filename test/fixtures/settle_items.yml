@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  settlement_id: 
+  product_id: 
+  quantity: 1
+  price: 9.99
+
+two:
+  settlement_id: 
+  product_id: 
+  quantity: 1
+  price: 9.99
