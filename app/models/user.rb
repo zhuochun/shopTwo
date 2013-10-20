@@ -21,6 +21,9 @@ class User < ActiveRecord::Base
   scope :employees, -> { where(role: [EMPLOYEE, MANAGER]) }
   scope :managers,  -> { where(role: [MANAGER, ADMIN]) }
 
+  # Relationship
+  belongs_to :store
+
   # Public: is this a management role
   def management?
     role == MANAGER || role == ADMIN
