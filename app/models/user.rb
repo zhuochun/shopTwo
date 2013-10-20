@@ -20,4 +20,9 @@ class User < ActiveRecord::Base
   scope :customers, -> { where(role: CUSTOMER) }
   scope :employees, -> { where(role: [EMPLOYEE, MANAGER]) }
   scope :managers,  -> { where(role: [MANAGER, ADMIN]) }
+
+  # Public: is this a management role
+  def management?
+    role == MANAGER || role == ADMIN
+  end
 end

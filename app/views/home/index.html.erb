@@ -1,25 +1,3 @@
-<% unless current_user.nil? %>
-  <% if current_user.role == User::ADMIN %>
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title">Hi, Admin <%= current_user.username %></h3>
-      </div>
-      <div class="panel-body">
-        View <%= link_to "Global Dashboard", dashboard_path %>
-      </div>
-    </div>
-  <% elsif current_user.role == User::MANAGER %>
-    <div class="panel panel-success">
-      <div class="panel-heading">
-        <h3 class="panel-title">Hi, Manager <%= current_user.username %></h3>
-      </div>
-      <div class="panel-body">
-        View your <%= link_to "Store Dashboard", dashboard_path %>
-      </div>
-    </div>
-  <% end %>
-<% end %>
-
 <h1>New Products</h1>
 
 <div class="row">

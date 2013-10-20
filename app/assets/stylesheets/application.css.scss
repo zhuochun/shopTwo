@@ -34,3 +34,33 @@ body {
         text-overflow: ellipsis;
     }
 }
+
+/*
+ * role specific
+ */
+.navbar-administrator,
+.navbar-manager {
+    @extend .navbar-inverse;
+}
+
+.navbar-customer,
+.navbar-employee {
+    @extend .navbar-default;
+}
+
+.glyphicon-administrator,
+.glyphicon-manager {
+    @extend .glyphicon-tower;
+}
+
+.glyphicon-customer,
+.glyphicon-employee {
+    @extend .glyphicon-user;
+}
+
+.panel-administrator {
+    @extend .panel-success;
+}
+.panel-manager {
+    @extend .panel-warning;
+}

@@ -1,8 +1,12 @@
 class HomeController < ApplicationController
   # GET /index
   def index
-    @new_products = Product.new_in_store.paginate(page: params[:page], per_page: 4)
-    @popular_products = Product.popular.paginate(page: params[:page], per_page: 40)
+    if current_user && current_user.management?
+      render :dashboard
+    else
+      @new_products = Product.new_in_store.paginate(page: params[:page], per_page: 4)
+      @popular_products = Product.popular.paginate(page: params[:page], per_page: 40)
+    end
   end
 
   # GET /deals
