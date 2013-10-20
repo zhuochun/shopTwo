@@ -1,0 +1,31 @@
+<h1>Listing product_in_shops</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Store</th>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @product_in_shops.each do |product_in_shop| %>
+      <tr>
+        <td><%= product_in_shop.store %></td>
+        <td><%= product_in_shop.product %></td>
+        <td><%= product_in_shop.quantity %></td>
+        <td><%= link_to 'Show', product_in_shop %></td>
+        <td><%= link_to 'Edit', edit_product_in_shop_path(product_in_shop) %></td>
+        <td><%= link_to 'Destroy', product_in_shop, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Product in shop', new_product_in_shop_path %>

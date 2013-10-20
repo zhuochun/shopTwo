@@ -9,6 +9,7 @@ ServerRails::Application.routes.draw do
   end
 
   resources :stores
+  resources :product_in_shops
 
   resources :products do
     collection do

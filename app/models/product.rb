@@ -1,6 +1,9 @@
 class Product < ActiveRecord::Base
+  # relationship
   belongs_to :category, counter_cache: true
   belongs_to :manufacturer, counter_cache: true
+  has_many :product_in_shops
+  has_many :stores, through: :product_in_shops
 
   # validations
   validates :name, presence: true
