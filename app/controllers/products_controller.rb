@@ -21,21 +21,19 @@ class ProductsController < ApplicationController
   def edit
   end
 
-  # GET /products/upload
+  # GET /products/batch_new
   def batch_new
   end
 
-  # POST /products/upload
+  # POST /products/batch_create
   def batch_create
     reader = FileReader.new(params[:inventory], FileReader::INVENTORY)
 
     respond_to do |format|
       if reader.process
-        format.html { redirect_to products_url, notice: "Products were created." }
-        format.json { render action: 'index', status: :created, location: product }
+        format.html { redirect_to products_url, notice: "Inventories are uploaded." }
       else
         format.html { redirect_to action: "batch_new", notice: "Invalid file uploaded." }
-        format.json { render json: "Invalid file uploaded", status: :unprocessable_entity }
       end
     end
   end
