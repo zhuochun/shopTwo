@@ -60,9 +60,9 @@ ActiveRecord::Schema.define(version: 20131020082334) do
   create_table "settle_items", force: true do |t|
     t.integer  "settlement_id"
     t.integer  "barcode"
-    t.integer  "quantity"
-    t.decimal  "price",         precision: 9, scale: 2
-    t.decimal  "total_price",   precision: 9, scale: 2
+    t.integer  "quantity",                              default: 0
+    t.decimal  "price",         precision: 9, scale: 2, default: 0.0
+    t.decimal  "total_price",   precision: 9, scale: 2, default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -72,8 +72,8 @@ ActiveRecord::Schema.define(version: 20131020082334) do
 
   create_table "settlements", force: true do |t|
     t.integer  "store_id"
-    t.integer  "total_count"
-    t.decimal  "total_price", precision: 9, scale: 2
+    t.integer  "total_count",                         default: 0
+    t.decimal  "total_price", precision: 9, scale: 2, default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

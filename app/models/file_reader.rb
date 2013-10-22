@@ -39,8 +39,6 @@ class FileReader
   # 33995417:2:10:1/9/2013
   def process_settlement(store)
     settlement = store.settlements.new
-    settlement.total_price = 0
-    settlement.total_count = 0
 
     File.foreach(@file.tempfile) do |line|
       barcode, quantity, price, date = line.chomp.split(':')

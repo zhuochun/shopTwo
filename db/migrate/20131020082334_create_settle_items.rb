@@ -3,9 +3,9 @@ class CreateSettleItems < ActiveRecord::Migration
     create_table :settle_items do |t|
       t.references :settlement, index: true
       t.integer :barcode
-      t.integer :quantity
-      t.decimal :price, precision: 9, scale: 2
-      t.decimal :total_price, precision: 9, scale: 2
+      t.integer :quantity, default: 0
+      t.decimal :price, precision: 9, scale: 2, default: 0
+      t.decimal :total_price, precision: 9, scale: 2, default: 0
 
       t.timestamps
     end
