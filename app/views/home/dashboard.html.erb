@@ -6,13 +6,26 @@
           Hi, <%= current_user.username %>
         </h3>
       </div>
-      <div class="panel-body">
-        <p><%= current_user.role.titleize %></p>
-        <p>
-          <%= link_to "Profile", edit_user_registration_path, class: "navbar-link" %> |
-          <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "navbar-link" %>
-        </p>
-      </div>
+      <table class="table">
+        <% if current_user.store %>
+          <tr>
+            <th>Store</th>
+            <td><%= current_user.store.name %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <th>Role</th>
+          <td><%= current_user.role.titleize %></td>
+        </tr>
+        <tr>
+          <td>
+            <%= link_to "Setting", edit_user_registration_path, class: "navbar-link" %>
+          </td>
+          <td>
+            <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "navbar-link" %>
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
 
