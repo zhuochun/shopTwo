@@ -1,6 +1,4 @@
 ServerRails::Application.routes.draw do
-  resources :settlements
-
   devise_for :users
 
   resources :users do
@@ -19,6 +17,8 @@ ServerRails::Application.routes.draw do
       post 'batch_create'
     end
   end
+
+  resources :settlements
 
   resources :manufacturers
   resources :categories
