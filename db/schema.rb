@@ -42,7 +42,6 @@ ActiveRecord::Schema.define(version: 20131020082334) do
   add_index "product_in_shops", ["store_id"], name: "index_product_in_shops_on_store_id", using: :btree
 
   create_table "products", force: true do |t|
-    t.integer  "barcode"
     t.string   "name"
     t.decimal  "daily_price",     precision: 9, scale: 2
     t.decimal  "cost_price",      precision: 9, scale: 2
@@ -60,25 +59,27 @@ ActiveRecord::Schema.define(version: 20131020082334) do
 
   create_table "settle_items", force: true do |t|
     t.integer  "settlement_id"
-    t.integer  "product_id"
+    t.integer  "barcode"
     t.integer  "quantity"
     t.decimal  "price",         precision: 9, scale: 2
+    t.decimal  "total_price",   precision: 9, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "settle_items", ["product_id"], name: "index_settle_items_on_product_id", using: :btree
+  add_index "settle_items", ["barcode"], name: "index_settle_items_on_barcode", using: :btree
   add_index "settle_items", ["settlement_id"], name: "index_settle_items_on_settlement_id", using: :btree
 
   create_table "settlements", force: true do |t|
     t.integer  "store_id"
-    t.decimal  "total_price", precision: 9, scale: 2
     t.string   "uuid"
+    t.decimal  "total_price", precision: 9, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "settlements", ["store_id"], name: "index_settlements_on_store_id", using: :btree
+  add_index "settlements", ["uuid"], name: "index_settlements_on_uuid", using: :btree
 
   create_table "stores", force: true do |t|
     t.string   "name"
@@ -91,6 +92,8 @@ ActiveRecord::Schema.define(version: 20131020082334) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "stores", ["contact"], name: "index_stores_on_contact", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "username",                                        default: "",         null: false

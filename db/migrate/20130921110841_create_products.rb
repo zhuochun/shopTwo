@@ -1,7 +1,6 @@
 class CreateProducts < ActiveRecord::Migration
   def change
     create_table :products do |t|
-      t.integer :barcode, index: true, unique: true
       t.string :name
 
       t.decimal :daily_price, precision: 9, scale: 2

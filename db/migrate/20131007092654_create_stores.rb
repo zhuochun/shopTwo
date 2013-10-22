@@ -6,10 +6,12 @@ class CreateStores < ActiveRecord::Migration
       t.text :address
       t.float :geo_latitude
       t.float :geo_longitude
-      t.integer :contact, index: true
+      t.integer :contact
       t.text :operation_hours
 
       t.timestamps
     end
+
+    add_index :stores, :contact
   end
 end
