@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   # Validations
   validates :username, presence: true, uniqueness: true
   validates :credits, presence: true
-  validates :phone, uniqueness: true
+  validates :phone, presence: true, uniqueness: true
 
   # Scopes
   default_scope -> { order("username ASC") }
