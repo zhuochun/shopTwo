@@ -72,14 +72,13 @@ ActiveRecord::Schema.define(version: 20131020082334) do
 
   create_table "settlements", force: true do |t|
     t.integer  "store_id"
-    t.string   "uuid"
+    t.integer  "total_count"
     t.decimal  "total_price", precision: 9, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "settlements", ["store_id"], name: "index_settlements_on_store_id", using: :btree
-  add_index "settlements", ["uuid"], name: "index_settlements_on_uuid", using: :btree
 
   create_table "stores", force: true do |t|
     t.string   "name"
