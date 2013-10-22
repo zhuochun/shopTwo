@@ -1,5 +1,15 @@
-<h1>New settlement</h1>
+<h1>Upload Transactions</h1>
+<h2><%= current_user.store.name %></h2>
 
-<%= render 'form' %>
+<%= simple_form_for(Settlement.new, html: { multipart: true }) do |f| %>
+  <%= f.error_notification %>
 
-<%= link_to 'Back', settlements_path %>
+  <input type="hidden" name="store_id" value="<%= current_user.store.id %>">
+
+  <div class="form-group">
+    <label for="transaction-file">Select Transaction Summary File</label>
+    <input type="file" id="transaction-file" name="settlement">
+  </div>
+
+  <button type="submit" class="btn btn-default">Upload</button>
+<% end %>

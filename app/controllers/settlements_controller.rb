@@ -24,15 +24,16 @@ class SettlementsController < ApplicationController
   # POST /settlements
   # POST /settlements.json
   def create
-    @settlement = Settlement.new(settlement_params)
+    reader = FileReader.new(params[:settlement], FileReader::SETTLEMENT)
+    store = Store.find(params[:store_id])
 
     respond_to do |format|
-      if @settlement.save
-        format.html { redirect_to @settlement, notice: 'Settlement was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @settlement }
+      if reader.process(store)
+        format.html { redirect_to settlements_url, notice: "Transaction summary was successfully uploaded." }
+        format.json { render action: 'index', status: :created, location: settlements_url }
       else
-        format.html { render action: 'new' }
-        format.json { render json: @settlement.errors, status: :unprocessable_entity }
+        format.html { redirect_to action: "new", notice: "Invalid Transaction file uploaded." }
+        format.json { render json: "Invalid Transaction file uploaded.", status: :unprocessable_entity }
       end
     end
   end
