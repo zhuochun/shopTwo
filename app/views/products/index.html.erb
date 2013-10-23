@@ -5,9 +5,9 @@
     <tr>
       <th>No.</th>
       <th>Name</th>
+      <th>Barcode</th>
       <th>Category</th>
       <th>Manufacturer</th>
-      <th>Barcode</th>
       <th>Daily price</th>
       <th>Cost price</th>
       <th>Current stock</th>
@@ -24,11 +24,11 @@
       <tr>
         <td><%= idx + 1 %></td>
         <td><%= product.name %></td>
+        <td><%= product.barcode %></td>
         <td><%= product.category.name %></td>
         <td><%= product.manufacturer.name %></td>
-        <td><%= product.barcode %></td>
-        <td><%= product.daily_price %></td>
-        <td><%= product.cost_price %></td>
+        <td><%= number_to_currency product.daily_price %></td>
+        <td><%= number_to_currency product.cost_price %></td>
         <td><%= product.current_stock %></td>
         <td><%= product.minimum_stock %></td>
         <td><%= product.bundle_unit %></td>
