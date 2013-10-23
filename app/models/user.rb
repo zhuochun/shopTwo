@@ -24,8 +24,25 @@ class User < ActiveRecord::Base
   # Relationship
   belongs_to :store
 
+  # Public: is the user manage the store
+  def manage?(store)
+    role == MANAGER && self.store == store
+  end
+
   # Public: is this a management role
   def management?
-    role == MANAGER || role == ADMIN
+    if role == MANAGER || role == ADMIN
+      true
+    else
+      false
+    end
   end
+
+  # Public: role? methods
+  ROLES.each do |role|
+    define_method "#{role}?" do
+      self.role == role
+    end
+  end
+
 end
