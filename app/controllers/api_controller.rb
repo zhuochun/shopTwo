@@ -7,14 +7,17 @@ class ApiController < ApplicationController
   # POST /api/stores/:store_id/transaction
   def settlement
     reader = FileReader.new(params[:settlement], FileReader::SETTLEMENT)
-    store = Store.find(params[:store_id])
 
-    respond_to do |format|
+    if params[:store_id]
+      store = Store.find(params[:store_id])
+
       if reader.process(store)
-        format.json { render json: 'Transaction file uploaded.', status: :created }
+        render json: { succeed: true, message: 'Transaction file uploaded.' }, status: :created
       else
-        format.json { render json: 'Invalid Transaction file uploaded.', status: :unprocessable_entity }
+        render json: { succeed: false, message: 'Invalid Transaction file uploaded.' }, status: :unprocessable_entity
       end
+    else
+      render json: { succeed: false, message: 'No store information provided.' }, status: :unprocessable_entity
     end
   end
 
