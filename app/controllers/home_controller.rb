@@ -30,11 +30,11 @@ class HomeController < ApplicationController
   def query_products(query)
     case query
     when /^\d{8}$/
-      Product.where(barcode: query)
+      Product.where(id: query)
     when /^\$\d+$/
       Product.where(daily_price: query.slice(1, query.size))
     else
-      Product.where("lower(name) LIKE ?", "%#{query.downcase}%")
+      Product.where('lower(name) LIKE ?', "%#{query.downcase}%")
     end
   end
 end
