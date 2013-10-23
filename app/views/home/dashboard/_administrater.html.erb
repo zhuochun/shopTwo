@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-md-4">
+    <div class="panel panel-warning">
+      <div class="panel-heading">ShopTwo</div>
+      <table class="table">
+        <tr><th>Stores</th><td><%= Store.count %></td>
+        <tr><th>Customers</th><td><%= User.customers.count %></td>
+        <tr><th>Employees</th><td><%= User.employees.count %></td>
+        <tr><th>Managers</th><td><%= User.managers.count %></td>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-info">
+      <div class="panel-heading">Inventory</div>
+      <table class="table">
+        <tr><th>Stores</th><td><%= Store.count %></td>
+        <tr><th>Products</th><td><%= Product.count %></td>
+        <tr><th>Categories</th><td><%= Category.count %></td>
+        <tr><th>Manufacturers</th><td><%= Manufacturer.count %></td>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-danger">
+      <div class="panel-heading">Transactions</div>
+      <table class="table">
+        <tr><th>This Week</th><td><%= Settlement.last_week.sell_sum %></td>
+        <tr><th>This Month</th><td><%= Settlement.last_month.sell_sum %></td>
+      </table>
+    </div>
+  </div>
+</div>

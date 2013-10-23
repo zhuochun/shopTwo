@@ -1,0 +1,39 @@
+<% @store = current_user.store %>
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="panel panel-success">
+      <div class="panel-heading">Store</div>
+      <table class="table">
+        <tr>
+          <th>Name</th><td><%= @store.name %> (<%= link_to 'Edit', edit_store_path(@store) %>)</td>
+        </tr>
+        <tr>
+          <th>Id</th><td><%= @store.id %></td>
+        </tr>
+        <tr>
+          <th>Employees</th><td><%= @store.users.employees.count %></td>
+        </tr>
+        <tr>
+          <th>Stocks</th><td><%= @store.stocks.count %>
+        </td>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-info">
+      <div class="panel-heading">Transactions</div>
+      <table class="table">
+        <tr><th>This Week</th><td><%= @store.settlements.last_week.sell_sum %></td>
+        <tr><th>This Month</th><td><%= @store.settlements.last_month.sell_sum %></td>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-danger">
+      <div class="panel-heading">Others</div>
+      <table class="table">
+      </table>
+    </div>
+  </div>
+</div>
