@@ -1,28 +1,25 @@
-== README
+# ShopTwo
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+CG3002 Course Server-side, Ruby on Rails.
 
-Things you may want to cover:
+# Prerequisite
 
-* Ruby version
+- Ruby 2.0.0
+- Rails 4.0.0
+- [PostgreSQL](http://www.postgresql.org/download/), Mac: <http://postgresapp.com/>
 
-* System dependencies
+# Setup Local Machine
 
-* Configuration
+- `bundle install`
+- `rake db:setup`
+- `rake db:migrate`
+- `rake db:seed`
+- `rails server`
 
-* Database creation
+# Setup on Heroku
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+- `heroku create`
+- `git push heroku master`
+- `heroku pg:reset DATABASE` if necessary
+- `heroku run rake db:migrate`
+- `heroku ps:scale web=1`
