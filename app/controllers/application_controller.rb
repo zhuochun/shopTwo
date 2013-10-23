@@ -6,20 +6,6 @@ class ApplicationController < ActionController::Base
   # Add additional parameters to devise user
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
-  # Authenticate
-  def authenticate_role!(*roles)
-    auth = authenticate_user!
-
-    case roles.length
-    when 0
-      auth
-    when 1
-      roles[0] == current_user.role
-    else
-      roles.include? current_user.role
-    end
-  end
-
   protected
 
   # Add more user parameters permitted
