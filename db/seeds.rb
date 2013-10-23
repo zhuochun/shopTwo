@@ -23,7 +23,7 @@ grant = Store.create(
     geo_latitude: 1.337320,
     geo_longitude: 103.793182,
     contact: 64622102,
-    operation_hours: '9am - 10pm' },
+    operation_hours: '9:00 AM - 10:00 PM' },
 )
 
 vivo = Store.create(
@@ -33,7 +33,37 @@ vivo = Store.create(
     geo_latitude: 1.264150,
     geo_longitude: 103.820847,
     contact: 62751638,
-    operation_hours: '10am - 10pm' },
+    operation_hours: '10:00 AM - 10:00 PM' },
+)
+
+changi = Store.create(
+  { name: 'Changi',
+    size: 30,
+    address: "60, Airport Boulevard, #B16-029, Basement Level South Terminal 2\nSINGAPORE 819643",
+    geo_latitude: 1.351440,
+    geo_longitude: 103.986267,
+    contact: 65431147,
+    operation_hours: '07:00 AM- 11:00 PM' },
+)
+
+clementi = Store.create(
+  { name: 'Clementi',
+    size: 50,
+    address: "Blk 352, Clementi Ave 2, #01-141/143\nSINGAPORE 120352",
+    geo_latitude: 1.314780,
+    geo_longitude: 103.771362,
+    contact: 67745642,
+    operation_hours: '24 Hours' },
+)
+
+orchard = Store.create(
+  { name: 'Orchard',
+    size: 20,
+    address: "491, River Valley Road, #01-14, Valley Point\nSINGAPORE 248371",
+    geo_latitude: 1.293170,
+    geo_longitude: 103.826828,
+    contact: 67339861,
+    operation_hours: '08:00 AM- 10:00 PM' },
 )
 
 puts "=== #{Store.count} stores created ==="
@@ -67,6 +97,30 @@ User.create([
     email: 'jason@cg3002.ceg',
     password: '12345678',
     store: vivo },
+  { username: 'Haskell',
+    phone: 33345678,
+    birthday: '21-10-2013',
+    credits: 100.0,
+    role: User::MANAGER,
+    email: 'haskell@cg3002.ceg',
+    password: '12345678',
+    store: changi },
+  { username: 'Ruby',
+    phone: 34345678,
+    birthday: '21-10-2013',
+    credits: 100.0,
+    role: User::MANAGER,
+    email: 'ruby@cg3002.ceg',
+    password: '12345678',
+    store: clementi },
+  { username: 'JavaScript',
+    phone: 35345678,
+    birthday: '21-10-2013',
+    credits: 100.0,
+    role: User::MANAGER,
+    email: 'javascript@cg3002.ceg',
+    password: '12345678',
+    store: orchard },
   { username: 'David',
     phone: 42345678,
     birthday: '21-10-2013',
