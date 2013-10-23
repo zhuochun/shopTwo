@@ -22,4 +22,5 @@ CG3002 Course Server-side, Ruby on Rails.
 - `git push heroku master`
 - `heroku pg:reset DATABASE` if necessary
 - `heroku run rake db:migrate`
+- `heroku run rake db:seed`
 - `heroku ps:scale web=1`
