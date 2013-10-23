@@ -14,9 +14,9 @@ class ApplicationController < ActionController::Base
     when 0
       auth
     when 1
-      auth && roles[0] == current_user.role
+      roles[0] == current_user.role
     else
-      auth && roles.include?(current_user.role)
+      roles.include? current_user.role
     end
   end
 

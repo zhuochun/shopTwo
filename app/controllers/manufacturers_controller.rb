@@ -1,5 +1,4 @@
 class ManufacturersController < ApplicationController
-  before_action -> { authenticate_role! User::ADMIN }, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_manufacturer, only: [:show, :edit, :update, :destroy]
 
   # GET /manufacturers

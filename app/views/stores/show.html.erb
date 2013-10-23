@@ -1,3 +1,5 @@
+<p id="notice"><%= notice %></p>
+
 <h1>Store Detail</h1>
 
 <p>
@@ -30,4 +32,5 @@
   <%= @store.operation_hours %>
 </p>
 
-<%= link_to('Edit', edit_store_path(@store)) if current_user.manage?(@store) %>
+<%= link_to 'Edit', edit_store_path(@store) %> |
+<%= link_to 'Back', stores_path %>

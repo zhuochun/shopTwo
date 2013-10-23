@@ -25,10 +25,10 @@
         <td><%= store.location %></td>
         <td><%= store.contact %></td>
         <td><%= store.operation_hours %></td>
-        <td><%= link_to 'Detail', store %></td>
+        <td><%= link_to 'Show', store %></td>
         <td><%= link_to 'Edit', edit_store_path(store) %></td>
-        <td><%= link_to 'Transactions', store_settlements_path(store) %></td>
-        <td><%= link_to 'Close', store, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Transaction', store_settlements_path(store) %></td>
+        <td><%= link_to 'Destroy', store, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

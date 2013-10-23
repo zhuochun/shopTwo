@@ -1,6 +1,4 @@
 class HomeController < ApplicationController
-  before_action -> { authenticate_role! User::MANAGER, User::ADMIN }, only: :dashboard
-
   # GET /index
   def index
     if current_user && current_user.management?
@@ -23,6 +21,7 @@ class HomeController < ApplicationController
   def search
     @query = params[:q].strip
     @products = query_products(@query).paginate(page: params[:page], per_page: 50)
+                                      .order('name ASC')
   end
 
   protected
@@ -31,11 +30,11 @@ class HomeController < ApplicationController
   def query_products(query)
     case query
     when /^\d{8}$/
-      Product.where(id: query)
+      Product.where(barcode: query)
     when /^\$\d+$/
       Product.where(daily_price: query.slice(1, query.size))
     else
-      Product.where('lower(name) LIKE ?', "%#{query.downcase}%")
+      Product.where("lower(name) LIKE ?", "%#{query.downcase}%")
     end
   end
 end
