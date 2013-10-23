@@ -1,9 +1,11 @@
 module ApplicationHelper
 
   def shop_title
-    return 'ShopTwo' unless current_user
+    return 'ShopTwo' unless user_signed_in?
 
-    if current_user.store
+    if current_user.customer?
+      "ShopTwo"
+    elsif current_user.store
       "ShopTwo:#{current_user.store.name}"
     else
       'ShopTwo:Admin'
