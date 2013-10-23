@@ -58,7 +58,7 @@ class FileReader
   end
 
   def valid_file?
-    @file.content_type == "text/plain"
+    @file && @file.content_type == "text/plain"
   end
 
 end
