@@ -6,8 +6,8 @@ class Product < ActiveRecord::Base
   belongs_to :category, counter_cache: true
   belongs_to :manufacturer, counter_cache: true
 
-  has_many :product_in_shops
-  has_many :stores, through: :product_in_shops
+  has_many :stocks
+  has_many :stores, through: :stocks
 
   has_many :settle_items, foreign_key: 'barcode'
   has_many :settlements, through: :settle_items

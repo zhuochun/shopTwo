@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131020082334) do
+ActiveRecord::Schema.define(version: 20131023035321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,17 +29,6 @@ ActiveRecord::Schema.define(version: 20131020082334) do
     t.datetime "updated_at"
     t.integer  "products_count"
   end
-
-  create_table "product_in_shops", force: true do |t|
-    t.integer  "store_id"
-    t.integer  "product_id"
-    t.integer  "quantity"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "product_in_shops", ["product_id"], name: "index_product_in_shops_on_product_id", using: :btree
-  add_index "product_in_shops", ["store_id"], name: "index_product_in_shops_on_store_id", using: :btree
 
   create_table "products", force: true do |t|
     t.string   "name"
@@ -79,6 +68,18 @@ ActiveRecord::Schema.define(version: 20131020082334) do
   end
 
   add_index "settlements", ["store_id"], name: "index_settlements_on_store_id", using: :btree
+
+  create_table "stocks", force: true do |t|
+    t.integer  "store_id"
+    t.integer  "product_id"
+    t.integer  "quantity"
+    t.integer  "minimum"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "stocks", ["product_id"], name: "index_stocks_on_product_id", using: :btree
+  add_index "stocks", ["store_id"], name: "index_stocks_on_store_id", using: :btree
 
   create_table "stores", force: true do |t|
     t.string   "name"

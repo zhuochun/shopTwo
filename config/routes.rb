@@ -10,10 +10,12 @@ ServerRails::Application.routes.draw do
 
   resources :stores do
     resources :settlements, only: [:index, :show]
-    resources :products, only: [:index]
+    resources :stocks, only: [:index]
   end
 
-  resources :product_in_shops, as: 'restocks'
+  resources :stocks
+  # alias to transactions
+  resources :settlements
 
   resources :products do
     collection do
@@ -21,9 +23,6 @@ ServerRails::Application.routes.draw do
       post 'batch_create'
     end
   end
-
-  resources :settlements
-
   resources :manufacturers
   resources :categories
 
