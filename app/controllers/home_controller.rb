@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  before_action -> { authenticate_role! User::MANAGER, User::ADMIN }, only: :dashboard
+
   # GET /index
   def index
     if current_user && current_user.management?

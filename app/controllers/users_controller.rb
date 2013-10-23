@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
+  before_action -> { authenticate_role! User::EMPLOYEE, User::MANAGER, User::ADMIN }
   before_action :set_user, only: [:show, :update, :destroy]
+
   # GET /users
   # GET /users.json
   def index

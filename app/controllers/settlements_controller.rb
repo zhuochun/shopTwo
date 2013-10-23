@@ -1,4 +1,5 @@
 class SettlementsController < ApplicationController
+  before_action -> { authenticate_role! User::MANAGER, User::ADMIN }
   before_action :set_settlement, only: [:show, :edit, :update, :destroy]
   before_action :set_store, only: [:index, :show, :create]
 

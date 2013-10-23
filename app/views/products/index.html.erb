@@ -14,8 +14,12 @@
       <th>Minimum stock</th>
       <th>Bundle unit</th>
       <th></th>
+    <% if can? :manage, Product %>
       <th></th>
       <th></th>
+    <% elsif can? :manage, Stock %>
+      <th></th>
+    <% end %>
     </tr>
   </thead>
 
@@ -33,12 +37,12 @@
         <td><%= product.minimum_stock %></td>
         <td><%= product.bundle_unit %></td>
         <td><%= link_to 'Show', product %></td>
+      <% if can? :manage, Product %>
         <td><%= link_to 'Edit', edit_product_path(product) %></td>
-        <% if current_user.role == User::ADMIN %>
         <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% else %>
+      <% elsif can? :manage, Stock %>
         <td><%= link_to 'Stock', new_product_stock_path(product) %></td>
-        <% end %>
+      <% end %>
       </tr>
     <% end %>
   </tbody>
