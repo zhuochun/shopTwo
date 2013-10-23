@@ -1,10 +1,10 @@
-<h1>Listing stocks</h1>
+<h1>Stocks in <%= @store.name %></h1>
 
-<table>
+<table class="table table-striped table-hover table-responsive">
   <thead>
     <tr>
-      <th>Store</th>
       <th>Product</th>
+      <th>Barcode</th>
       <th>Quantity</th>
       <th>Minimum</th>
       <th></th>
@@ -16,8 +16,8 @@
   <tbody>
     <% @stocks.each do |stock| %>
       <tr>
-        <td><%= stock.store %></td>
-        <td><%= stock.product %></td>
+        <td><%= stock.product.name %></td>
+        <td><%= stock.product.barcode %></td>
         <td><%= stock.quantity %></td>
         <td><%= stock.minimum %></td>
         <td><%= link_to 'Show', stock %></td>

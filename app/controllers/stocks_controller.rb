@@ -1,10 +1,10 @@
 class StocksController < ApplicationController
   before_action :set_stock, only: [:show, :edit, :update, :destroy]
+  before_action :set_store
 
   # GET /stocks
   # GET /stocks.json
   def index
-    @store  = current_user.store || Store.find(params[:store_id])
     @stocks = @store.stocks.paginate(page: params[:page], per_page: 50)
   end
 
@@ -15,7 +15,9 @@ class StocksController < ApplicationController
 
   # GET /stocks/new
   def new
-    @stock = Stock.new
+    @stock = @store.stocks.new
+    @product = Product.find(params[:product_id]) if params[:product_id]
+    @stock.product = @product
   end
 
   # GET /stocks/1/edit
@@ -25,7 +27,7 @@ class StocksController < ApplicationController
   # POST /stocks
   # POST /stocks.json
   def create
-    @stock = Stock.new(stock_params)
+    @stock = @store.stocks.new(stock_params)
 
     respond_to do |format|
       if @stock.save
@@ -68,8 +70,12 @@ class StocksController < ApplicationController
       @stock = Stock.find(params[:id])
     end
 
+    def set_store
+      @store  = current_user.store || Store.find(params[:store_id])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def stock_params
-      params.require(:stock).permit(:store_id, :product_id, :quantity, :minimum)
+      params.require(:stock).permit(:product_id, :quantity, :minimum)
     end
 end

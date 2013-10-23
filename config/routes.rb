@@ -22,6 +22,8 @@ ServerRails::Application.routes.draw do
       get 'batch_new'
       post 'batch_create'
     end
+
+    resources :stocks, only: [:new]
   end
   resources :manufacturers
   resources :categories

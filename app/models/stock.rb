@@ -3,6 +3,9 @@ class Stock < ActiveRecord::Base
   belongs_to :store
   belongs_to :product
 
+  # validations
+  validates :store, :product, :quantity, :minimum, presence: true
+
   # scope
-  default_scope -> { includes(:product).order('product.name ASC') }
+  default_scope -> { includes(:product).order('products.name ASC') }
 end
