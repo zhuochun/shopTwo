@@ -1,4 +1,7 @@
 <h1>Transaction Histories</h1>
+<% if @store %>
+  <h2><%= @store.name %></h2>
+<% end %>
 
 <table class="table table-striped table-hover table-responsive">
   <thead>
@@ -25,6 +28,8 @@
     <% end %>
   </tbody>
 </table>
+
+<%= will_paginate @settlements %>
 
 <br>
 

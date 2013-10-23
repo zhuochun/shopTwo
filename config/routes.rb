@@ -8,8 +8,10 @@ ServerRails::Application.routes.draw do
     end
   end
 
-  resources :stores
-  resources :product_in_shops
+  resources :stores do
+    resources :settlements, only: [:index, :show]
+  end
+
 
   resources :products do
     collection do

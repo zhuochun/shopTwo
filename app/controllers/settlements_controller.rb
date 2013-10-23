@@ -1,15 +1,25 @@
 class SettlementsController < ApplicationController
   before_action :set_settlement, only: [:show, :edit, :update, :destroy]
+  before_action :set_store, only: [:index, :show, :create]
 
   # GET /settlements
   # GET /settlements.json
   def index
-    @settlements = Settlement.all
+    if @store
+      @settlements = @store.settlements.paginate(page: params[:page], per_page: 50)
+    else
+      @settlements = Settlement.paginate(page: params[:page], per_page: 50)
+    end
   end
 
   # GET /settlements/1
   # GET /settlements/1.json
   def show
+    if @store
+      @settlement = @store.settlements.find(params[:id])
+    else
+      @settlement = Settlement.find(params[:id])
+    end
   end
 
   # GET /settlements/new
@@ -25,10 +35,9 @@ class SettlementsController < ApplicationController
   # POST /settlements.json
   def create
     reader = FileReader.new(params[:settlement], FileReader::SETTLEMENT)
-    store = Store.find(params[:store_id])
 
     respond_to do |format|
-      if reader.process(store)
+      if reader.process(@store)
         format.html { redirect_to settlements_url, notice: "Transaction summary was successfully uploaded." }
         format.json { render action: 'index', status: :created, location: settlements_url }
       else
@@ -66,6 +75,16 @@ class SettlementsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_settlement
       @settlement = Settlement.find(params[:id])
+    end
+
+    def set_store
+      if current_user.store
+        @store = current_user.store
+      elsif params[:store_id]
+        @store = Store.find(params[:store_id])
+      else
+        @store = nil
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
