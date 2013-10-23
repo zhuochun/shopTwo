@@ -8,15 +8,6 @@
     </ul>
   </li>
   <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Users <b class="caret"></b></a>
-    <ul class="dropdown-menu">
-      <li><%= link_to "Customers", users_path %></li>
-      <li class="divider"></li>
-      <li><%= link_to "Employees", employee_users_path %></li>
-      <li><%= link_to "Managers", manager_users_path %></li>
-    </ul>
-  </li>
-  <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Inventory <b class="caret"></b></a>
     <ul class="dropdown-menu">
       <li><%= link_to "Products", products_path %></li>
@@ -25,6 +16,15 @@
       <li class="divider"></li>
       <li class="dropdown-header">Administrative</li>
       <li><%= link_to "Upload", batch_new_products_path %></li>
+    </ul>
+  </li>
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Users <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      <li><%= link_to "Customers", users_path %></li>
+      <li class="divider"></li>
+      <li><%= link_to "Employees", employee_users_path %></li>
+      <li><%= link_to "Managers", manager_users_path %></li>
     </ul>
   </li>
 </ul>

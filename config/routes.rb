@@ -10,8 +10,10 @@ ServerRails::Application.routes.draw do
 
   resources :stores do
     resources :settlements, only: [:index, :show]
+    resources :products, only: [:index]
   end
 
+  resources :product_in_shops, as: 'restocks'
 
   resources :products do
     collection do
