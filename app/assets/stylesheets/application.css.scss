@@ -38,7 +38,7 @@ body {
 /*
  * role specific
  */
-.navbar-administrator,
+.navbar-administrater,
 .navbar-manager {
     @extend .navbar-inverse;
 }
@@ -48,7 +48,7 @@ body {
     @extend .navbar-default;
 }
 
-.glyphicon-administrator,
+.glyphicon-administrater,
 .glyphicon-manager {
     @extend .glyphicon-tower;
 }
@@ -58,7 +58,7 @@ body {
     @extend .glyphicon-user;
 }
 
-.panel-administrator {
+.panel-administrater {
     @extend .panel-success;
 }
 .panel-manager {

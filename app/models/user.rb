@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   # Default roles
-  ROLES = %w(customer employee manager administrator)
+  ROLES = %w(customer employee manager administrater)
   # For each role
   CUSTOMER, EMPLOYEE, MANAGER, ADMIN = ROLES
 
