@@ -3,8 +3,9 @@ class ApiController < ApplicationController
   skip_before_action :verify_authenticity_token
   # TODO add in custom authentications
 
-  # POST /api/transactions?store_id=*
-  def transactions
+  # POST /api/transaction
+  # POST /api/stores/:store_id/transaction
+  def settlement
     reader = FileReader.new(params[:settlement], FileReader::SETTLEMENT)
     store = Store.find(params[:store_id])
 
@@ -18,8 +19,15 @@ class ApiController < ApplicationController
   end
 
   # GET /api/price_list
+  # GET /api/stores/:store_id/price_list
   def price_list
-    @products = Product.all.includes(:category, :manufacturer)
+    @store = Store.find(params[:store_id]) if params[:store_id]
+
+    if @store
+      @products = @store.products.includes(:category, :manufacturer)
+    else
+      @products = Product.all.includes(:category, :manufacturer)
+    end
   end
 
   # GET /api/customers

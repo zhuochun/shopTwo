@@ -36,8 +36,10 @@ ServerRails::Application.routes.draw do
   # api gets
   get '/api/customers', to: 'api#customers'
   get '/api/price_list', to: 'api#price_list'
+  get '/api/stores/:store_id/price_list', to: 'api#price_list'
   # api posts
-  post '/api/transaction', to: 'api#transactions'
+  post '/api/transaction', to: 'api#settlement'
+  post '/api/stores/:store_id/transaction', to: 'api#settlement'
 
   root 'home#index'
 end
