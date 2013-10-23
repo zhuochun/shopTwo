@@ -9,16 +9,20 @@ class FileReader
 
   def process(*args)
     if valid_file?
-      self.send("process_#{@type}", *args)
+      self.send("process_#{@type}", @file.tempfile, *args)
     else
       false
     end
   end
 
+  def seed(*args)
+    self.send("process_#{@type}", @file, *args)
+  end
+
   # Inventory Format: name:category:manufacturer:barcode:cost:cur_stock:min_stock:bundle
   # BHC Golf Visor With Magnetic Marker:Stop Smoking:Kit E Kat:59030623:26.85:3325:2625:0
-  def process_inventory
-    File.foreach(@file.tempfile) do |line|
+  def process_inventory(file)
+    File.foreach(file) do |line|
       name, cate, manu, barcode, cost, cur_stock, min_stock, bundle = line.chomp.split(':')
 
       product = Product.new name: name,
@@ -37,10 +41,10 @@ class FileReader
 
   # Settlement Format: barcode:quantity:price:date
   # 33995417:2:10:1/9/2013
-  def process_settlement(store)
+  def process_settlement(file, store)
     settlement = store.settlements.new
 
-    File.foreach(@file.tempfile) do |line|
+    File.foreach(file) do |line|
       barcode, quantity, price, date = line.chomp.split(':')
 
       item = SettleItem.new barcode: barcode,
@@ -56,6 +60,8 @@ class FileReader
 
     settlement.save
   end
+
+  private
 
   def valid_file?
     @file && @file.content_type == "text/plain"
