@@ -80,6 +80,12 @@ class Product < ActiveRecord::Base
   end
 
   # dynamic pricing
-  def self.dynamic_pricing
+  # OPTIMIZE better sql
+  def self.active_pricing
+    Product.transaction do
+      self.find_each(batch_size: 500) do |product|
+        product.update_price
+      end
+    end
   end
 end
