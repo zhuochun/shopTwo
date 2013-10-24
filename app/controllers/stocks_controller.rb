@@ -25,9 +25,7 @@ class StocksController < ApplicationController
 
   # GET /stocks/new
   def new
-    @stock = @store.stocks.new
-    @product = Product.find(params[:product_id]) if params[:product_id]
-    @stock.product = @product
+    @stock = @store.stocks.find_or_initialize_by(product_id: params[:product_id])
   end
 
   # GET /stocks/1/edit
@@ -37,10 +35,10 @@ class StocksController < ApplicationController
   # POST /stocks
   # POST /stocks.json
   def create
-    @stock = @store.stocks.new(stock_params)
+    @stock = @store.stocks.find_or_initialize_by(product_id: params[:stock][:product_id])
 
     respond_to do |format|
-      if @stock.save
+      if @stock.update(stock_params)
         format.html { redirect_to @stock, notice: 'Stock was successfully created.' }
         format.json { render action: 'show', status: :created, location: @stock }
       else
@@ -53,8 +51,10 @@ class StocksController < ApplicationController
   # PATCH/PUT /stocks/1
   # PATCH/PUT /stocks/1.json
   def update
+    @update_params = params.require(:stock).permit(:quantity, :minimum)
+
     respond_to do |format|
-      if @stock.update(stock_params)
+      if @stock.update(@update_params)
         format.html { redirect_to @stock, notice: 'Stock was successfully updated.' }
         format.json { head :no_content }
       else
