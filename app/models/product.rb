@@ -30,6 +30,11 @@ class Product < ActiveRecord::Base
     stocks.count > 0
   end
 
+  # on reference
+  def on_reference?
+    stocks.count > 0 && settle_items.count > 0
+  end
+
   # dynamic pricing upper bound
   STOCK_UPPER_LIMIT = 1
   SELL_UPPER_LIMIT  = 2

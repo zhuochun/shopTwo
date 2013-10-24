@@ -103,7 +103,7 @@ class ProductsController < ApplicationController
   # DELETE /products/1.json
   def destroy
     respond_to do |format|
-      if @product.on_sell?
+      if @product.on_reference?
         format.html { redirect_to products_url, alert: "Product #{@product.name} is on sell." }
         format.json { render json: { errors: 'Product is on sell.' }, status: :unprocessable_entity }
       else
