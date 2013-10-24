@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131023035321) do
+ActiveRecord::Schema.define(version: 20131023174220) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,10 +54,12 @@ ActiveRecord::Schema.define(version: 20131023035321) do
     t.decimal  "total_price",   precision: 9, scale: 2, default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "store_id"
   end
 
   add_index "settle_items", ["barcode"], name: "index_settle_items_on_barcode", using: :btree
   add_index "settle_items", ["settlement_id"], name: "index_settle_items_on_settlement_id", using: :btree
+  add_index "settle_items", ["store_id"], name: "index_settle_items_on_store_id", using: :btree
 
   create_table "settlements", force: true do |t|
     t.integer  "store_id"

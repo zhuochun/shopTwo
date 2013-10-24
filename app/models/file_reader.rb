@@ -48,14 +48,16 @@ class FileReader
       barcode, quantity, price, date = line.chomp.split(':')
 
       item = SettleItem.new barcode: barcode,
+                            store_id: store.id,
                             quantity: quantity,
                             price: price,
                             created_at: date
       item.total_price = item.quantity * item.price
 
       settlement.settle_items << item
-      settlement.total_count += item.quantity
-      settlement.total_price += item.total_price
+      settlement.total_count  += item.quantity
+      settlement.total_price  += item.total_price
+      settlement.created_at    = date
     end
 
     settlement.save
