@@ -30,6 +30,9 @@ gem 'simple_form'
 # Use carrierwave to handle file uploads
 gem 'carrierwave'
 
+# Handle slow processes
+gem 'delayed_job_active_record'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
