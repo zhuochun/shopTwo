@@ -13,8 +13,7 @@ class Product < ActiveRecord::Base
   has_many :settlements, through: :settle_items
 
   # validations
-  validates :name, :barcode, :cost_price,
-            :current_stock, :minimum_stock, presence: true
+  validates :name, :barcode, :cost_price, :current_stock, :minimum_stock, presence: true
   validates :current_stock, :minimum_stock, :bundle_unit, numericality: { greater_than_or_equal_to: 0 }
   validates :daily_price, :cost_price, numericality: { greater_than_or_equal_to: 0 }
 
@@ -26,8 +25,44 @@ class Product < ActiveRecord::Base
   scope :new_in_store, -> { order('created_at DESC') }
   scope :popular, -> { order('current_stock DESC') }
 
-  # adjust price
-  def adjust_price
+  # dynamic pricing upper bound
+  STOCK_UPPER_LIMIT = 1
+  SELL_UPPER_LIMIT  = 2
+  # price weight of each part
+  TOTAL_WEIGHT      = 3.0
+  MINIMUM_PROFIT    = 0.3
+  COST_WEIGHT       = 1.0
+  SELL_WEIGHT       = 1.7
+  STOCK_WEIGHT      = 0.3
+
+  # generate new price
+  def profit_price
+    cost_price * (1.0 + MINIMUM_PROFIT)
+  end
+
+  def new_daily_price
+    (profit_price * COST_WEIGHT +
+     profit_price * (1.0 + sell_difference) * SELL_WEIGHT +
+     profit_price * (1.0 - stock_difference) * STOCK_WEIGHT) / TOTAL_WEIGHT
+  end
+
+  def stock_difference
+    if minimum_stock == 0
+      0
+    else
+      [STOCK_UPPER_LIMIT, ((current_stock - minimum_stock) / minimum_stock)].min
+    end
+  end
+
+  def sell_difference
+    week_sell  = settle_items.last_week.average('quantity')
+    month_sell = settle_items.last_month.average('quantity')
+
+    if week_sell.nil? || month_sell.nil? || month_sell == 0
+      0
+    else
+      [SELL_UPPER_LIMIT, ((week_sell - month_sell) / month_sell)].min
+    end
   end
 
   # dynamic pricing
