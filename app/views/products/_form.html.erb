@@ -2,9 +2,9 @@
   <%= f.error_notification %>
 
   <%= f.input :name %><br>
+  <%= f.input :barcode, disabled: true %><br>
   <%= f.association :category %><br>
   <%= f.association :manufacturer %><br>
-  <%= f.input :barcode %><br>
   <%= f.input :daily_price %><br>
   <%= f.input :cost_price %><br>
   <%= f.input :current_stock %><br>

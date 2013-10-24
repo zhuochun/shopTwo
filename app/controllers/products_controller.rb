@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:show, :edit, :update, :update_price, :destroy]
 
   # GET /products
   # GET /products.json
@@ -65,6 +65,22 @@ class ProductsController < ApplicationController
         format.html { render action: 'edit' }
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  # PATCH/PUT /products/1/update_price
+  # PATCH/PUT /products/1/update_price.json
+  def update_price
+    respond_to do |format|
+      if @product.update_price
+        format.html { redirect_to @product, notice: 'Product was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @product.errors, status: :unprocessable_entity }
+      end
+
+      format.js # update_price
     end
   end
 

@@ -12,4 +12,10 @@ module ApplicationHelper
     end
   end
 
+  def alert_box(message, type)
+    content_tag :div, class: "alert alert-dismissable alert-#{type}" do
+      "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>#{message}".html_safe
+    end
+  end
+
 end

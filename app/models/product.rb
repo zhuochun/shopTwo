@@ -73,6 +73,12 @@ class Product < ActiveRecord::Base
     settle_items.last_week.sum('quantity')
   end
 
+  # update to active price
+  def update_price
+    self.daily_price = new_daily_price
+    self.save
+  end
+
   # dynamic pricing
   def self.dynamic_pricing
   end

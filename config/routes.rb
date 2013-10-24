@@ -27,6 +27,10 @@ ServerRails::Application.routes.draw do
       post 'batch_create'
     end
 
+    member do
+      patch 'update_price'
+    end
+
     resources :stocks, only: [:new]
   end
   resources :manufacturers
