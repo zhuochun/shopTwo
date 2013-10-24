@@ -25,6 +25,7 @@ ServerRails::Application.routes.draw do
     collection do
       get 'batch_new'
       post 'batch_create'
+      post 'active_pricing'
     end
 
     member do

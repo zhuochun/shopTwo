@@ -84,6 +84,21 @@ class ProductsController < ApplicationController
     end
   end
 
+  # POST /products/active_pricing
+  # POST /products/active_pricing.json
+  def active_pricing
+    if ENV['delayed_job']
+      Product.delay.active_pricing
+    else
+      Product.active_pricing
+    end
+
+    respond_to do |format|
+      format.html { redirect_to products_url, notice: 'Product was successfully updated.' }
+      format.json { head :no_content }
+    end
+  end
+
   # DELETE /products/1
   # DELETE /products/1.json
   def destroy
