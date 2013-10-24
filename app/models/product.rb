@@ -25,6 +25,11 @@ class Product < ActiveRecord::Base
   scope :new_in_store, -> { order('created_at DESC') }
   scope :popular, -> { order('current_stock DESC') }
 
+  # on sell
+  def on_sell?
+    stocks.count > 0
+  end
+
   # dynamic pricing upper bound
   STOCK_UPPER_LIMIT = 1
   SELL_UPPER_LIMIT  = 2

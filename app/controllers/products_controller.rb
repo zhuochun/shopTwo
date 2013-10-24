@@ -102,10 +102,16 @@ class ProductsController < ApplicationController
   # DELETE /products/1
   # DELETE /products/1.json
   def destroy
-    @product.destroy
     respond_to do |format|
-      format.html { redirect_to products_url }
-      format.json { head :no_content }
+      if @product.on_sell?
+        format.html { redirect_to products_url, alert: "Product #{@product.name} is on sell." }
+        format.json { render json: { errors: 'Product is on sell.' }, status: :unprocessable_entity }
+      else
+        @product.destroy
+
+        format.html { redirect_to products_url }
+        format.json { head :no_content }
+      end
     end
   end
 

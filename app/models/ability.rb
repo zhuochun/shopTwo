@@ -21,7 +21,7 @@ class Ability
   def initialize(user)
     user ||= User.new # guest user (not logged in)
 
-    if user.role == User::ADMIN
+    if user.administrater?
       can :manage, Product
       can :manage, Category
       can :manage, Manufacturer
@@ -29,7 +29,7 @@ class Ability
 
       can :read, :all
       can :view, :all
-    elsif user.role == User::MANAGER
+    elsif user.manager?
       can :manage, Stock
       can :manage, Settlement
       can :manage, Store, id: user.store_id
@@ -38,11 +38,11 @@ class Ability
       can :view, :all
 
       basic_ability
-    elsif user.role == User::EMPLOYEE
+    elsif user.employee?
       can :read, Stock
 
       basic_ability
-    elsif user.role == User::CUSTOMER
+    elsif user.customer?
       basic_ability
     else
       basic_ability

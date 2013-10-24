@@ -2,11 +2,9 @@
 <%= render "shared/menu" %>
 
 <div class="container">
-  <% if flash[:notice] %>
-  <div class="alert alert-success alert-dismissable">
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-    <%= flash[:notice] %>
-  </div>
+  <% if flash.any? %>
+    <%= alert_box(flash[:notice], 'success') if flash[:notice] %>
+    <%= alert_box(flash[:alert], 'danger') if flash[:alert] %>
   <% end %>
 
   <%= yield %>
