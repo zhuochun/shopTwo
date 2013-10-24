@@ -5,6 +5,9 @@ class Store < ActiveRecord::Base
   has_many :stocks
   has_many :products, through: :stocks
 
+  # valiations
+  validates :name, presence: true
+
   # scope
   default_scope -> { order('name ASC') }
 

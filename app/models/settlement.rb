@@ -4,6 +4,9 @@ class Settlement < ActiveRecord::Base
   has_many :settle_items
   has_many :products, through: :settle_items
 
+  # validates
+  validate :total_price, :total_count, numericality: { greater_than_or_equal_to: 0 }
+
   # scopes
   default_scope -> { order('created_at DESC') }
   scope :last_week, -> { where('created_at >= ?', 1.week.ago.midnight) }
