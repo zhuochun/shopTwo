@@ -65,6 +65,14 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def weekly_sell
+    settle_items.last_week.sum('quantity')
+  end
+
+  def monthly_sell
+    settle_items.last_week.sum('quantity')
+  end
+
   # dynamic pricing
   def self.dynamic_pricing
   end

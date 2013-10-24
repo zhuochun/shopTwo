@@ -11,7 +11,6 @@
       <th>Total Items</th>
       <th>Total Price</th>
       <th></th>
-      <th></th>
     </tr>
   </thead>
 
@@ -23,7 +22,6 @@
         <td><%= settlement.total_count %></td>
         <td><%= settlement.total_price %></td>
         <td><%= link_to 'Show', settlement %></td>
-        <td><%= link_to 'Destroy', settlement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -33,4 +31,6 @@
 
 <br>
 
+<% if can? :edit, Settlement %>
 <%= link_to 'Upload Transaction Summary', new_settlement_path %>
+<% end %>

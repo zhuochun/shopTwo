@@ -19,26 +19,43 @@
 </p>
 
 <p>
-  <strong>Daily price:</strong>
-  <%= product.daily_price %>
+  <strong>Current Price:</strong>
+  <%= number_to_currency product.daily_price %>
+</p>
+
+<% if can? :view, Product %>
+<p>
+  <strong>Predicted Price:</strong>
+  <%= number_to_currency product.new_daily_price %>
 </p>
 
 <p>
-  <strong>Cost price:</strong>
-  <%= product.cost_price %>
+  <strong>This Week Sell:</strong>
+  <%= product.weekly_sell %>
 </p>
 
 <p>
-  <strong>Current stock:</strong>
+  <strong>This Month Sell:</strong>
+  <%= product.monthly_sell %>
+</p>
+
+<p>
+  <strong>Cost Price:</strong>
+  <%= number_to_currency product.cost_price %>
+</p>
+
+<p>
+  <strong>Current Stock:</strong>
   <%= product.current_stock %>
 </p>
 
 <p>
-  <strong>Minimum stock:</strong>
+  <strong>Minimum Stock:</strong>
   <%= product.minimum_stock %>
 </p>
+<% end %>
 
 <p>
-  <strong>Bundle unit:</strong>
+  <strong>Bundle Unit:</strong>
   <%= product.bundle_unit %>
 </p>

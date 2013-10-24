@@ -15,11 +15,13 @@
 
   <tbody>
     <% @settlement.settle_items.each do |item| %>
-      <td><%= item.product.name %></td>
-      <td><%= item.product.barcode %></td>
-      <td><%= item.price %></td>
-      <td><%= item.quantity %></td>
-      <td><%= item.total_price %></td>
+      <tr>
+        <td><%= item.product.name.titleize %></td>
+        <td><%= item.product.barcode %></td>
+        <td><%= number_to_currency item.price %></td>
+        <td><%= item.quantity %></td>
+        <td><%= number_to_currency item.total_price %></td>
+      </tr>
     <% end %>
   </tbody>
 </table>
@@ -27,14 +29,16 @@
 <hr />
 
 <h3>Summary</h3>
-<p>
+<h4>
   <strong>Total Items:</strong>
   <%= @settlement.total_count %>
-</p>
+</h4>
 
-<p>
-  <strong>Total price:</strong>
-  <%= @settlement.total_price %>
-</p>
+<h4>
+  <strong>Total Revenue:</strong>
+  <%= number_to_currency @settlement.total_price %>
+</h4>
+
+<hr />
 
 <%= link_to 'Back', settlements_path %>

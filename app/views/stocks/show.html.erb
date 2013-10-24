@@ -1,20 +1,25 @@
+<h1><%= @stock.store.name %> - Stock Detail</h1>
+<h2><%= @stock.product.name %></h2>
+
+<hr />
+
 <p>
-  <strong>Store:</strong>
-  <%= @stock.store.name %>
+  <strong>Current Price:</strong>
+  <%= number_to_currency @stock.product.daily_price %>
 </p>
 
 <p>
-  <strong>Product:</strong>
-  <%= @stock.product.name %>
+  <strong>Predicted Price:</strong>
+  <%= number_to_currency @stock.product.new_daily_price %>
 </p>
 
 <p>
-  <strong>Quantity:</strong>
+  <strong>Current Stock:</strong>
   <%= @stock.quantity %>
 </p>
 
 <p>
-  <strong>Minimum:</strong>
+  <strong>Minimum Stock:</strong>
   <%= @stock.minimum %>
 </p>
 

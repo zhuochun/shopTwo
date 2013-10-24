@@ -5,6 +5,7 @@
     <tr>
       <th>Product</th>
       <th>Barcode</th>
+      <th>Price</th>
       <th>Quantity</th>
       <th>Minimum</th>
       <th></th>
@@ -18,6 +19,7 @@
       <tr>
         <td><%= stock.product.name %></td>
         <td><%= stock.product.barcode %></td>
+        <td><%= number_to_currency stock.product.daily_price %></td>
         <td><%= stock.quantity %></td>
         <td><%= stock.minimum %></td>
         <td><%= link_to 'Show', stock %></td>

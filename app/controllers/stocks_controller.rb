@@ -5,7 +5,7 @@ class StocksController < ApplicationController
   # GET /stocks
   # GET /stocks.json
   def index
-    @stocks = @store.stocks.paginate(page: params[:page], per_page: 50)
+    @stocks = @store.stocks.includes(:product).paginate(page: params[:page], per_page: 50)
   end
 
   # GET /stocks/1
