@@ -1,6 +1,9 @@
 class ApiController < ApplicationController
+  respond_to :json
+
   # Skip default authentications
   skip_before_action :verify_authenticity_token
+
   # TODO add in custom authentications
 
   # POST /api/transaction
@@ -27,7 +30,8 @@ class ApiController < ApplicationController
     @store = Store.find(params[:store_id]) if params[:store_id]
 
     if @store
-      @products = @store.products.includes(:category, :manufacturer)
+      @stocks = @store.stocks.includes(:product)
+      render 'price_list_store'
     else
       @products = Product.all.includes(:category, :manufacturer)
     end
