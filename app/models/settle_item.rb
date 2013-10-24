@@ -12,9 +12,13 @@ class SettleItem < ActiveRecord::Base
   scope :last_month, -> { where('created_at >= ?', 1.month.ago.midnight) }
 
   # hooks
-  before_create :deduct_stock_from_store
-  def deduct_stock_from_store
-    # TODO
+  before_create :deduct_stocks_from_store
+
+  private
+
+  # make sure stocks are reduced
+  def deduct_stocks_from_store
+    Stock.find(product_id: barcode, store_id: store_id).deduct_stocks(quantity)
   end
 
 end
