@@ -1,0 +1,3 @@
+<% @stocks.each do |stock| %>
+<%= "#{stock.product.name}:#{stock.product.barcode}:#{stock.product.daily_price}:#{stock.quantity}:#{stock.minimum}:#{stock.product.bundle_unit}:#{stock.product.category.name}:#{stock.product.manufacturer.name}" %>
+<% end %>

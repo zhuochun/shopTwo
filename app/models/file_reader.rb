@@ -21,6 +21,8 @@ class FileReader
 
   # Inventory Format: name:category:manufacturer:barcode:cost:cur_stock:min_stock:bundle
   # BHC Golf Visor With Magnetic Marker:Stop Smoking:Kit E Kat:59030623:26.85:3325:2625:0
+  #
+  # OPTIMIZE change this to raw SQL
   def process_inventory(file)
     File.foreach(file) do |line|
       name, cate, manu, barcode, cost, cur_stock, min_stock, bundle = line.chomp.split(':')
@@ -41,6 +43,8 @@ class FileReader
 
   # Settlement Format: barcode:quantity:price:date
   # 33995417:2:10:1/9/2013
+  #
+  # OPTIMIZE change this to raw SQL
   def process_settlement(file, store)
     settlement = store.settlements.new
 

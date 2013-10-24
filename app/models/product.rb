@@ -21,7 +21,7 @@ class Product < ActiveRecord::Base
   before_validation -> { self.daily_price = cost_price * 1.3 unless daily_price }
 
   # scopes
-  default_scope -> { order('name ASC') }
+  default_scope -> { includes(:manufacturer, :category).order('name ASC') }
   scope :new_in_store, -> { order('created_at DESC') }
   scope :popular, -> { order('current_stock DESC') }
 

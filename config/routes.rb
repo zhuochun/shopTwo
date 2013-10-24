@@ -13,7 +13,11 @@ ServerRails::Application.routes.draw do
     resources :stocks, only: [:index]
   end
 
-  resources :stocks
+  resources :stocks do
+    collection do
+      get 'download'
+    end
+  end
   # alias to transactions
   resources :settlements
 

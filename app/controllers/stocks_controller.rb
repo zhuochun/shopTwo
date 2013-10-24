@@ -13,6 +13,16 @@ class StocksController < ApplicationController
   def show
   end
 
+  # GET /stocks/download.txt
+  def download
+    @stocks = @store.stocks.includes(:product)
+
+    respond_to do |format|
+      format.text # download.txt
+      format.html { redirect_to action: 'index' }
+    end
+  end
+
   # GET /stocks/new
   def new
     @stock = @store.stocks.new
