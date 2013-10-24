@@ -11,6 +11,10 @@ ServerRails::Application.routes.draw do
   resources :stores do
     resources :settlements, only: [:index, :show]
     resources :stocks, only: [:index]
+
+    member do
+      patch 'reopen'
+    end
   end
 
   resources :stocks do

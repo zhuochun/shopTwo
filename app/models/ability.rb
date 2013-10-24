@@ -25,12 +25,14 @@ class Ability
       can :manage, Product
       can :manage, Category
       can :manage, Manufacturer
+      can :manage, Store
 
       can :read, :all
       can :view, :all
     elsif user.role == User::MANAGER
       can :manage, Stock
       can :manage, Settlement
+      can :manage, Store, id: user.store_id
 
       can :read, :all
       can :view, :all

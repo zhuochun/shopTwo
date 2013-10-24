@@ -14,4 +14,17 @@ class Store < ActiveRecord::Base
   def location
     [geo_latitude, geo_longitude]
   end
+
+  # reopen a store
+  def reopen
+    self.closed = false
+    self.save
+  end
+
+  # close down a store
+  def close_down
+    self.closed = true
+    self.stocks.destroy_all
+    self.save
+  end
 end

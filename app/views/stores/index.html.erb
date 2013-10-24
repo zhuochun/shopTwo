@@ -6,7 +6,6 @@
       <th>Name</th>
       <th>Size</th>
       <th>Address</th>
-      <th>Location</th>
       <th>Contact</th>
       <th>Operation hours</th>
       <th></th>
@@ -22,13 +21,19 @@
         <td><%= store.name %></td>
         <td><%= store.size %></td>
         <td><%= store.address %></td>
-        <td><%= store.location %></td>
         <td><%= store.contact %></td>
         <td><%= store.operation_hours %></td>
         <td><%= link_to 'Show', store %></td>
         <td><%= link_to 'Edit', edit_store_path(store) %></td>
-        <td><%= link_to 'Transaction', store_settlements_path(store) %></td>
-        <td><%= link_to 'Destroy', store, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= link_to 'Stocks', store_stocks_path(store) %>
+          <%= link_to 'Transactions', store_settlements_path(store) %>
+        </td>
+        <% if store.closed? %>
+          <td>Closed <%= link_to 'Reopen', reopen_store_path(store), method: :patch, data: { confirm: 'Are you sure?' } %></td>
+        <% else %>
+          <td><%= link_to 'Close Down', store, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

@@ -23,6 +23,7 @@ grant = Store.create(
     geo_latitude: 1.337320,
     geo_longitude: 103.793182,
     contact: 64622102,
+    closed: false,
     operation_hours: '9:00 AM - 10:00 PM' },
 )
 
@@ -33,6 +34,7 @@ vivo = Store.create(
     geo_latitude: 1.264150,
     geo_longitude: 103.820847,
     contact: 62751638,
+    closed: false,
     operation_hours: '10:00 AM - 10:00 PM' },
 )
 
@@ -43,6 +45,7 @@ changi = Store.create(
     geo_latitude: 1.351440,
     geo_longitude: 103.986267,
     contact: 65431147,
+    closed: false,
     operation_hours: '07:00 AM- 11:00 PM' },
 )
 
@@ -53,6 +56,7 @@ clementi = Store.create(
     geo_latitude: 1.314780,
     geo_longitude: 103.771362,
     contact: 67745642,
+    closed: false,
     operation_hours: '24 Hours' },
 )
 
@@ -63,6 +67,7 @@ orchard = Store.create(
     geo_latitude: 1.293170,
     geo_longitude: 103.826828,
     contact: 67339861,
+    closed: false,
     operation_hours: '08:00 AM- 10:00 PM' },
 )
 

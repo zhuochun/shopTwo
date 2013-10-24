@@ -1,5 +1,5 @@
 class StoresController < ApplicationController
-  before_action :set_store, only: [:show, :edit, :update, :destroy]
+  before_action :set_store, except: [:index, :new, :create]
 
   # GET /stores
   # GET /stores.json
@@ -10,6 +10,7 @@ class StoresController < ApplicationController
   # GET /stores/1
   # GET /stores/1.json
   def show
+    @managers = @store.users.managers
   end
 
   # GET /stores/new
@@ -51,12 +52,24 @@ class StoresController < ApplicationController
     end
   end
 
+  # PATCH/PUT /stores/1/reopen
+  # PATCH/PUT /stores/1/reopone.json
+  def reopen
+    @store.reopen
+
+    respond_to do |format|
+      format.html { redirect_to stores_url, notice: "Store #{@store.name} was reopened." }
+      format.json { head :no_content }
+    end
+  end
+
   # DELETE /stores/1
   # DELETE /stores/1.json
   def destroy
-    @store.destroy
+    @store.close_down
+
     respond_to do |format|
-      format.html { redirect_to stores_url }
+      format.html { redirect_to stores_url, notice: "Store #{@store.name} was closed down." }
       format.json { head :no_content }
     end
   end

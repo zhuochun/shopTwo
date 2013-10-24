@@ -1,36 +1,53 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Store Detail</h1>
 
-<p>
-  <strong>Name:</strong>
-  <%= @store.name %>
-</p>
+<div class="row">
+  <div class="col-md-6">
+    <h2><%= @store.name %></h2>
 
-<p>
-  <strong>Size:</strong>
-  <%= @store.size %>
-</p>
+    <p>
+      <strong>Size:</strong>
+      <%= @store.size %>
+    </p>
 
-<p>
-  <strong>Address:</strong>
-  <%= @store.address %>
-</p>
+    <p>
+      <strong>Address:</strong>
+      <%= @store.address %>
+    </p>
 
-<p>
-  <strong>Location:</strong>
-  <%= @store.location %>
-</p>
+    <p>
+      <strong>Location:</strong>
+      <%= @store.location %>
+    </p>
 
-<p>
-  <strong>Contact:</strong>
-  <%= @store.contact %>
-</p>
+    <p>
+      <strong>Contact:</strong>
+      <%= @store.contact %>
+    </p>
 
-<p>
-  <strong>Operation hours:</strong>
-  <%= @store.operation_hours %>
-</p>
+    <p>
+      <strong>Operation hours:</strong>
+      <%= @store.operation_hours %>
+    </p>
 
-<%= link_to 'Edit', edit_store_path(@store) %> |
-<%= link_to 'Back', stores_path %>
+    <% if can? :update, Store %>
+      <%= link_to 'Edit', edit_store_path(@store) %> |
+      <% if @store.closed? %>
+        Closed <%= link_to 'Reopen', reopen_store_path(@store), method: :patch, data: { confirm: 'Are you sure?' } %> |
+      <% else %>
+        <%= link_to 'Close Down', @store, method: :delete, data: { confirm: 'Are you sure?' } %> |
+      <% end %>
+    <% end %>
+    <%= link_to 'Back', stores_path %>
+  </div>
+
+  <div class="col-md-6">
+    <h2>Manager</h2>
+
+    <% @managers.each do |manager| %>
+      <div <%= dom_id(manager) %>>
+        <h3><%= manager.username %></h3>
+        <p><%= manager.email %></p>
+      </div>
+    <% end %>
+  </div>
+</div>
