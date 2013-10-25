@@ -3,6 +3,9 @@ class Stock < ActiveRecord::Base
   belongs_to :store
   belongs_to :product
 
+  # delegate
+  delegate :name, :daily_price, :bundle_unit, :barcode, to: :product
+
   # validations
   validates :store_id, :product_id, :quantity, :minimum, presence: true
   validates :quantity, :minimum, numericality: { greater_than_or_equal_to: 0 }
@@ -21,7 +24,4 @@ class Stock < ActiveRecord::Base
       self.save
     end
   end
-
-  # delegate
-  delegate :name, :daily_price, :bundle_unit, :barcode, to: :product
 end
