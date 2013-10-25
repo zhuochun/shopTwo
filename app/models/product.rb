@@ -35,6 +35,11 @@ class Product < ActiveRecord::Base
     stocks.count > 0 && settle_items.count > 0
   end
 
+  # stocks available for stores to restock
+  def available_stock
+    current_stock - stocks.sum('quantity')
+  end
+
   # dynamic pricing upper bound
   STOCK_UPPER_LIMIT = 1
   SELL_UPPER_LIMIT  = 2
