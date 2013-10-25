@@ -1,6 +1,6 @@
 class FileReader
   # Type of files supported
-  INVENTORY, SETTLEMENT = %i(inventory settlement)
+  INVENTORY, SETTLEMENT, STOCK = %w(inventory settlement stock)
 
   def initialize(file, type)
     @file = file
@@ -25,7 +25,7 @@ class FileReader
   # OPTIMIZE change this to raw SQL
   def process_inventory(file)
     File.foreach(file) do |line|
-      name, cate, manu, barcode, cost, cur_stock, min_stock, bundle = line.chomp.split(':')
+      name, cate, manu, barcode, cost, cur_stock, min_stock, bundle = line.chomp.force_encoding("UTF-8").split(':')
 
       product = Product.new name: name,
                             barcode: barcode,
@@ -49,7 +49,7 @@ class FileReader
     settlement = store.settlements.new
 
     File.foreach(file) do |line|
-      barcode, quantity, price, date = line.chomp.split(':')
+      barcode, quantity, price, date = line.chomp.force_encoding("UTF-8").split(':')
 
       item = SettleItem.new barcode: barcode,
                             store_id: store.id,
@@ -65,6 +65,25 @@ class FileReader
     end
 
     settlement.save
+  end
+
+  # Stock Format: barcode:quantity:minimum_stock
+  # 77797546:7225:1313
+  #
+  # OPTIMIZE raw SQL
+  def process_stock(file, store)
+    stocks = []
+
+    File.foreach(file) do |line|
+      barcode, quantity, minimum = line.chomp.force_encoding("UTF-8").split(':')
+
+      stocks << { product_id: barcode,
+                  store_id: store.id,
+                  quantity: quantity,
+                  minimum: minimum }
+    end
+
+    Stock.create(stocks)
   end
 
   private

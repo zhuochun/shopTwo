@@ -48,6 +48,23 @@ class StocksController < ApplicationController
     end
   end
 
+  # GET /stocks/batch_new
+  def batch_new
+  end
+
+  # POST /stocks/batch_create
+  def batch_create
+    reader = FileReader.new(params[:stocks], FileReader::STOCK)
+
+    respond_to do |format|
+      if reader.process(@store)
+        format.html { redirect_to stocks_url, notice: "Stocks are uploaded." }
+      else
+        format.html { redirect_to action: "batch_new", notice: "Invalid file uploaded." }
+      end
+    end
+  end
+
   # PATCH/PUT /stocks/1
   # PATCH/PUT /stocks/1.json
   def update

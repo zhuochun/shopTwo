@@ -1,0 +1,15 @@
+<h1>Upload Stocks</h1>
+<h2><%= @store.name %></h2>
+
+<%= simple_form_for(Stock.new,
+                    url: batch_create_stocks_path,
+                    html: { multipart: true }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-group">
+    <label for="stocks-file">Select Stocks File</label>
+    <input type="file" id="stocks-file" name="stocks">
+  </div>
+
+  <button type="submit" class="btn btn-default">Upload</button>
+<% end %>

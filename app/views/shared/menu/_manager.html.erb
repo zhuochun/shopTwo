@@ -3,7 +3,10 @@
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Inventory <b class="caret"></b></a>
     <ul class="dropdown-menu">
       <li><%= link_to "Shop", stocks_path %></li>
+      <li class="divider"></li>
+      <li class="dropdown-header">Stock</li>
       <li><%= link_to "Restock", new_stock_path %></li>
+      <li><%= link_to "Upload", batch_new_stocks_path %></li>
       <li class="divider"></li>
       <li class="dropdown-header">HQ</li>
       <li><%= link_to "Products", products_path %></li>

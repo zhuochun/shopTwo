@@ -20,6 +20,8 @@ ServerRails::Application.routes.draw do
   resources :stocks do
     collection do
       get 'download'
+      get 'batch_new'
+      post 'batch_create'
     end
   end
   # alias to transactions
