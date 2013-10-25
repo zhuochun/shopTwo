@@ -69,21 +69,17 @@ class FileReader
 
   # Stock Format: barcode:quantity:minimum_stock
   # 77797546:7225:1313
-  #
-  # OPTIMIZE raw SQL
   def process_stock(file, store)
-    stocks = []
+    columns = [:product_id, :store_id, :quantity, :minimum]
+    values  = []
 
     File.foreach(file) do |line|
       barcode, quantity, minimum = line.chomp.force_encoding("UTF-8").split(':')
 
-      stocks << { product_id: barcode,
-                  store_id: store.id,
-                  quantity: quantity,
-                  minimum: minimum }
+      values << [barcode.to_i, store.id, quantity.to_i, minimum.to_i]
     end
 
-    Stock.transaction { Stock.create(stocks) }
+    Stock.import columns, values, validate: false
   end
 
   private

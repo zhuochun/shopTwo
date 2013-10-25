@@ -8,7 +8,7 @@ class Stock < ActiveRecord::Base
   validates :quantity, :minimum, numericality: { greater_than_or_equal_to: 0 }
 
   # scope
-  default_scope -> { includes(:product).order('products.name ASC') }
+  default_scope -> { includes(:product).order('quantity DESC') }
 
   # deduct apply to self and hq stock as well
   def deduct_stocks(amount)

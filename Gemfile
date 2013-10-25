@@ -30,6 +30,9 @@ gem 'simple_form'
 # Use carrierwave to handle file uploads
 gem 'carrierwave'
 
+# Mass Import Data in ActiveRecord
+gem "activerecord-import"
+
 # Handle slow processes
 gem 'delayed_job_active_record'
 
