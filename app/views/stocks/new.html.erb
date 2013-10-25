@@ -1,5 +1,15 @@
-<h1>Add a New Stock</h1>
-
-<%= render 'form' %>
+<div class="row">
+  <div class="col-md-6">
+    <h1>Add a New Stock</h1>
+    <%= render 'form' %>
+  </div>
+  <div class="col-md-6">
+    <% unless @stock.new_record? %>
+      <h2>Stock Infomation</h2>
+      <p>Current Price: <%= number_to_currency @stock.product.daily_price %></p>
+      <p>Available Stock: <%= @stock.product.available_stock %></p>
+    <% end %>
+  </div>
+</div>
 
 <%= link_to 'Back', stocks_path %>

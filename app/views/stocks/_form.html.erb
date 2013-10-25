@@ -4,11 +4,6 @@
   <div class="form-inputs">
     <%= f.association :product, include_blank: false, disabled: !@stock.new_record? %>
 
-    <% if @product %>
-      <p>Current Price: <%= number_to_currency @product.daily_price %></p>
-      <p>Quantity in HQ: <%= @product.current_stock %></p>
-    <% end %>
-
     <%= f.input :quantity %>
     <%= f.input :minimum %>
   </div>
