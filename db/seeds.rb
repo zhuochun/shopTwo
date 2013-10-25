@@ -151,7 +151,7 @@ puts "=== #{Manufacturer.count} manufacturers created ==="
 
 # to populate stocks
 def stocks_path(size)
-  "#{root}/db/stocks/#{size}.txt"
+  "#{Rails.root}/db/stocks/#{size}.txt"
 end
 
 def load_stocks(*stores)
@@ -164,7 +164,7 @@ end
 
 # to populate transactions
 def transaction_path(size)
-  "#{root}/db/transactions/#{size}/*.txt"
+  "#{Rails.root}/db/transactions/#{size}/*.txt"
 end
 
 def load_transactions(*stores)
@@ -180,10 +180,6 @@ end
 
 # the rest only apply to production
 if env == "production"
-
   load_stocks(grant, vivo, changi, clementi, orchard)
-
-
   load_transactions(grant, vivo, changi, clementi, orchard)
-
 end
