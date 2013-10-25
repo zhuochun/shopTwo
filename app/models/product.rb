@@ -76,11 +76,11 @@ class Product < ActiveRecord::Base
   end
 
   def weekly_sell
-    settle_items.last_week.sum('quantity')
+    @weekly_sell ||= settle_items.last_week.sum('quantity')
   end
 
   def monthly_sell
-    settle_items.last_week.sum('quantity')
+    @monthly_sell ||= settle_items.last_month.sum('quantity')
   end
 
   # update to active price
