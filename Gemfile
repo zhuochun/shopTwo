@@ -33,9 +33,6 @@ gem 'carrierwave'
 # Handle slow processes
 gem 'delayed_job_active_record'
 
-# Load local environments
-gem 'dotenv-rails'
-
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
@@ -68,8 +65,11 @@ group :production do
 end
 
 # Development only
-group :development do
+group :development, :test do
+  # Better errors messages for debug
   gem "better_errors"
+  # Load local environments
+  gem 'dotenv-rails'
 end
 
 # Use unicorn as the app server
