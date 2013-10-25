@@ -38,11 +38,11 @@ class SettlementsController < ApplicationController
 
     respond_to do |format|
       if reader.process(@store)
-        format.html { redirect_to settlements_url, notice: "Transaction summary was successfully uploaded." }
+        format.html { redirect_to settlements_url, notice: 'Transaction summary was successfully uploaded.' }
         format.json { render action: 'index', status: :created, location: settlements_url }
       else
-        format.html { redirect_to action: "new", notice: "Invalid Transaction file uploaded." }
-        format.json { render json: "Invalid Transaction file uploaded.", status: :unprocessable_entity }
+        format.html { redirect_to action: 'new', alert: 'Invalid Transaction file uploaded.' }
+        format.json { render json: 'Invalid Transaction file uploaded.', status: :unprocessable_entity }
       end
     end
   end

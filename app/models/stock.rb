@@ -17,6 +17,7 @@ class Stock < ActiveRecord::Base
     Stock.transaction do
       self.quantity -= amount
       self.product.current_stock -= amount
+      self.product.save
       self.save
     end
   end
