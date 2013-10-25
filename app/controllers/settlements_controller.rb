@@ -1,5 +1,5 @@
 class SettlementsController < ApplicationController
-  before_action :set_settlement, only: [:show, :edit, :update, :destroy]
+  before_action :set_settlement, only: [:edit, :update, :destroy]
   before_action :set_store, only: [:index, :show, :create]
 
   # GET /settlements
@@ -16,9 +16,9 @@ class SettlementsController < ApplicationController
   # GET /settlements/1.json
   def show
     if @store
-      @settlement = @store.settlements.find(params[:id])
+      @settlement = @store.settlements.includes(:settle_items, :products).find(params[:id])
     else
-      @settlement = Settlement.find(params[:id])
+      @settlement = Settlement.includes(:settle_items, :products).find(params[:id])
     end
   end
 
