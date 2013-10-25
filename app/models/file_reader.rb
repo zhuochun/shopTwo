@@ -83,7 +83,7 @@ class FileReader
                   minimum: minimum }
     end
 
-    Stock.create(stocks)
+    Stock.transaction { Stock.create(stocks) }
   end
 
   private

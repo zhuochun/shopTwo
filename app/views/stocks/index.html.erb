@@ -8,9 +8,11 @@
       <th>Price</th>
       <th>Quantity</th>
       <th>Minimum</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <% if can? :manage, Stock %>
+        <th></th>
+        <th></th>
+        <th></th>
+      <% end %>
     </tr>
   </thead>
 
@@ -22,9 +24,11 @@
         <td><%= number_to_currency stock.product.daily_price %></td>
         <td><%= stock.quantity %></td>
         <td><%= stock.minimum %></td>
+      <% if can? :manage, Stock %>
         <td><%= link_to 'Show', stock %></td>
         <td><%= link_to 'Edit', edit_stock_path(stock) %></td>
         <td><%= link_to 'Destroy', stock, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
       </tr>
     <% end %>
   </tbody>

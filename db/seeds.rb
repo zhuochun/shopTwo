@@ -18,58 +18,53 @@ Store.destroy_all
 
 grant = Store.create(
   { name: 'Grand Stand',
-    size: 100,
+    size: 1000,
     address: "200 Turf Club Road #01-01\nSingapore 289631",
     geo_latitude: 1.337320,
     geo_longitude: 103.793182,
     contact: 64622102,
     closed: false,
-    operation_hours: '9:00 AM - 10:00 PM' },
-)
+    operation_hours: '9:00 AM - 10:00 PM' })
 
 vivo = Store.create(
   { name: 'Vivo City',
-    size: 100,
+    size: 400,
     address: "1 HarbourFront Walk #B1-23 / #01-23\nSingapore 098585",
     geo_latitude: 1.264150,
     geo_longitude: 103.820847,
     contact: 62751638,
     closed: false,
-    operation_hours: '10:00 AM - 10:00 PM' },
-)
+    operation_hours: '10:00 AM - 10:00 PM' })
 
 changi = Store.create(
   { name: 'Changi',
-    size: 30,
+    size: 250,
     address: "60, Airport Boulevard, #B16-029, Basement Level South Terminal 2\nSINGAPORE 819643",
     geo_latitude: 1.351440,
     geo_longitude: 103.986267,
     contact: 65431147,
     closed: false,
-    operation_hours: '07:00 AM- 11:00 PM' },
-)
+    operation_hours: '07:00 AM- 11:00 PM' })
 
 clementi = Store.create(
   { name: 'Clementi',
-    size: 50,
+    size: 100,
     address: "Blk 352, Clementi Ave 2, #01-141/143\nSINGAPORE 120352",
     geo_latitude: 1.314780,
     geo_longitude: 103.771362,
     contact: 67745642,
     closed: false,
-    operation_hours: '24 Hours' },
-)
+    operation_hours: '24 Hours' })
 
 orchard = Store.create(
   { name: 'Orchard',
-    size: 20,
+    size: 50,
     address: "491, River Valley Road, #01-14, Valley Point\nSINGAPORE 248371",
     geo_latitude: 1.293170,
     geo_longitude: 103.826828,
     contact: 67339861,
     closed: false,
-    operation_hours: '08:00 AM- 10:00 PM' },
-)
+    operation_hours: '08:00 AM- 10:00 PM' })
 
 puts "=== #{Store.count} stores created ==="
 
@@ -154,5 +149,28 @@ puts "=== #{Product.count} products created ==="
 puts "=== #{Category.count} categories created ==="
 puts "=== #{Manufacturer.count} manufacturers created ==="
 
-# populate previous transactions
-# TODO create transaction summaries
+# the rest only apply to production
+if env == "production"
+  # populate stocks
+  def stocks_path(size)
+    "#{root}/db/stocks/#{size}.txt"
+  end
+
+  FileReader.new(stocks_path(grant.size), FileReader::INVENTORY).seed(grant)
+  puts "=== #{grant.stocks.size} stocks created for #{grant.name} ==="
+
+  FileReader.new(stocks_path(vivo.size), FileReader::INVENTORY).seed(vivo)
+  puts "=== #{vivo.stocks.size} stocks created for #{vivo.name} ==="
+
+  FileReader.new(stocks_path(changi.size), FileReader::INVENTORY).seed(changi)
+  puts "=== #{changi.stocks.size} stocks created for #{changi.name} ==="
+
+  FileReader.new(stocks_path(clementi.size), FileReader::INVENTORY).seed(clementi)
+  puts "=== #{clementi.stocks.size} stocks created for #{clementi.name} ==="
+
+  FileReader.new(stocks_path(orchard.size), FileReader::INVENTORY).seed(orchard)
+  puts "=== #{orchard.stocks.size} stocks created for #{orchard.name} ==="
+
+  # populate transactions
+
+end
