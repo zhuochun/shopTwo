@@ -148,38 +148,3 @@ reader.seed
 puts "=== #{Product.count} products created ==="
 puts "=== #{Category.count} categories created ==="
 puts "=== #{Manufacturer.count} manufacturers created ==="
-
-# to populate stocks
-def stocks_path(size)
-  "#{Rails.root}/db/stocks/#{size}.txt"
-end
-
-def load_stocks(*stores)
-  stores.each do |store|
-    FileReader.new(stocks_path(store.size), FileReader::STOCK).seed(store)
-
-    puts "=== #{store.stocks.size} stocks created for #{store.name} ==="
-  end
-end
-
-# to populate transactions
-def transaction_path(size)
-  "#{Rails.root}/db/transactions/#{size}/*.txt"
-end
-
-def load_transactions(*stores)
-  stores.each do |store|
-    Dir[transaction_path(store.size)].each do |file|
-      FileReader.new(file, FileReader::SETTLEMENT).seed(store)
-      print '.'
-    end
-
-    puts "=== #{store.settlements.size} transactions created for #{store.name} ==="
-  end
-end
-
-# the rest only apply to production
-if env == "production"
-  load_stocks(grant, vivo, changi, clementi, orchard)
-  load_transactions(grant, vivo, changi, clementi, orchard)
-end
