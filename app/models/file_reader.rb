@@ -43,27 +43,42 @@ class FileReader
 
   # Settlement Format: barcode:quantity:price:date
   # 33995417:2:10:1/9/2013
-  #
-  # OPTIMIZE change this to raw SQL
   def process_settlement(file, store)
-    settlement = store.settlements.new
+    # create a settlement
+    settlement = store.settlements.create(total_count: 0, total_price: 0)
+    # list of items
+    columns  = [:settlement_id, :barcode, :store_id, :quantity, :price, :total_price]
+    values   = []
+    # products and stocks update
+    stocks   = []
+    products = []
 
     File.foreach(file) do |line|
       barcode, quantity, price, date = line.chomp.force_encoding("UTF-8").split(':')
+      total_price = quantity.to_i * price.to_f
 
-      item = SettleItem.new barcode: barcode,
-                            store_id: store.id,
-                            quantity: quantity,
-                            price: price,
-                            created_at: date
-      item.total_price = item.quantity * item.price
+      settlement.total_count += quantity.to_i
+      settlement.total_price += total_price
+      settlement.created_at   = date
 
-      settlement.settle_items << item
-      settlement.total_count  += item.quantity
-      settlement.total_price  += item.total_price
-      settlement.created_at    = date
+      values << [settlement.id, barcode, store.id, quantity, price, total_price]
+      stocks << "UPDATE stocks SET quantity = quantity - #{quantity} " +
+                "WHERE store_id = #{store.id} AND product_id = #{barcode}"
+      products << "UPDATE products SET current_stock = current_stock - #{quantity} " +
+                  "WHERE id = #{barcode}"
     end
 
+    # import settle items
+    SettleItem.import columns, values, validate: false
+    # update settle items date
+    ActiveRecord::Base.connection().execute("UPDATE settle_items SET created_at = '#{settlement.created_at}' " +
+                                            "WHERE settlement_id = #{settlement.id}")
+
+    # update stocks and products
+    ActiveRecord::Base.connection().execute(stocks.join(";"))
+    ActiveRecord::Base.connection().execute(products.join(";"))
+
+    # save settlement
     settlement.save
   end
 
