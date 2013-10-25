@@ -21,24 +21,45 @@ class FileReader
 
   # Inventory Format: name:category:manufacturer:barcode:cost:cur_stock:min_stock:bundle
   # BHC Golf Visor With Magnetic Marker:Stop Smoking:Kit E Kat:59030623:26.85:3325:2625:0
-  #
-  # OPTIMIZE change this to raw SQL
   def process_inventory(file)
+    # products
+    product_columns = [:name, :category_id, :manufacturer_id, :id, :cost_price,
+                       :current_stock, :minimum_stock, :bundle_unit, :daily_price]
+    products = []
+    # categories
+    categories = {}
+    categories_count = 1
+    # manufacturers
+    manufacturers = {}
+    manufacturers_count = 1
+
     File.foreach(file) do |line|
-      name, cate, manu, barcode, cost, cur_stock, min_stock, bundle = line.chomp.force_encoding("UTF-8").split(':')
+      product = line.chomp.force_encoding("UTF-8").split(':')
 
-      product = Product.new name: name,
-                            barcode: barcode,
-                            cost_price: cost,
-                            current_stock: cur_stock,
-                            minimum_stock: min_stock,
-                            bundle_unit: bundle
+      if categories[product[1]]
+        product[1] = categories[product[1]]
+      else
+        categories[product[1]] = categories_count
+        product[1] = categories_count
+        categories_count += 1
+      end
 
-      product.category = Category.find_or_create_by_name(cate)
-      product.manufacturer = Manufacturer.find_or_create_by_name(manu)
+      if manufacturers[product[2]]
+        product[2] = manufacturers[product[2]]
+      else
+        manufacturers[product[2]] = manufacturers_count
+        product[2] = manufacturers_count
+        manufacturers_count += 1
+      end
 
-      product.save
+      product[8] = product[4].to_f * 1.3
+
+      products << product
     end
+
+    Product.import product_columns, products, validate: false
+    Category.import [:name, :id], categories.map { |k, v| [k, v] }, validate: false
+    Manufacturer.import [:name, :id], manufacturers.map { |k, v| [k, v] }, validate: false
   end
 
   # Settlement Format: barcode:quantity:price:date
