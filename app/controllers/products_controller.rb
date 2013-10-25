@@ -87,7 +87,7 @@ class ProductsController < ApplicationController
   # POST /products/active_pricing
   # POST /products/active_pricing.json
   def active_pricing
-    if ENV['delayed_job']
+    if ENV['DELAYED_JOB_ENABLE']
       Product.delay.active_pricing
     else
       Product.active_pricing

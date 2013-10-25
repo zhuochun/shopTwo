@@ -9,8 +9,17 @@ class Settlement < ActiveRecord::Base
 
   # scopes
   default_scope -> { order('created_at DESC') }
-  scope :last_week, -> { where('created_at >= ?', 1.week.ago.midnight) }
-  scope :last_month, -> { where('created_at >= ?', 1.month.ago.midnight) }
+  scope :last_week, -> { where('created_at >= ?', get_from_time(1.week)) }
+  scope :last_month, -> { where('created_at >= ?', get_from_time(1.month)) }
   scope :sell_sum, -> { sum('total_count') }
+
+  # get time
+  def get_from_time(period)
+    if ENV['CUSTOM_CURRENT_DATE']
+      DateTime.parse(ENV['CURRENT_DATE']) - period
+    else
+      period.ago.midnight
+    end
+  end
 
 end
