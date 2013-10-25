@@ -149,28 +149,41 @@ puts "=== #{Product.count} products created ==="
 puts "=== #{Category.count} categories created ==="
 puts "=== #{Manufacturer.count} manufacturers created ==="
 
+# to populate stocks
+def stocks_path(size)
+  "#{root}/db/stocks/#{size}.txt"
+end
+
+def load_stocks(*stores)
+  stores.each do |store|
+    FileReader.new(stocks_path(store.size), FileReader::STOCK).seed(store)
+
+    puts "=== #{store.stocks.size} stocks created for #{store.name} ==="
+  end
+end
+
+# to populate transactions
+def transaction_path(size)
+  "#{root}/db/transactions/#{size}/*.txt"
+end
+
+def load_transactions(*stores)
+  stores.each do |store|
+    Dir[transaction_path(store.size)].each do |file|
+      FileReader.new(file, FileReader::SETTLEMENT).seed(store)
+      print '.'
+    end
+
+    puts "=== #{store.settlements.size} transactions created for #{store.name} ==="
+  end
+end
+
 # the rest only apply to production
 if env == "production"
-  # populate stocks
-  def stocks_path(size)
-    "#{root}/db/stocks/#{size}.txt"
-  end
 
-  FileReader.new(stocks_path(grant.size), FileReader::INVENTORY).seed(grant)
-  puts "=== #{grant.stocks.size} stocks created for #{grant.name} ==="
+  load_stocks(grant, vivo, changi, clementi, orchard)
 
-  FileReader.new(stocks_path(vivo.size), FileReader::INVENTORY).seed(vivo)
-  puts "=== #{vivo.stocks.size} stocks created for #{vivo.name} ==="
 
-  FileReader.new(stocks_path(changi.size), FileReader::INVENTORY).seed(changi)
-  puts "=== #{changi.stocks.size} stocks created for #{changi.name} ==="
-
-  FileReader.new(stocks_path(clementi.size), FileReader::INVENTORY).seed(clementi)
-  puts "=== #{clementi.stocks.size} stocks created for #{clementi.name} ==="
-
-  FileReader.new(stocks_path(orchard.size), FileReader::INVENTORY).seed(orchard)
-  puts "=== #{orchard.stocks.size} stocks created for #{orchard.name} ==="
-
-  # populate transactions
+  load_transactions(grant, vivo, changi, clementi, orchard)
 
 end
