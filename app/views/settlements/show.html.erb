@@ -1,7 +1,10 @@
 <h1>Transaction Summary <small><%= @settlement.created_at.strftime("%B %d, %Y") %></small></h1>
 <h2><%= @settlement.store.name %></h2>
 
+<hr />
+
 <h3>Products</h3>
+
 <table class="table table-striped table-hover table-responsive">
   <thead>
     <tr>
@@ -14,7 +17,7 @@
   </thead>
 
   <tbody>
-    <% @settlement.settle_items.each do |item| %>
+    <% @items.each do |item| %>
       <tr>
         <td><%= item.name.titleize %></td>
         <td><%= item.barcode %></td>
@@ -25,6 +28,8 @@
     <% end %>
   </tbody>
 </table>
+
+<%= will_paginate @items %>
 
 <hr />
 
@@ -41,4 +46,9 @@
 
 <hr />
 
-<%= link_to 'Back', settlements_path %>
+<% if current_user.manage?(@settlement.store) %>
+  <%= link_to 'Back', settlements_path %>
+<% else %>
+  <%= link_to 'Back', store_settlements_path(@settlement.store) %>
+<% end %>
+
