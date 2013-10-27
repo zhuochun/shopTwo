@@ -98,7 +98,7 @@ class FileReader
                                             "WHERE settlement_id = #{settlement.id}")
 
     # update stocks and products
-    unless options.skip_deduction
+    unless options[:skip_deduction]
       ActiveRecord::Base.connection().execute(stocks.join(";"))
       ActiveRecord::Base.connection().execute(products.join(";"))
     end
