@@ -60,8 +60,8 @@ class FileReader
     end
 
     Product.import product_columns, products, validate: false
-    Category.import [:name, :id, :products_count], categories.map { |k, v| [k, v[:id], v[:count]] }, validate: false
-    Manufacturer.import [:name, :id, :products_count], manufacturers.map { |k, v| [k, v[:id], v[:count]] }, validate: false
+    Category.import [:name, :products_count], categories.map { |k, v| [k, v[:count]] }, validate: false
+    Manufacturer.import [:name, :products_count], manufacturers.map { |k, v| [k, v[:count]] }, validate: false
   end
 
   # Settlement Format: barcode:quantity:price:date
