@@ -74,6 +74,8 @@ end
 group :development, :test do
   # Better errors messages for debug
   gem "better_errors"
+  # View instance variables
+  gem "binding_of_caller"
   # Load local environments
   gem 'dotenv-rails'
 end
