@@ -1,4 +1,4 @@
-    <% unless @stock.new_record? %>
+    <% unless @stock.product.nil? %>
       <h2>Product Infomation</h2>
       <p>Barcode: <%= @stock.product_id %>
       <p>Current Price: <%= number_to_currency @stock.product.daily_price %></p>

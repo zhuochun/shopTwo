@@ -2,7 +2,12 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :product, include_blank: false, disabled: !@stock.new_record? %>
+    <% if params[:product_id] %>
+      <%= f.input :product_id, as: :hidden %>
+      <p><%= @stock.product.name %></p>
+    <% else %>
+      <%= f.association :product, include_blank: false %>
+    <% end %>
 
     <%= f.input :quantity %>
     <%= f.input :minimum %>

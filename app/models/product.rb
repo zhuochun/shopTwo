@@ -23,9 +23,9 @@ class Product < ActiveRecord::Base
   before_validation -> { self.daily_price = cost_price * 1.3 if cost_price && !daily_price }
 
   # scopes
-  default_scope -> { includes(:manufacturer, :category).order('name ASC') }
-  scope :new_in_store, -> { order('created_at DESC') }
-  scope :popular, -> { order('current_stock DESC') }
+  default_scope -> { order(:name).includes(:manufacturer, :category) }
+  scope :new_in_store, -> { order(created_at: :desc) }
+  scope :popular, -> { order(current_stock: :desc) }
 
   # on sell
   def on_sell?
