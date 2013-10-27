@@ -1,5 +1,17 @@
 <h1>Store Detail</h1>
 
+<% if can? :update, Store %>
+  <%= link_to 'Edit', edit_store_path(@store) %> |
+
+  <% if @store.closed? %>
+    Closed <%= link_to 'Reopen', reopen_store_path(@store), method: :patch, data: { confirm: 'Are you sure?' } %>
+  <% else %>
+    <%= link_to 'Close Down', @store, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% end %>
+<% end %>
+
+<hr />
+
 <div class="row">
   <div class="col-md-6">
     <h2><%= @store.name %></h2>
@@ -10,13 +22,8 @@
     </p>
 
     <p>
-      <strong>Address:</strong>
-      <%= @store.address %>
-    </p>
-
-    <p>
-      <strong>Location:</strong>
-      <%= @store.location %>
+      <strong>Address:</strong> <br>
+      <%= escape_once(@store.address).gsub(/\n/, "<br>").html_safe %>
     </p>
 
     <p>
@@ -29,25 +36,49 @@
       <%= @store.operation_hours %>
     </p>
 
-    <% if can? :update, Store %>
-      <%= link_to 'Edit', edit_store_path(@store) %> |
-      <% if @store.closed? %>
-        Closed <%= link_to 'Reopen', reopen_store_path(@store), method: :patch, data: { confirm: 'Are you sure?' } %> |
-      <% else %>
-        <%= link_to 'Close Down', @store, method: :delete, data: { confirm: 'Are you sure?' } %> |
-      <% end %>
-    <% end %>
-    <%= link_to 'Back', stores_path %>
+    <div class="store-managers">
+      <h2>Managers</h2>
+
+      <ul>
+        <% @managers.each do |manager| %>
+          <li>
+            <h3>
+              <%= manager.username %>
+              <span class="label label-primary"><%= manager.email %></span>
+            </h3>
+          </li>
+        <% end %>
+      </ul>
+    </div>
   </div>
 
   <div class="col-md-6">
-    <h2>Manager</h2>
-
-    <% @managers.each do |manager| %>
-      <div <%= dom_id(manager) %>>
-        <h3><%= manager.username %></h3>
-        <p><%= manager.email %></p>
-      </div>
-    <% end %>
+    <div class="store-map">
+      <h2>Location</h2>
+      <div id="store-gmap"></div>
+    </div>
   </div>
 </div>
+
+<% content_for :javascripts do %>
+  <%= javascript_include_tag "//maps.google.com/maps/api/js?sensor=true", "gmaps" %>
+<% end %>
+
+<script type="text/javascript">
+  $(function(){
+    var lat = <%= @store.geo_latitude %>,
+        lng = <%= @store.geo_longitude %>,
+        map = new GMaps({
+          div: '#store-gmap',
+          height: '300px',
+          lat: lat,
+          lng: lng
+        });
+
+    map.addMarker({
+      lat: lat,
+      lng: lng,
+      title: '<%= @store.name %>'
+    });
+  });
+</script>
