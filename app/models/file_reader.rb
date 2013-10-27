@@ -66,7 +66,7 @@ class FileReader
 
   # Settlement Format: barcode:quantity:price:date
   # 33995417:2:10:1/9/2013
-  def process_settlement(file, store)
+  def process_settlement(file, store, options = {})
     # create a settlement
     settlement = store.settlements.create(total_count: 0, total_price: 0)
     # list of items
@@ -98,8 +98,10 @@ class FileReader
                                             "WHERE settlement_id = #{settlement.id}")
 
     # update stocks and products
-    ActiveRecord::Base.connection().execute(stocks.join(";"))
-    ActiveRecord::Base.connection().execute(products.join(";"))
+    unless options.skip_deduction
+      ActiveRecord::Base.connection().execute(stocks.join(";"))
+      ActiveRecord::Base.connection().execute(products.join(";"))
+    end
 
     # save settlement
     settlement.save

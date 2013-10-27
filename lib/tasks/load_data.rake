@@ -31,7 +31,7 @@ namespace :import do
   def load_transactions(stores)
     stores.each do |store|
       Dir[transaction_path(store.size)].each do |file|
-        FileReader.new(file, FileReader::SETTLEMENT).seed(store)
+        FileReader.new(file, FileReader::SETTLEMENT).seed(store, skip_deduction: true)
         print '.'
       end
 
