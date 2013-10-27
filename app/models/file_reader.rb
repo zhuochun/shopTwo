@@ -37,17 +37,19 @@ class FileReader
       product = line.chomp.force_encoding("UTF-8").split(':')
 
       if categories[product[1]]
-        product[1] = categories[product[1]]
+        categories[product[1]][:count] += 1
+        product[1] = categories[product[1]][:id]
       else
-        categories[product[1]] = categories_count
+        categories[product[1]] = { id: categories_count, count: 1 }
         product[1] = categories_count
         categories_count += 1
       end
 
       if manufacturers[product[2]]
-        product[2] = manufacturers[product[2]]
+        manufacturers[product[2]][:count] += 1
+        product[2] = manufacturers[product[2]][:id]
       else
-        manufacturers[product[2]] = manufacturers_count
+        manufacturers[product[2]] = { id: manufacturers_count, count: 1 }
         product[2] = manufacturers_count
         manufacturers_count += 1
       end
@@ -58,8 +60,8 @@ class FileReader
     end
 
     Product.import product_columns, products, validate: false
-    Category.import [:name, :id], categories.map { |k, v| [k, v] }, validate: false
-    Manufacturer.import [:name, :id], manufacturers.map { |k, v| [k, v] }, validate: false
+    Category.import [:name, :id, :products_count], categories.map { |k, v| [k, v[:id], v[:count]] }, validate: false
+    Manufacturer.import [:name, :id, :products_count], manufacturers.map { |k, v| [k, v[:id], v[:count]] }, validate: false
   end
 
   # Settlement Format: barcode:quantity:price:date
