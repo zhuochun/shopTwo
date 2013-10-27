@@ -20,7 +20,7 @@
         <td><%= settlement.created_at.strftime("%B %d, %Y") %></td>
         <td><%= settlement.store.name %></td>
         <td><%= settlement.total_count %></td>
-        <td><%= settlement.total_price %></td>
+        <td><%= number_to_currency settlement.total_price %></td>
         <td><%= link_to 'Show', settlement %></td>
       </tr>
     <% end %>

@@ -7,7 +7,7 @@
       <h2><%= product.name %></h2>
       <h5><%= product.category.name %> - <%= product.manufacturer.name %></h5>
       <h2>
-        <span class="label label-primary"><%= number_to_currency product.daily_price %></span>
+        <span class="label label-primary" id="price-tag"><%= number_to_currency product.daily_price %></span>
         <% if product.bundle_unit > 0 %>
           <small>Buy <%= product.bundle_unit %> Get 10% Discount!</small>
         <% end %>
@@ -58,6 +58,11 @@
       <p>
         <strong>Minimum Stock:</strong>
         <%= product.minimum_stock %>
+      </p>
+
+      <p>
+        <strong>Bundle Units:</strong>
+        <%= product.bundle_unit %>
       </p>
       <% end %>
 
