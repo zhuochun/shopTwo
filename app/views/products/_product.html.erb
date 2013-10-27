@@ -45,18 +45,31 @@
         <%= number_to_currency product.cost_price %>
       </p>
 
+      <% if current_user.manager? %>
+        <% @stock = product.stocks.where(store: current_user.store).take %>
+        <p>
+          <strong>Current Shop Stock:</strong>
+          <%= @stock.quantity %>
+        </p>
+
+        <p>
+          <strong>Minimum Shop Stock:</strong>
+          <%= @stock.minimum %>
+        </p>
+      <% end %>
+
       <p>
-        <strong>Current Stock:</strong>
+        <strong>Current HQ Stock:</strong>
         <%= product.current_stock %>
       </p>
 
       <p>
-        <strong>Available Stock:</strong>
+        <strong>Available HQ Stock:</strong>
         <%= product.available_stock %>
       </p>
 
       <p>
-        <strong>Minimum Stock:</strong>
+        <strong>Minimum HQ Stock:</strong>
         <%= product.minimum_stock %>
       </p>
 
@@ -68,11 +81,11 @@
 
       <p>
         <% if can? :manage, Product %>
-          <%= link_to "Edit", edit_product_path(@product) %>
+          <%= link_to "Edit", edit_product_path(product) %>
         <% end %>
 
         <% if can? :create, Stock %>
-          <%= link_to "Stock this Product", new_product_stock_path(@product) %>
+          <%= link_to "Stock this Product", new_product_stock_path(product) %>
         <% end %>
       </p>
     </div>
