@@ -15,7 +15,9 @@
       <% if can? :update, Product %>
         <th></th>
       <% end %>
-      <th></th>
+      <% if((can? :update, Product) || (can? :create, Stock)) %>
+        <th></th>
+      <% end %>
     </tr>
   </thead>
 
