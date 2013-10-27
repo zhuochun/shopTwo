@@ -11,7 +11,6 @@ class Settlement < ActiveRecord::Base
   default_scope -> { order('created_at DESC') }
   scope :last_week, -> { where('created_at >= ?', self.get_from_time(1.week)) }
   scope :last_month, -> { where('created_at >= ?', self.get_from_time(1.month)) }
-  scope :sell_sum, -> { sum('total_count') }
 
   # get time
   def self.get_from_time(period)

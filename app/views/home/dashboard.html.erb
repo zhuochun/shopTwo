@@ -3,31 +3,9 @@
 </div>
 
 <div class="row">
-  <div class="col-sm-12 col-md-3 secondary">
-    <div class="panel panel-<%= current_user.role %>">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-          Hi, <%= current_user.username %>
-        </h3>
-      </div>
-      <table class="table">
-        <tr>
-          <th>Role</th>
-          <td><%= current_user.role.titleize %></td>
-        </tr>
-        <tr>
-          <td>
-            <%= link_to "Setting", edit_user_registration_path, class: "navbar-link" %>
-          </td>
-          <td>
-            <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "navbar-link" %>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
-
-  <div class="col-sm-12 col-md-9 primary">
     <%= render "home/dashboard/#{current_user.role}" %>
-  </div>
 </div>
+
+<% content_for :javascripts do %>
+  <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+<% end %>

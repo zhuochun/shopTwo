@@ -1,39 +1,84 @@
 <% @store = current_user.store %>
 
-<div class="row">
-  <div class="col-md-4">
-    <div class="panel panel-success">
-      <div class="panel-heading">Store</div>
-      <table class="table">
-        <tr>
-          <th>Name</th><td><%= @store.name %> (<%= link_to 'Edit', edit_store_path(@store) %>)</td>
-        </tr>
-        <tr>
-          <th>Id</th><td><%= @store.id %></td>
-        </tr>
-        <tr>
-          <th>Employees</th><td><%= @store.users.employees.count %></td>
-        </tr>
-        <tr>
-          <th>Stocks</th><td><%= @store.stocks.count %>
+<div class="col-sm-12 col-md-3 secondary">
+  <div class="panel panel-<%= current_user.role %>">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        Hi, <%= current_user.username %>
+      </h3>
+    </div>
+    <table class="table">
+      <tr>
+        <th>Role</th>
+        <td><%= current_user.role.titleize %></td>
+      </tr>
+      <tr>
+        <td>
+          <%= link_to "Setting", edit_user_registration_path, class: "navbar-link" %>
         </td>
-      </table>
-    </div>
+        <td>
+          <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "navbar-link" %>
+        </td>
+      </tr>
+    </table>
   </div>
-  <div class="col-md-4">
-    <div class="panel panel-info">
-      <div class="panel-heading">Transactions</div>
-      <table class="table">
-        <tr><th>This Week</th><td><%= @store.settlements.last_week.sell_sum %></td>
-        <tr><th>This Month</th><td><%= @store.settlements.last_month.sell_sum %></td>
-      </table>
-    </div>
+  <div class="panel panel-success">
+    <div class="panel-heading">Store</div>
+    <table class="table">
+      <tr>
+        <th>Name</th><td><%= @store.name %> (<%= link_to 'Edit', edit_store_path(@store) %>)</td>
+      </tr>
+      <tr>
+        <th>Store Id</th><td><%= @store.id %></td>
+      </tr>
+      <tr>
+        <th>Stocks</th><td><%= @store.stocks.count %>
+      </td>
+      <tr>
+        <th>Employees</th><td><%= @store.users.employees.count %></td>
+      </tr>
+    </table>
   </div>
-  <div class="col-md-4">
-    <div class="panel panel-danger">
-      <div class="panel-heading">Others</div>
-      <table class="table">
-      </table>
+</div>
+
+<div class="col-sm-12 col-md-9 primary">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-danger">
+        <div class="panel-heading">Revenue</div>
+        <table class="table">
+          <tr><th>This Week</th><td><%= number_to_currency @store.settlements.last_week.sum(:total_price) %></td>
+          <tr><th>This Month</th><td><%= number_to_currency @store.settlements.last_month.sum(:total_price) %></td>
+        </table>
+      </div>
     </div>
-  </div>
+    <div class="col-md-6">
+      <div class="panel panel-info">
+        <div class="panel-heading">Transactions</div>
+        <table class="table">
+          <tr><th>This Week</th><td><%= number_with_delimiter @store.settlements.last_week.sum(:total_count) %></td>
+          <tr><th>This Month</th><td><%= number_with_delimiter @store.settlements.last_month.sum(:total_count) %></td>
+        </table>
+      </div>
+    </div>
+  </div> <!-- row -->
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-danger">
+        <div class="panel-heading">Revenue in Last Week</div>
+        <div class="panel-body">
+          <%= line_chart @store.settlements.last_week.map { |s| [s.created_at, s.total_price] } %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-info">
+        <div class="panel-heading">Transactions in Last Week</div>
+        <div class="panel-body">
+          <%= line_chart @store.settlements.last_week.map { |s| [s.created_at, s.total_count] } %>
+        </div>
+      </div>
+    </div>
+  </div> <!-- row -->
 </div>

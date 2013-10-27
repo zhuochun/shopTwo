@@ -21,6 +21,9 @@ gem 'sass-rails', '~> 4.0.0'
 # Use Bootstrap with SCSS favors
 gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails', :github => 'anjlab/bootstrap-rails'
 
+# Graphics for data
+gem 'chartkick'
+
 # Use paginate
 gem 'will_paginate', '~> 3.0'
 

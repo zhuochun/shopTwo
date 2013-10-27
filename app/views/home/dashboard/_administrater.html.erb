@@ -1,33 +1,66 @@
-<div class="row">
-  <div class="col-md-4">
-    <div class="panel panel-warning">
-      <div class="panel-heading">ShopTwo</div>
-      <table class="table">
-        <tr><th>Stores</th><td><%= Store.count %></td>
-        <tr><th>Customers</th><td><%= User.customers.count %></td>
-        <tr><th>Employees</th><td><%= User.employees.count %></td>
-        <tr><th>Managers</th><td><%= User.managers.count %></td>
-      </table>
+<div class="col-sm-12 col-md-3 secondary">
+  <div class="panel panel-<%= current_user.role %>">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        Hi, <%= current_user.username %>
+      </h3>
     </div>
+    <table class="table">
+      <tr>
+        <th>Role</th>
+        <td><%= current_user.role.titleize %></td>
+      </tr>
+      <tr>
+        <td>
+          <%= link_to "Setting", edit_user_registration_path, class: "navbar-link" %>
+        </td>
+        <td>
+          <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "navbar-link" %>
+        </td>
+      </tr>
+    </table>
   </div>
-  <div class="col-md-4">
-    <div class="panel panel-info">
-      <div class="panel-heading">Inventory</div>
-      <table class="table">
-        <tr><th>Stores</th><td><%= Store.count %></td>
-        <tr><th>Products</th><td><%= Product.count %></td>
-        <tr><th>Categories</th><td><%= Category.count %></td>
-        <tr><th>Manufacturers</th><td><%= Manufacturer.count %></td>
-      </table>
+</div>
+
+<div class="col-sm-12 col-md-9 primary">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="panel panel-warning">
+        <div class="panel-heading">ShopTwo</div>
+        <table class="table">
+          <tr><th>Stores</th><td><%= Store.count %></td>
+          <tr><th>Customers</th><td><%= User.customers.count %></td>
+          <tr><th>Employees</th><td><%= User.employees.count %></td>
+          <tr><th>Managers</th><td><%= User.managers.count %></td>
+        </table>
+      </div>
     </div>
-  </div>
-  <div class="col-md-4">
-    <div class="panel panel-danger">
-      <div class="panel-heading">Transactions</div>
-      <table class="table">
-        <tr><th>This Week</th><td><%= Settlement.last_week.sell_sum %></td>
-        <tr><th>This Month</th><td><%= Settlement.last_month.sell_sum %></td>
-      </table>
+    <div class="col-md-4">
+      <div class="panel panel-info">
+        <div class="panel-heading">Inventory</div>
+        <table class="table">
+          <tr><th>Stores</th><td><%= Store.count %></td>
+          <tr><th>Products</th><td><%= Product.count %></td>
+          <tr><th>Categories</th><td><%= Category.count %></td>
+          <tr><th>Manufacturers</th><td><%= Manufacturer.count %></td>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-danger">
+        <div class="panel-heading">Revenue</div>
+        <table class="table">
+          <tr><th>This Week</th><td><%= number_to_currency Settlement.last_week.sum(:total_price) %></td>
+          <tr><th>This Month</th><td><%= number_to_currency Settlement.last_month.sum(:total_price) %></td>
+        </table>
+      </div>
+      <div class="panel panel-danger">
+        <div class="panel-heading">Transactions</div>
+        <table class="table">
+          <tr><th>This Week</th><td><%= number_with_delimiter Settlement.last_week.sum(:total_count) %></td>
+          <tr><th>This Month</th><td><%= number_with_delimiter Settlement.last_month.sum(:total_count) %></td>
+        </table>
+      </div>
     </div>
   </div>
 </div>
