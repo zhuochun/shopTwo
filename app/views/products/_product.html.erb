@@ -1,77 +1,79 @@
-<div class="product-detail row">
-  <div class="col-md-6">
-    <h2><%= product.name %></h2>
+<div class="product-detail">
+  <div class="row">
+    <div class="col-md-4">
+      <img data-src="holder.js/300x300" alt="View Details of <%= product.name %>">
+    </div>
+    <div class="col-md-8">
+      <h2><%= product.name %></h2>
+      <h5><%= product.category.name %> - <%= product.manufacturer.name %></h5>
+      <h2>
+        <span class="label label-primary"><%= number_to_currency product.daily_price %></span>
+        <% if product.bundle_unit > 0 %>
+          <small>Buy <%= product.bundle_unit %> Get 10% Discount!</small>
+        <% end %>
+      </h2>
 
-    <p>
-      <strong>Category:</strong>
-      <%= product.category.name %>
-    </p>
+      <div class="buy-cart row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <span class="input-group-addon">Quantity</span>
+            <input type="text" class="form-control" value="1" placeholder="1">
+            <span class="input-group-btn">
+                <button class="btn btn-danger">Add to Cart</button>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <p>Sold <%= pluralize(product.monthly_sell, 'unit') %> this month.</p>
+        </div>
+      </div> <!-- buy-cart -->
 
-    <p>
-      <strong>Manufacturer:</strong>
-      <%= product.manufacturer.name %>
-    </p>
+      <p>
+        <strong>Barcode:</strong>
+        <%= product.barcode %>
+      </p>
 
-    <p>
-      <strong>Barcode:</strong>
-      <%= product.barcode %>
-    </p>
+      <% if can? :view, Product %>
+      <p>
+        <strong>Predicted Price:</strong>
+        <%= number_to_currency product.new_daily_price %>
+        <%= link_to 'Accept', update_price_product_path(product), remote:true, method: :patch if can? :edit, Product %>
+      </p>
 
-    <p>
-      <strong>Current Price:</strong>
-      <%= number_to_currency product.daily_price %>
-    </p>
+      <p>
+        <strong>Cost Price:</strong>
+        <%= number_to_currency product.cost_price %>
+      </p>
 
-    <% if can? :view, Product %>
-    <p>
-      <strong>Predicted Price:</strong>
-      <%= number_to_currency product.new_daily_price %>
-      <%= link_to 'Accept', update_price_product_path(product), remote:true, method: :patch if can? :edit, Product %>
-    </p>
+      <p>
+        <strong>Current Stock:</strong>
+        <%= product.current_stock %>
+      </p>
 
-    <p>
-      <strong>This Week Sell:</strong>
-      <%= product.weekly_sell %>
-    </p>
+      <p>
+        <strong>Available Stock:</strong>
+        <%= product.available_stock %>
+      </p>
 
-    <p>
-      <strong>This Month Sell:</strong>
-      <%= product.monthly_sell %>
-    </p>
-
-    <p>
-      <strong>Cost Price:</strong>
-      <%= number_to_currency product.cost_price %>
-    </p>
-
-    <p>
-      <strong>Current Stock:</strong>
-      <%= product.current_stock %>
-    </p>
-
-    <p>
-      <strong>Available Stock:</strong>
-      <%= product.available_stock %>
-    </p>
-
-    <p>
-      <strong>Minimum Stock:</strong>
-      <%= product.minimum_stock %>
-    </p>
-    <% end %>
-
-    <p>
-      <strong>Bundle Unit:</strong>
-      <%= product.bundle_unit %>
-    </p>
-  </div>
-  <div class="col-md-6">
-    <% if can? :view, Product %>
-      <h2>Actions</h2>
-
-      <% if can? :create, Stock %>
-        <%= link_to 'Stock this Product', new_product_stock_path(product) %>
+      <p>
+        <strong>Minimum Stock:</strong>
+        <%= product.minimum_stock %>
+      </p>
       <% end %>
-    <% end %>
+
+      <p>
+        <% if can? :manage, Product %>
+          <%= link_to "Edit", edit_product_path(@product) %>
+        <% end %>
+
+        <% if can? :create, Stock %>
+          <%= link_to "Stock this Product", new_product_stock_path(@product) %>
+        <% end %>
+      </p>
+    </div>
   </div>
 </div>
+
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag "products" %>
+<% end %>

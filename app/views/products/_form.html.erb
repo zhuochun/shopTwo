@@ -2,7 +2,7 @@
   <%= f.error_notification %>
 
   <%= f.input :name %><br>
-  <%= f.input :barcode, disabled: true %><br>
+  <%= f.input :barcode, disabled: !@product.new_record? %><br>
   <%= f.association :category %><br>
   <%= f.association :manufacturer %><br>
   <%= f.input :daily_price %><br>
