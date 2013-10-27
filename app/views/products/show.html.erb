@@ -2,5 +2,8 @@
 
 <%= render @product %>
 
-<%= link_to 'Edit', edit_product_path(@product) %> |
+<% if can? :manage, Product %>
+  <%= link_to 'Edit', edit_product_path(@product) %> |
+<% end %>
+
 <%= link_to 'Back', products_path %>

@@ -9,7 +9,7 @@ class Store < ActiveRecord::Base
   validates :name, presence: true
 
   # scope
-  default_scope -> { order('name ASC') }
+  default_scope -> { order(:size) }
 
   def location
     [geo_latitude, geo_longitude]
