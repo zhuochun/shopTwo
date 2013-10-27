@@ -2,11 +2,11 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <% if params[:product_id] %>
-      <%= f.input :product_id, as: :hidden %>
-      <p><%= @stock.product.name %></p>
-    <% else %>
+    <% if @stock.product.nil? %>
       <%= f.association :product, include_blank: false %>
+    <% else %>
+      <%= f.input :product_id, as: :hidden %>
+      <p><strong>Product:</strong> <%= @stock.product.name %></p>
     <% end %>
 
     <%= f.input :quantity %>
