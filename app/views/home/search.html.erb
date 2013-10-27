@@ -10,7 +10,6 @@
 
 <% else %>
 
-  <%= render template: 'products/index',
-             locals: { products: @products } %>
+  <%= render partial: 'products/products', locals: { products: @products } %>
 
 <% end %>

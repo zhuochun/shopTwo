@@ -35,7 +35,7 @@ namespace :import do
         print '.'
       end
 
-      puts "=== #{store.settlements.size} transactions created for #{store.name} ==="
+      puts "\n=== #{store.settlements.size} transactions created for #{store.name} ==="
     end
   end
 
@@ -49,4 +49,8 @@ namespace :import do
     load_transactions(stores)
     puts "==== Transactions Loaded to Database ===="
   end
+
+  desc 'Load sample stocks and transactions into database (in production)'
+  task all: [:stocks, :transactions]
+
 end

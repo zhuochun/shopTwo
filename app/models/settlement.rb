@@ -8,7 +8,7 @@ class Settlement < ActiveRecord::Base
   validate :total_price, :total_count, numericality: { greater_than_or_equal_to: 0 }
 
   # scopes
-  default_scope -> { order('created_at DESC') }
+  default_scope -> { order(created_at: :desc) }
   scope :last_week, -> { where('created_at >= ?', self.get_from_time(1.week)) }
   scope :last_month, -> { where('created_at >= ?', self.get_from_time(1.month)) }
 
