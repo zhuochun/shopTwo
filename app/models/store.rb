@@ -7,6 +7,10 @@ class Store < ActiveRecord::Base
 
   # valiations
   validates :name, presence: true
+  validates :size, numericality: { greater_than_or_equal_to: 0 }
+  validates :contact, format: { with: /\A\d{8}\z/, message: "invalid contact number" }
+  validates :geo_latitude, numericality: { greater_than_or_equal_to: -90, less_than_or_equal_to: 90 }
+  validates :geo_longitude, numericality: { greater_than_or_equal_to: -180, less_than_or_equal_to: 180 }
 
   # scope
   default_scope -> { order(:size) }

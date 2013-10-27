@@ -26,20 +26,23 @@ class Ability
       can :manage, Category
       can :manage, Manufacturer
       can :manage, Store
+      can :manage, User
 
       can :read, :all
       can :view, :all
     elsif user.manager?
       can :manage, Stock
       can :manage, Settlement
+      can :manage, SettleItem
       can :manage, Store, id: user.store_id
 
       can :read, :all
       can :view, :all
-
-      basic_ability
     elsif user.employee?
       can :read, Stock
+      can :read, Settlement
+      can :read, SettleItem
+      can :read, User, role: User::CUSTOMER
 
       basic_ability
     elsif user.customer?
