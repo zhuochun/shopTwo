@@ -25,6 +25,13 @@ class SettlementsController < ApplicationController
                         .paginate(page: params[:page], per_page: 50)
   end
 
+  # Get /settlements/1/search
+  # Get /settlements/1/search.json
+  def search
+    @settlement = Settlement.find(params[:id])
+    @product = @settlement.settle_items.where(barcode: params[:q]).take
+  end
+
   # GET /settlements/new
   def new
     @settlement = Settlement.new

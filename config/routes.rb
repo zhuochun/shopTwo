@@ -25,7 +25,11 @@ ServerRails::Application.routes.draw do
     end
   end
   # alias to transactions
-  resources :settlements
+  resources :settlements do
+    member do
+      get 'search'
+    end
+  end
 
   resources :products do
     collection do
