@@ -1,4 +1,4 @@
-<h1>Search for '<%= @query %>' in Transaction</h1>
+<h1>Search for '<%= params[:q] %>' in Transaction</h1>
 
 <% if @product.nil? %>
 
@@ -6,8 +6,8 @@
 
 <% else %>
 
-  <p>Name: <%= @product.name %> </p>
-  <p>Quantity: <%= @product.quantity %></p>
-  <p>Price: <%= @product.price %></p>
+  <p>Barcode: <%= @product.barcode %></p>
+  <p>Sold: <%= number_with_delimiter @product.quantity %></p>
+  <p>Price: <%= number_to_currency @product.price %></p>
 
 <% end %>
