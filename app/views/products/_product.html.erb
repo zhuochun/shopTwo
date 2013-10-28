@@ -47,15 +47,19 @@
 
       <% if current_user.manager? %>
         <% @stock = product.stocks.where(store: current_user.store).take %>
-        <p>
-          <strong>Current Shop Stock:</strong>
-          <%= @stock.quantity %>
-        </p>
+        <% if @stock.nil? %>
+          <p><strong>No Stock in Shop</strong></p>
+        <% else %>
+          <p>
+            <strong>Current Shop Stock:</strong>
+            <%= @stock.quantity %>
+          </p>
 
-        <p>
-          <strong>Minimum Shop Stock:</strong>
-          <%= @stock.minimum %>
-        </p>
+          <p>
+            <strong>Minimum Shop Stock:</strong>
+            <%= @stock.minimum %>
+          </p>
+        <% end %>
       <% end %>
 
       <p>
