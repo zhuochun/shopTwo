@@ -1,6 +1,28 @@
 namespace :import do
 
+  # ========================================
+  # to populate inventories
+  # ========================================
+
+  def inventory_path(env)
+    "#{Rails.root}/db/inventory/#{env}.txt"
+  end
+
+  desc 'Load sample inventories (in production)'
+  task inventory: [:environment] do
+    puts "==== Load Inventory (production) to Database ===="
+
+    FileReader.new(inventory_path("production"), FileReader::INVENTORY).seed
+
+    puts "=== #{Product.count} products created ==="
+    puts "=== #{Category.count} categories created ==="
+    puts "=== #{Manufacturer.count} manufacturers created ==="
+    puts "==== Inventory Loaded to Database ===="
+  end
+
+  # ========================================
   # to populate stocks
+  # ========================================
   def stocks_path(size)
     "#{Rails.root}/db/stocks/#{size}.txt"
   end
@@ -14,7 +36,7 @@ namespace :import do
 
   desc 'Load sample stocks into database (in production)'
   task stocks: [:environment] do
-    puts "==== Load Stocks to Database ===="
+    puts "==== Load Stocks (Production) to Database ===="
 
     stores = Store.all
     puts "=== #{stores.size} stores found in database ==="
@@ -23,7 +45,9 @@ namespace :import do
     puts "==== Stocks Loaded to Database ===="
   end
 
+  # ========================================
   # to populate transactions
+  # ========================================
   def transaction_path(size)
     "#{Rails.root}/db/transactions/#{size}/*.txt"
   end
@@ -41,7 +65,7 @@ namespace :import do
 
   desc 'Load sample transactions into database (in production)'
   task transactions: [:environment] do
-    puts "==== Load Transactions to Database ===="
+    puts "==== Load Transactions (Production) to Database ===="
 
     stores = Store.all
     puts "=== #{stores.size} stores found in database ==="
@@ -50,7 +74,42 @@ namespace :import do
     puts "==== Transactions Loaded to Database ===="
   end
 
-  desc 'Load sample stocks and transactions into database (in production)'
-  task all: [:stocks, :transactions]
+  # ========================================
+  # to populate stocks and transactions in production
+  # ========================================
+  desc 'Load inventory, stocks and transactions into database (in production)'
+  task production: [:inventory, :stocks, :transactions]
+
+  # ========================================
+  # to populate stocks and transactions in development
+  # ========================================
+  desc 'Load inventory, stocks into database (in development)'
+  task dev: [:environment] do
+    puts "==== Destroy Inventory and Stocks in Database ===="
+
+    Stock.destroy_all
+    Product.destroy_all
+    Category.destroy_all
+    Manufacturer.destroy_all
+
+    puts "==== Load Inventory (development) to Database ===="
+
+    FileReader.new(inventory_path("development"), FileReader::INVENTORY)
+              .seed
+
+    puts "=== #{Product.count} products created ==="
+    puts "=== #{Category.count} categories created ==="
+    puts "=== #{Manufacturer.count} manufacturers created ==="
+    puts "==== Inventory Loaded to Database ===="
+
+    puts "==== Load Stocks (development) to Database ===="
+
+    store = Store.find(1)
+    FileReader.new(stocks_path("1000_dev"), FileReader::STOCK)
+              .seed(store)
+
+    puts "=== #{store.stocks.size} stocks created for #{store.name} ==="
+    puts "==== Stocks Loaded to Database ===="
+  end
 
 end

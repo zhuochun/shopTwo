@@ -11,7 +11,9 @@ env = Rails.env
 
 puts "Mode: [#{env}] #{root}"
 
+# ========================================
 # create stores
+# ========================================
 puts "=== Stores ==="
 
 Store.destroy_all
@@ -68,7 +70,9 @@ orchard = Store.create(
 
 puts "=== #{Store.count} stores created ==="
 
+# ========================================
 # create users
+# ========================================
 puts "=== Users ==="
 
 User.destroy_all
@@ -122,29 +126,35 @@ User.create([
     password: '12345678',
     store: orchard },
   { username: 'David',
-    phone: 42345678,
+    phone: 42345670,
     birthday: '21-10-2013',
     credits: 800.0,
     role: User::CUSTOMER,
     email: 'david@cg3002.ceg',
     password: '12345678'},
+  { username: 'Harry',
+    phone: 42345671,
+    birthday: '21-10-2013',
+    credits: 800.0,
+    role: User::CUSTOMER,
+    email: 'harry@cg3002.ceg',
+    password: '12345678'},
+  { username: 'Johnason',
+    phone: 42345672,
+    birthday: '21-10-2013',
+    credits: 800.0,
+    role: User::CUSTOMER,
+    email: 'Johnason@cg3002.ceg',
+    password: '12345678'},
+  { username: 'William',
+    phone: 42345673,
+    birthday: '21-10-2013',
+    credits: 800.0,
+    role: User::CUSTOMER,
+    email: 'william@cg3002.ceg',
+    password: '12345678'},
 ])
 
 puts "=== #{User.count} users created ==="
-
-# populate inventory
-file = "#{root}/db/inventory/#{env}.txt"
-
-puts "=== Inventory ==="
-puts "FILE: #{file}"
-
-Product.destroy_all
-Category.destroy_all
-Manufacturer.destroy_all
-
-reader = FileReader.new(file, FileReader::INVENTORY)
-reader.seed
-
-puts "=== #{Product.count} products created ==="
-puts "=== #{Category.count} categories created ==="
-puts "=== #{Manufacturer.count} manufacturers created ==="
+puts "=== #{User.managers.count} managers created ==="
+puts "=== #{User.customers.count} customers created ==="
