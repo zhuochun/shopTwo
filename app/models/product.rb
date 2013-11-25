@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: products
+#
+#  id              :integer          not null, primary key
+#  name            :string(255)
+#  daily_price     :decimal(9, 2)
+#  cost_price      :decimal(9, 2)
+#  current_stock   :integer
+#  minimum_stock   :integer
+#  bundle_unit     :integer
+#  category_id     :integer
+#  manufacturer_id :integer
+#  created_at      :datetime
+#  updated_at      :datetime
+#
+
 class Product < ActiveRecord::Base
   # alias
   alias_attribute :barcode, :id

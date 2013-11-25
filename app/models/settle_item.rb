@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: settle_items
+#
+#  id            :integer          not null, primary key
+#  settlement_id :integer
+#  barcode       :integer
+#  quantity      :integer          default(0)
+#  price         :decimal(9, 2)    default(0.0)
+#  total_price   :decimal(9, 2)    default(0.0)
+#  created_at    :datetime
+#  updated_at    :datetime
+#  store_id      :integer
+#
+
 class SettleItem < ActiveRecord::Base
   # relationships
   belongs_to :settlement

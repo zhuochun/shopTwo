@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: settlements
+#
+#  id          :integer          not null, primary key
+#  store_id    :integer
+#  total_count :integer          default(0)
+#  total_price :decimal(9, 2)    default(0.0)
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
 class Settlement < ActiveRecord::Base
   # relationship
   belongs_to :store

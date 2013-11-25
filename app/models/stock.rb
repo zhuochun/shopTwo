@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: stocks
+#
+#  id         :integer          not null, primary key
+#  store_id   :integer
+#  product_id :integer
+#  quantity   :integer
+#  minimum    :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class Stock < ActiveRecord::Base
   # relationships
   belongs_to :store

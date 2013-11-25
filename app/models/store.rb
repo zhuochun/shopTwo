@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: stores
+#
+#  id              :integer          not null, primary key
+#  name            :string(255)
+#  size            :integer
+#  address         :text
+#  geo_latitude    :float
+#  geo_longitude   :float
+#  contact         :integer
+#  operation_hours :text
+#  created_at      :datetime
+#  updated_at      :datetime
+#  closed          :boolean
+#
+
 class Store < ActiveRecord::Base
   # relationship
   has_many :users
