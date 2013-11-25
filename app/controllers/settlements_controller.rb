@@ -29,7 +29,9 @@ class SettlementsController < ApplicationController
   # Get /settlements/1/search.json
   def search
     @settlement = Settlement.find(params[:id])
-    @product = @settlement.settle_items.where(barcode: params[:q]).take
+    @engine     = SearchEngine::Searchable.new(@settlement.settle_items, params[:q], barcode: true)
+    @query      = @engine.query
+    @product    = @engine.lookup.take
   end
 
   # GET /settlements/new

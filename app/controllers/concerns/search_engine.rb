@@ -5,7 +5,7 @@ module SearchEngine
     attr_reader   :result
 
     def initialize(items, query, flags)
-      @items, @query, @flags = items, query, flags
+      @items, @query, @flags = items, query.strip, flags
     end
 
     def lookup

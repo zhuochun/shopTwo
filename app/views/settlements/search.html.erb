@@ -1,4 +1,4 @@
-<h1>Search for '<%= params[:q] %>' in Transaction <small><%= @settlement.created_at.strftime("%B %d, %Y") %></small></h1>
+<h1>Search for '<%= @query %>' in Transaction <small><%= @settlement.created_at.strftime("%B %d, %Y") %></small></h1>
 <h2><%= @settlement.store.name %></h2>
 
 <% if @product.nil? %>
