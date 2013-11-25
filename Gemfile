@@ -78,6 +78,8 @@ group :development, :test do
   gem "binding_of_caller"
   # Load local environments
   gem 'dotenv-rails'
+  # Annotate schema
+  gem 'annotate', ">=2.5.0"
 end
 
 # Use unicorn as the app server
