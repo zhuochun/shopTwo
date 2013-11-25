@@ -9,25 +9,29 @@ module SearchEngine
     end
 
     def lookup
-      found = :continue
+      @result = :continue
 
-      if found == :continue && flags[:barcode]
-        found = by_barcode
+      if use_engine?(:barcode)
+        @result = by_barcode
       end
 
-      if found == :continue && flags[:price]
-        found = by_price
+      if use_engine?(:price)
+        @result = by_price
       end
 
-      if found == :continue && flags[:price]
-        found = by_price_range
+      if use_engine?(:price)
+        @result = by_price_range
       end
 
-      if found == :continue && flags[:name]
-        found = by_name
+      if use_engine?(:name)
+        @result = by_name
       end
 
-      @result = (found == :continue ? nil : found)
+      @result = (@result == :continue ? nil : @result)
+    end
+
+    def use_engine?(flag)
+      @result == :continue && (flags[flag] || flags[:all])
     end
 
     # regex constants
@@ -38,7 +42,11 @@ module SearchEngine
     # search by barcode
     def by_barcode
       if BARCODE.match(@query)
-        @items.where(barcode: @query)
+        if @items.column_names.include?("barcode")
+          @items.where(barcode: @query)
+        else
+          @items.where(id: @query)
+        end
       else
         :continue
       end
