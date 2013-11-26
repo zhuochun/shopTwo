@@ -1,17 +1,23 @@
 <h1>New Products</h1>
 
-<% @new_products.in_groups_of(4) do |products| %>
-<div class="row">
-  <%= render partial: "products/product_thumbnail", collection: products, as: :product, locals: { type: "new-product-item" }  %>
-</div>
-<% end %>
+<%=
+  render partial: "products/products_thumbnail",
+         locals: {
+           products: @new_products,
+           divider_num: 4,
+           options: { type: "new-product-item" }
+         }
+%>
 
 <h1>Popular Products</h1>
 
-<% @popular_products.in_groups_of(4) do |products| %>
-<div class="row">
-  <%= render partial: "products/product_thumbnail", collection: products, as: :product, locals: { type: "popular-product-item" }  %>
-</div>
-<% end %>
+<%=
+  render partial: "products/products_thumbnail",
+         locals: {
+           products: @popular_products,
+           divider_num: 4,
+           options: { type: "popular-product-item" }
+         }
+%>
 
 <%= will_paginate @popular_products %>

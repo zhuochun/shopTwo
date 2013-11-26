@@ -1,0 +1,5 @@
+<% products.in_groups_of(divider_num) do |p| %>
+<div class="row">
+  <%= render partial: "products/product_thumbnail", collection: p, as: :product, locals: options  %>
+</div>
+<% end %>

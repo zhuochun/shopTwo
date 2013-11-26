@@ -4,7 +4,11 @@
 
 .product-item.thumbnail {
     img {
+        display: block;
         height: 200px;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     h3 {

@@ -1,9 +1,9 @@
 <div class="col-sm-12 col-md-4 col-lg-3">
   <div id="<%= dom_id(product) %>" class="thumbnail product-item <%= type || "" %>">
-    <%= image_tag product.image_path, size: "200x200", alt: product.name %>
+    <%= link_to(image_tag(product.image_path, size: "200x200", alt: product.name), product)  %>
     <div class="caption">
-      <h3><%= product.name.titleize %></h3>
-      <h5><%= product.category.name %></h5>
+      <h3><%= link_to(product.name.titleize, product) %></h3>
+      <h5><%= link_to(product.category.name, product.category) %></h5>
       <p>
         <%= link_to "Details", product, class: "btn btn-primary" %>
         <%= link_to "Buy at $#{product.daily_price}", product, class: "btn btn-success" %>
