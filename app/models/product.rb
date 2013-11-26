@@ -48,6 +48,11 @@ class Product < ActiveRecord::Base
   include ActivePricing
   include Stockable
 
+  # image
+  def image_path
+    "products/#{barcode % 43}.jpg"
+  end
+
   # dynamic pricing
   def self.active_pricing
     Product.transaction do

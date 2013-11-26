@@ -1,41 +1,17 @@
 <h1>New Products</h1>
 
+<% @new_products.in_groups_of(4) do |products| %>
 <div class="row">
-  <% @new_products.each_with_index do |product, idx| %>
-    <div class="col-sm-12 col-md-3">
-      <div class="thumbnail product-item new-product-item">
-        <img data-src="holder.js/300x200" alt="View Details of <%= product.name %>">
-        <div class="caption">
-          <h3><%= product.name.titleize %></h3>
-          <p><%= product.category.name %></p>
-          <p>
-            <%= link_to "Details", product, class: "btn btn-primary" %>
-            <%= link_to "Buy at $#{product.daily_price}", product, class: "btn btn-success" %>
-          </p>
-        </div>
-      </div>
-    </div>
-  <% end %>
+  <%= render partial: "products/product_thumbnail", collection: products, as: :product, locals: { type: "new-product-item" }  %>
 </div>
+<% end %>
 
 <h1>Popular Products</h1>
 
+<% @popular_products.in_groups_of(4) do |products| %>
 <div class="row">
-  <% @popular_products.each_with_index do |product, idx| %>
-    <div class="col-sm-12 col-md-3">
-      <div class="thumbnail product-item">
-        <img data-src="holder.js/300x200" alt="View Details of <%= product.name %>">
-        <div class="caption">
-          <h3><%= product.name.titleize %></h3>
-          <p><%= product.category.name %></p>
-          <p>
-            <%= link_to "Details", product, class: "btn btn-primary" %>
-            <%= link_to "Buy at $#{product.daily_price}", product, class: "btn btn-success" %>
-          </p>
-        </div>
-      </div>
-    </div>
-  <% end %>
+  <%= render partial: "products/product_thumbnail", collection: products, as: :product, locals: { type: "popular-product-item" }  %>
 </div>
+<% end %>
 
 <%= will_paginate @popular_products %>
