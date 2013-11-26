@@ -2,11 +2,16 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.product-item {
+.product-item.thumbnail {
+    img {
+        height: 200px;
+    }
+
     h3 {
-        height: 53px;
+        max-height: 28px;
         width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 }
+

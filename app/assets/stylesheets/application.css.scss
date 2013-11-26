@@ -9,6 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+ *= require_tree .
  */
 
 /*
@@ -28,25 +29,6 @@ footer {
     border-top: 1px solid #efefef;
     padding-top: 20px;
     padding-bottom: 50px;
-}
-
-/*
- * home page css
- */
-.product-item {
-    h3 {
-        height: 53px;
-        width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-}
-
-/*
- * transaction page
- */
-.transaction-search {
-    margin-top: 11px;
 }
 
 /*
