@@ -1,5 +1,8 @@
-<h1>Search for '<%= @query %>' in Transaction <small><%= @settlement.created_at.strftime("%B %d, %Y") %></small></h1>
-<h2><%= @settlement.store.name %></h2>
+<h1>Search for '<%= @query %>'</h1>
+<h2>
+  Transaction <small><%= @settlement.created_at.strftime("%B %d, %Y") %></small>
+</h2>
+<h3><%= @settlement.store.name %></h3>
 
 <% if @product.nil? %>
 
@@ -11,5 +14,7 @@
   <p>Barcode: <%= @product.barcode %></p>
   <p>Sold: <%= number_with_delimiter @product.quantity %></p>
   <p>Price: <%= number_to_currency @product.price %></p>
+
+  <%= link_to "View Product", product_path(@product.barcode) %>
 
 <% end %>

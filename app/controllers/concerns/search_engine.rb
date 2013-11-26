@@ -9,6 +9,8 @@ module SearchEngine
     end
 
     def lookup
+      return @items.none if @query.empty?
+
       @result = :continue
 
       if use_engine?(:barcode)
@@ -27,7 +29,7 @@ module SearchEngine
         @result = by_name
       end
 
-      @result = (@result == :continue ? nil : @result)
+      @result = (@result == :continue ? @items.none : @result)
     end
 
     def use_engine?(flag)
