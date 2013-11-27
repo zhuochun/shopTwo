@@ -7,7 +7,7 @@
       <h2><%= product.name %></h2>
       <dl class="dl-horizontal">
         <dt><strong>Price</strong></dt>
-        <dd class="lead text-danger" id="price-tag"><%= number_to_currency product.daily_price %></dd>
+        <dd class="lead text-danger price-tag"><%= number_to_currency product.daily_price %></dd>
         <% if product.bundle_unit > 0 %>
           <dt><strong>Discount</strong></dt>
           <dd>10% for <%= product.bundle_unit %> and more</small>
@@ -37,72 +37,15 @@
         <div class="col-md-6">
         </div>
       </div> <!-- buy-cart -->
-
-      <p>
-      </p>
-
-      <% if can? :view, Product %>
-      <p>
-        <strong>Predicted Price:</strong>
-        <%= number_to_currency product.new_daily_price %>
-        <%= link_to 'Accept', update_price_product_path(product), remote:true, method: :patch if can? :edit, Product %>
-      </p>
-
-      <p>
-        <strong>Cost Price:</strong>
-        <%= number_to_currency product.cost_price %>
-      </p>
-
-      <% if current_user.manager? %>
-        <% @stock = product.stocks.where(store: current_user.store).take %>
-        <% if @stock.nil? %>
-          <p><strong>No Stock in Shop</strong></p>
-        <% else %>
-          <p>
-            <strong>Current Shop Stock:</strong>
-            <%= @stock.quantity %>
-          </p>
-
-          <p>
-            <strong>Minimum Shop Stock:</strong>
-            <%= @stock.minimum %>
-          </p>
-        <% end %>
-      <% end %>
-
-      <p>
-        <strong>Current HQ Stock:</strong>
-        <%= product.current_stock %>
-      </p>
-
-      <p>
-        <strong>Available HQ Stock:</strong>
-        <%= product.available_stock %>
-      </p>
-
-      <p>
-        <strong>Minimum HQ Stock:</strong>
-        <%= product.minimum_stock %>
-      </p>
-
-      <p>
-        <strong>Bundle Units:</strong>
-        <%= product.bundle_unit %>
-      </p>
-      <% end %>
-
-      <p>
-        <% if can? :manage, Product %>
-          <%= link_to "Edit", edit_product_path(product) %>
-        <% end %>
-
-        <% if can? :create, Stock %>
-          <%= link_to "Stock this Product", new_product_stock_path(product) %>
-        <% end %>
-      </p>
     </div>
-  </div>
-</div>
+  </div> <!-- row -->
+</div> <!-- product-detail -->
+
+<% if user_signed_in? && current_user.management? %>
+  <h2 class="text-muted">Product Administration</h2>
+  <hr>
+  <%= render partial: "products/product_statistics", locals: { product: product } %>
+<% end %>
 
 <% content_for :stylesheets do %>
   <%= stylesheet_link_tag "products" %>

@@ -1,0 +1,13 @@
+<tr>
+  <th>Store</th>
+  <td><%= stock.store.name %></td>
+  <% if stock.nil? %>
+    <th cols="6">No Stock in Shop</th>
+  <% else %>
+    <th>Current Stocks</th>
+    <td><%= stock.quantity %></td>
+    <th>Minimum Stocks</th>
+    <td><%= stock.minimum %></td>
+    <td colspan="2"></td>
+  <% end %>
+</tr>

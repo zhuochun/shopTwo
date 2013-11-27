@@ -1,0 +1,103 @@
+<table class="table table-bordered">
+  <tr class="success">
+    <td colspan="8">
+      <h3>Info</h3>
+    </td>
+  </tr>
+  <tr>
+    <th>Product</th>
+    <td colspan="7"><%= product.name %></td>
+  </tr>
+  <tr>
+    <th>Barcode</th>
+    <td><%= product.barcode %></td>
+    <th>Category</th>
+    <td><%= product.category.name %></td>
+    <th>Manufacturer</th>
+    <td><%= product.manufacturer.name %></td>
+    <th>Bundle Unit</th>
+    <td><%= product.bundle_unit %></td>
+  </tr>
+
+  <tr class="success">
+    <td colspan="8">
+      <h3>Sells</h3>
+    </td>
+  </tr>
+  <tr>
+    <th>This Week</th>
+    <td><%= product.weekly_sell %></td>
+    <th>This Month</th>
+    <td><%= product.monthly_sell %></td>
+    <td colspan="4"></td>
+  </tr>
+
+  <tr class="success">
+    <td colspan="8">
+      <h3>Price</h3>
+    </td>
+  </tr>
+  <tr>
+    <th>Current Price</th>
+    <td class="price-tag">
+      <%= number_to_currency product.daily_price %>
+    </td>
+    <th>Predicted New Price</th>
+    <td>
+      <%= number_to_currency product.new_daily_price %>
+      <% if can? :edit, Product %>
+        <%= link_to 'Update Now', update_price_product_path(product), remote:true, method: :patch if can? :edit, Product %>
+      <% end %>
+    </td>
+    <% if can? :edit, Product %>
+      <th>Cost Price</th>
+      <td><%= number_to_currency product.cost_price %></td>
+      <th>Recommanded Price</th>
+      <td>
+        <%= number_to_currency product.profit_price %>
+      </td>
+    <% else %>
+      <td colspan="4"></td>
+    <% end %>
+  </tr>
+
+  <tr class="success">
+    <td colspan="8">
+      <h3>HQ Stocks</h3>
+    </td>
+  </tr>
+  <tr>
+    <th>Current Stocks</th>
+    <td><%= product.current_stock %></td>
+    <th>Available Stocks</th>
+    <td><%= product.available_stock %></td>
+    <th>Minimum Stocks</th>
+    <td><%= product.minimum_stock %></td>
+    <td colspan="2"></td>
+  </tr>
+
+  <tr class="success">
+    <td colspan="8">
+      <h3>Store Stocks</h3>
+    </td>
+  </tr>
+
+  <% if current_user.manager? %>
+    <%= render partial: "stocks/stock_in_store", locals: { stock: product.stock_in_store(current_user.store) } %>
+  <% else %>
+    <% product.stocks.each do |stock| %>
+      <%= render partial: "stocks/stock_in_store", locals: { stock: stock } %>
+    <% end %>
+  <% end %>
+
+</table>
+
+<p>
+  <% if can? :manage, Product %>
+    <%= link_to "Edit Product", edit_product_path(product) %>
+  <% end %>
+
+  <% if can? :create, Stock %>
+    <%= link_to "Stock this Product", new_product_stock_path(product) %>
+  <% end %>
+</p>

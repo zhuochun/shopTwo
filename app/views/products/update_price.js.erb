@@ -1,2 +1,2 @@
-$("#price-tag").html("<%= number_to_currency @product.daily_price %>")
+$(".price-tag").html("<%= number_to_currency @product.daily_price %>")
 $(".product-detail").before("<%= escape_javascript(alert_box("Price updated to #{number_to_currency @product.daily_price}.", "success")) %>")
