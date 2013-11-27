@@ -42,7 +42,16 @@ class Product < ActiveRecord::Base
   # scopes
   default_scope -> { order(:name).includes(:manufacturer, :category) }
   scope :new_in_store, -> { order(created_at: :desc) }
-  scope :popular, -> { order(current_stock: :desc) }
+  scope :popular, -> (num) do
+    Product.find(
+      SettleItem.unscoped
+                .select(:barcode)
+                .group(:barcode)
+                .sum(:quantity)
+                .take(num)
+                .map { |r| r.first }
+    )
+  end
 
   # properties
   include ActivePricing

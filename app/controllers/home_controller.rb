@@ -4,8 +4,8 @@ class HomeController < ApplicationController
     if current_user && current_user.management?
       render :dashboard
     else
-      @new_products = Product.new_in_store.paginate(page: params[:page], per_page: 4)
-      @popular_products = Product.popular.paginate(page: params[:page], per_page: 40)
+      @new_products = Product.new_in_store.take(4)
+      @popular_products = Product.popular(40)
     end
   end
 
