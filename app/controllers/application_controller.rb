@@ -25,10 +25,12 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:sign_up) << :username
     devise_parameter_sanitizer.for(:sign_up) << :birthday
     devise_parameter_sanitizer.for(:sign_up) << :phone
+    devise_parameter_sanitizer.for(:sign_up) << :location
 
     # edit account
     devise_parameter_sanitizer.for(:account_update) << :username
     devise_parameter_sanitizer.for(:account_update) << :birthday
     devise_parameter_sanitizer.for(:account_update) << :phone
+    devise_parameter_sanitizer.for(:account_update) << :location
   end
 end

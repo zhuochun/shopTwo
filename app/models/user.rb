@@ -24,6 +24,7 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  store_id               :integer
+#  location               :text
 #
 
 class User < ActiveRecord::Base

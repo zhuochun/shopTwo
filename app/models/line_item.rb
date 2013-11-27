@@ -2,14 +2,15 @@
 #
 # Table name: line_items
 #
-#  id         :integer          not null, primary key
-#  product_id :integer
-#  cart_id    :integer
-#  order_id   :integer
-#  quantity   :integer          default(1)
-#  price      :decimal(9, 2)    default(0.0)
-#  created_at :datetime
-#  updated_at :datetime
+#  id            :integer          not null, primary key
+#  product_id    :integer
+#  cart_id       :integer
+#  order_id      :integer
+#  quantity      :integer          default(1)
+#  price         :decimal(9, 2)    default(0.0)
+#  created_at    :datetime
+#  updated_at    :datetime
+#  discount_rate :decimal(3, 2)
 #
 
 class LineItem < ActiveRecord::Base
