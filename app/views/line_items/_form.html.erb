@@ -1,14 +1,40 @@
-<%= simple_form_for(@line_item) do |f| %>
+<%= simple_form_for(product.line_items.build) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :product %>
-    <%= f.association :cart %>
-    <%= f.association :order %>
-    <%= f.input :quantity %>
+    <%= f.input :quantity,
+      collection: quantity_range(product.available_stock),
+      include_blank: false,
+      input_html: { class: "form-control" },
+      wrapper_html: { class: "form-group" } %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.submit "Add to Cart", class: "btn btn-primary" %>
+    <span>
+      <span id="line-item-purchase-quantity">1</span>
+      <%= " x #{number_to_currency product.daily_price} = " %>
+      <b id="line-item-purchase-total-price">
+        <%= "#{number_to_currency product.daily_price}" %>
+      </b>
+    </span>
   </div>
 <% end %>
+
+<script>
+  $(function() {
+    var price = <%= product.daily_price %>
+
+    function update_total_price() {
+      var quantity = $(this).val(),
+          total_price = "$" + price * quantity;
+
+      total_price = total_price.substring(0, total_price.indexOf('.') + 3);
+
+      $("#line-item-purchase-quantity").html(quantity);
+      $("#line-item-purchase-total-price").html(total_price);
+    }
+
+    $("#line_item_quantity").on("change", update_total_price);
+  })
+</script>

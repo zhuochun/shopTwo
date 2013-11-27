@@ -5,6 +5,7 @@
     </div>
     <div class="col-xm-12 col-sm-7 col-sm-offset-1">
       <h2><%= product.name %></h2>
+
       <dl class="dl-horizontal">
         <dt><strong>Price</strong></dt>
         <dd class="lead text-danger price-tag"><%= number_to_currency product.daily_price %></dd>
@@ -24,19 +25,21 @@
         <dd><%= link_to product.manufacturer.name, product.manufacturer %></dd>
       </dl>
 
-      <div class="buy-cart row">
-        <div class="col-md-6">
-          <div class="input-group">
-            <span class="input-group-addon">Quantity</span>
-            <input type="text" class="form-control" value="1" placeholder="1">
-            <span class="input-group-btn">
-                <button class="btn btn-danger">Add to Cart</button>
-            </span>
+      <%= display_product_availability(product.available_stock) %>
+
+      <% unless product.available_stock < 1 %>
+        <div class="buy-cart-panel panel panel-success">
+          <div class="panel-heading">
+            <h3 class="panel-title">Purchase</h3>
           </div>
-        </div>
-        <div class="col-md-6">
-        </div>
-      </div> <!-- buy-cart -->
+          <div class="panel-body">
+          <%=
+            render partial: "line_items/form",
+                   locals: { product: product }
+          %>
+          </div>
+        </div> <!-- buy-cart -->
+      <% end %>
     </div>
   </div> <!-- row -->
 </div> <!-- product-detail -->

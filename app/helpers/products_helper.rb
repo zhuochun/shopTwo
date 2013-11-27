@@ -1,5 +1,15 @@
 module ProductsHelper
 
+  # display products' stock availability
+  def display_product_availability(stock)
+    available = stock > 0
+
+    content_tag :p, class: "lead text-#{available ? 'success' : 'muted' }" do
+      available ? "In Stock" : "Out of Stock"
+    end
+  end
+
+  # display from 0 to 5 stars
   def display_popularity_stars(sell)
     result = []
     empty, filled  = popularity_stars(sell)

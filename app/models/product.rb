@@ -29,6 +29,9 @@ class Product < ActiveRecord::Base
   has_many :settle_items, foreign_key: 'barcode'
   has_many :settlements, through: :settle_items
 
+  has_many :line_items
+  has_many :orders, through: :line_items
+
   # validations
   validates :name, :barcode, :cost_price, :current_stock, :minimum_stock, presence: true
   validates :category, :manufacturer, presence: true
