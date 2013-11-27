@@ -1,15 +1,23 @@
 <h1>New Products</h1>
 
+<hr>
+
 <%=
   render partial: "products/products_thumbnail",
          locals: {
            products: @new_products,
-           divider_num: 4,
-           options: { type: "new-product-item" }
+           divider_num: 6,
+           options: {
+             type: "popular-product-item",
+             span: 2,
+             size: "100x100"
+           }
          }
 %>
 
 <h1>Popular Products</h1>
+
+<hr>
 
 <%=
   render partial: "products/products_thumbnail",

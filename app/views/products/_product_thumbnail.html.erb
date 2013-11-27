@@ -3,16 +3,12 @@
     <div id="<%= dom_id(product) %>" class="thumbnail product-item <%= opts[:type] || "" %>">
       <%= link_to(image_tag(product.image_path, size: opts[:size] || "200x200", alt: product.name), product)  %>
       <div class="caption">
-        <h3><%= link_to(product.name.titleize, product) %></h3>
+        <h4><%= link_to(product.name.titleize, product) %></h4>
         <% unless opts[:no_category] %>
         <h5><%= link_to(product.category.name, product.category) %></h5>
         <% end %>
-        <% if opts[:no_buying] %>
+        <% unless opts[:no_buying] %>
           <p class="text-danger">
-            <%= number_to_currency product.daily_price %>
-          </p>
-        <% else %>
-          <p class="lead text-danger">
             <%= number_to_currency product.daily_price %>
           </p>
         <% end %>

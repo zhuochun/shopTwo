@@ -4,7 +4,7 @@ class HomeController < ApplicationController
     if current_user && current_user.management?
       render :dashboard
     else
-      @new_products = Product.new_in_store.take(4)
+      @new_products = Product.new_in_store.take(6)
       @popular_products = Product.popular(40)
     end
   end
