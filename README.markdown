@@ -1,6 +1,6 @@
 # ShopTwo
 
-Course CG3002 Server-side, built with Ruby on Rails.
+Course CG3002 Server-side, built with Ruby on Rails. [Some screenshots in Wiki](https://github.com/zhuochun/shopTwo/wiki)
 
 # Prerequisite
 
