@@ -12,9 +12,8 @@
             <%= number_to_currency product.daily_price %>
           </p>
         <% else %>
-          <p>
-            <%= link_to "Details", product, class: "btn btn-primary" %>
-            <%= link_to "Buy at $#{product.daily_price}", product, class: "btn btn-success" %>
+          <p class="lead text-danger">
+            <%= number_to_currency product.daily_price %>
           </p>
         <% end %>
       </div>

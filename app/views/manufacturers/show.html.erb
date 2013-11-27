@@ -2,15 +2,24 @@
 
 <% if can? :manage, Manufacturer %>
   <%= link_to 'Edit Manufacturer', edit_manufacturer_path(@manufacturer) %> |
-  <%= link_to 'Destroy', @manufacturer, method: :delete, data: { confirm: 'Are you sure?' } %> |
+  <%= link_to 'Destroy', @manufacturer, method: :delete, data: { confirm: 'Are you sure?' } %>
 <% end %>
-
-<%= link_to 'Back', manufacturers_path %>
 
 <hr>
 
 <h2>Products</h2>
 
-<%= render "products/products" %>
+<% if user_signed_in? && current_user.management? %>
+  <%= render "products/products" %>
+<% else %>
+  <%=
+    render partial: "products/products_thumbnail",
+           locals: {
+             products: @products,
+             divider_num: 4,
+             options: { type: "category-product-item" }
+           }
+  %>
+<% end %>
 
 <%= will_paginate @products %>
