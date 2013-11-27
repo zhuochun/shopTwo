@@ -24,7 +24,8 @@ ServerRails::Application.routes.draw do
       post 'batch_create'
     end
   end
-  # alias to transactions
+
+  # transactions
   resources :settlements do
     member do
       get 'search'
@@ -46,6 +47,11 @@ ServerRails::Application.routes.draw do
   end
   resources :manufacturers
   resources :categories
+
+  # online shop
+  resources :carts
+  resources :orders
+  resources :line_items
 
   # custom pages
   get '/dashboard', to: 'home#dashboard', as: 'dashboard'
