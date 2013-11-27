@@ -14,6 +14,18 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
+    unless user_signed_in?
+      redirect_to new_user_session_url, alert: "Please login before proceeds to Checkout."
+      return
+    end
+
+    @cart = current_cart
+
+    if @cart.empty?
+      redirect_to root_url, notice: "Your cart is empty."
+      return
+    end
+
     @order = Order.new
   end
 
