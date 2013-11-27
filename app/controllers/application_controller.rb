@@ -6,6 +6,17 @@ class ApplicationController < ActionController::Base
   # Add additional parameters to devise user
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
+  # Get current cart or create a new cart
+  def current_cart
+    @cart ||= Cart.find(session[:cart_id])
+  rescue ActiveRecord::RecordNotFound
+    cart = Cart.create
+    session[:cart_id] = cart.id
+    @cart = cart
+  end
+  # Add it as a helper as well
+  helper_method :current_cart
+
   protected
 
   # Add more user parameters permitted

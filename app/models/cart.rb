@@ -7,6 +7,6 @@ class Cart < ActiveRecord::Base
 
   # get total quantity
   def quantity
-    line_items.inject { |sum, item| sum + item.quantity }
+    line_items.inject { |sum, item| sum + item.quantity } || 0
   end
 end
