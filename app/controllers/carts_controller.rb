@@ -10,6 +10,7 @@ class CartsController < ApplicationController
   # GET /carts/1
   # GET /carts/1.json
   def show
+    @popular_products = Product.popular(6)
   end
 
   # GET /carts/new

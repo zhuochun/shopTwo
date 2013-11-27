@@ -14,6 +14,11 @@ module Stockable
     current_stock - stocks.sum('quantity')
   end
 
+  # available for sell
+  def in_stock?
+    available_stock > 0
+  end
+
   # stock in stores
   def stock_in_store(store)
     if store.nil?

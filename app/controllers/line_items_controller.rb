@@ -24,14 +24,16 @@ class LineItemsController < ApplicationController
   # POST /line_items
   # POST /line_items.json
   def create
-    @line_item = LineItem.new(line_item_params)
+    @cart = current_cart
+    @product = Product.find(line_item_params[:product_id])
+    @line_item = @cart.line_items.new(line_item_params)
 
     respond_to do |format|
       if @line_item.save
-        format.html { redirect_to @line_item, notice: 'Line item was successfully created.' }
+        format.html { redirect_to @cart, notice: 'Product was successfully added to your Cart.' }
         format.json { render action: 'show', status: :created, location: @line_item }
       else
-        format.html { render action: 'new' }
+        format.html { redirect_to @product, notice: 'Product was not added to your Cart.' }
         format.json { render json: @line_item.errors, status: :unprocessable_entity }
       end
     end

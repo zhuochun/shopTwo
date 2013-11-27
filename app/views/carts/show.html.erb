@@ -1,4 +1,61 @@
-<p id="notice"><%= notice %></p>
+<h1>Shopping Cart</h1>
 
-<%= link_to 'Edit', edit_cart_path(@cart) %> |
-<%= link_to 'Back', carts_path %>
+<hr>
+
+<% if @cart.empty? %>
+  <p class="lead">
+    Your Shopping Cart is empty.
+    <br>
+    <small><%= link_to "Let's Go Shopping :)", "/" %></small>
+  </p>
+<% else %>
+  <table class="table">
+    <tr>
+      <th colspan="2">Items to buy now</th>
+      <th>Price</th>
+      <th>Quantity</th>
+    </tr>
+
+    <%= render @cart.line_items %>
+
+    <tr class="active">
+      <td colspan="2">
+      </td>
+      <th>Subtotal</th>
+      <td class="lead text-danger"><%= number_to_currency @cart.subtotal %></td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td colspan="3">
+        <div class="pull-right">
+          <%= link_to "Empty Cart", orders_path %>
+          &nbsp;
+          <%= link_to "Proceed to Checkout", orders_path, class: "btn btn-warning btn-lg" %>
+        </div>
+      </td>
+    </tr>
+
+  </table>
+<% end %>
+
+<small>The price and availability of items at ShopTwo are subject to change. The Cart is a temporary place to store a list of your items and reflects each item's most recent price.</small>
+
+<hr>
+
+<h2 class="text-muted">More Popular Products</h2>
+<hr>
+<%=
+  render partial: "products/products_thumbnail",
+         locals: {
+           products: @popular_products,
+           divider_num: 6,
+           options: {
+             type: "popular-product-item",
+             no_buying: true,
+             no_category: true,
+             span: 2,
+             size: "100*100"
+           }
+         }
+%>

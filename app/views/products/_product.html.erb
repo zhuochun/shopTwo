@@ -25,7 +25,7 @@
         <dd><%= link_to product.manufacturer.name, product.manufacturer %></dd>
       </dl>
 
-      <%= display_product_availability(product.available_stock) %>
+      <%= display_product_availability(product) %>
 
       <% unless product.available_stock < 1 %>
         <div class="buy-cart-panel panel panel-success">
