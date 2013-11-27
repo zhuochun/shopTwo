@@ -14,6 +14,19 @@ class Cart < ActiveRecord::Base
   # scope
   default_scope -> { includes(:line_items) }
 
+  # add a line item
+  def add_item(params)
+    item = line_items.where(product_id: params[:product_id]).take
+
+    if item
+      item.quantity += params[:quantity].to_i
+    else
+      item = line_items.new(params)
+    end
+
+    item
+  end
+
   # get total quantity
   def quantity
     line_items.inject(0) { |sum, item| sum + item.quantity } || 0

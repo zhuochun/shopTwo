@@ -25,8 +25,7 @@ class LineItemsController < ApplicationController
   # POST /line_items.json
   def create
     @cart = current_cart
-    @product = Product.find(line_item_params[:product_id])
-    @line_item = @cart.line_items.new(line_item_params)
+    @line_item = @cart.add_item(line_item_params)
 
     respond_to do |format|
       if @line_item.save
@@ -57,8 +56,9 @@ class LineItemsController < ApplicationController
   # DELETE /line_items/1.json
   def destroy
     @line_item.destroy
+
     respond_to do |format|
-      format.html { redirect_to line_items_url }
+      format.html { redirect_to line_item.cart }
       format.json { head :no_content }
     end
   end
@@ -66,7 +66,11 @@ class LineItemsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_line_item
-      @line_item = LineItem.find(params[:id])
+      if can?(:view, LineItem)
+        @line_item = LineItem.find(params[:id])
+      else
+        @line_item = current_cart.line_items.find(params[:id])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
