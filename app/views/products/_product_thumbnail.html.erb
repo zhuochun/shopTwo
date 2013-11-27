@@ -1,5 +1,5 @@
 <% unless product.nil? %>
-  <div class="col-sm-12 col-md-<%= opts[:span] || "3" %>">
+  <div class="col-sm-<%= opts[:span] || "3" %>">
     <div id="<%= dom_id(product) %>" class="thumbnail product-item <%= opts[:type] || "" %>">
       <%= link_to(image_tag(product.image_path, size: opts[:size] || "200x200", alt: product.name), product)  %>
       <div class="caption">
