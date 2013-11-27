@@ -19,9 +19,9 @@ class Ability
   # See the wiki for details:
   # https://github.com/ryanb/cancan/wiki/Defining-Abilities
   def initialize(user)
-    user ||= User.new # guest user (not logged in)
+    @user = user || User.new # guest user (not logged in)
 
-    if user.administrater?
+    if @user.administrater?
       can :manage, Product
       can :manage, Category
       can :manage, Manufacturer
@@ -30,25 +30,32 @@ class Ability
 
       can :read, :all
       can :view, :all
-    elsif user.manager?
+
+      online_shop_power_ability
+    elsif @user.manager?
       can :manage, Stock
       can :manage, Settlement
       can :manage, SettleItem
-      can :manage, Store, id: user.store_id
+      can :manage, Store, id: @user.store_id
 
       can :read, :all
       can :view, :all
-    elsif user.employee?
+
+      online_shop_power_ability
+    elsif @user.employee?
       can :read, Stock
       can :read, Settlement
       can :read, SettleItem
       can :read, User, role: User::CUSTOMER
 
       basic_ability
-    elsif user.customer?
+      online_shop_ability
+    elsif @user.customer?
       basic_ability
+      online_shop_ability
     else
       basic_ability
+      online_shop_ability
     end
   end
 
@@ -56,5 +63,17 @@ class Ability
     can :read, Product
     can :read, Category
     can :read, Manufacturer
+  end
+
+  def online_shop_ability
+    can [:read, :create, :edit, :destroy], Cart
+    can [:read, :create, :edit, :destroy], Order, user_id: @user.id
+    can [:read, :create, :edit, :destroy], LineItem
+  end
+
+  def online_shop_power_ability
+    can :manage, Cart
+    can :manage, Order, user_id: @user.id
+    can :manage, LineItem
   end
 end
