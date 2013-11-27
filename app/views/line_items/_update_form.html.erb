@@ -1,0 +1,12 @@
+<%= simple_form_for(item) do |f| %>
+    <p>
+      <input type="number" min="1" max="99"
+        name="line_item[quantity]"
+        class="line-item-quantity"
+        value="<%= item.quantity %>"
+        data-quantity="<%= item.quantity %>" />
+    </p>
+    <p>
+      <%= f.submit "Update", class: "hidden update-line-item-quantity" %>
+    </p>
+<% end %>

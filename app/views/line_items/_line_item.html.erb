@@ -1,4 +1,4 @@
-<tr>
+<tr id="<%= dom_id(line_item) %>">
   <td>
     <%= link_to(image_tag(line_item.image_path, alt: line_item.name),
                 line_item.product, class: "pull-left cart-product-image") %>
@@ -13,6 +13,16 @@
       <%= link_to "Delete", line_item, method: :delete, confirm: "Are you sure?" %>
     </p>
   </td>
-  <td class="text-danger"><%= number_to_currency line_item.sell_price %></td>
-  <td><%= line_item.quantity %></td>
+  <td class="text-danger">
+    <p>
+      <span class="lead text-danger">
+        <%= number_to_currency line_item.actual_price %>
+      </span>
+      <br>
+      <%= display_line_item_discount(line_item) %>
+    </p>
+  </td>
+  <td>
+    <%= render partial: "line_items/update_form", locals: { item: line_item } %>
+  </td>
 </tr>

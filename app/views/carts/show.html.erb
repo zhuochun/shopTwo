@@ -29,14 +29,37 @@
       <td></td>
       <td colspan="3">
         <div class="pull-right">
-          <%= link_to "Empty Cart", orders_path %>
+          <%= link_to "Empty Cart", @cart, method: :delete, confirm: "Are you sure?" %>
           &nbsp;
-          <%= link_to "Proceed to Checkout", orders_path, class: "btn btn-warning btn-lg" %>
+          <%= link_to "Proceed to Checkout", orders_path, class: "btn btn-danger btn-lg" %>
         </div>
       </td>
     </tr>
-
   </table>
+
+  <script>
+    $(function() {
+      $(".line-item-quantity").on("change", function() {
+        var $this = $(this),
+            new_quantity = parseInt($this.val(), 10),
+            old_quantity = parseInt($this.data("quantity"), 10);
+
+        // quantity range
+        if (new_quantity > 99) {
+          $this.val(new_quantity = 99);
+        } else if (new_quantity < 1) {
+          $this.val(new_quantity = 1);
+        }
+
+        // update link button
+        if (new_quantity != old_quantity) {
+          $this.parents("td").find(".update-line-item-quantity").removeClass("hidden");
+        } else {
+          $this.parents("td").find(".update-line-item-quantity").addClass("hidden");
+        }
+      })
+    });
+  </script>
 <% end %>
 
 <small>The price and availability of items at ShopTwo are subject to change. The Cart is a temporary place to store a list of your items and reflects each item's most recent price.</small>
