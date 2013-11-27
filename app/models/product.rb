@@ -53,6 +53,11 @@ class Product < ActiveRecord::Base
     "products/#{barcode % 43}.jpg"
   end
 
+  # related products
+  def related_products
+    category.random_products(6)
+  end
+
   # dynamic pricing
   def self.active_pricing
     Product.transaction do

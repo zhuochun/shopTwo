@@ -2,6 +2,23 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.product-detail {
+    .dl-horizontal {
+        dt {
+            width: 90px;
+        }
+        dd {
+            margin-left: 100px;
+        }
+    }
+}
+
+.related-product-item.thumbnail {
+    img {
+        height: 120px;
+    }
+}
+
 .buy-cart {
     margin-top: 30px;
     margin-bottom: 30px;

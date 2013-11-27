@@ -10,8 +10,20 @@
 #
 
 class Category < ActiveRecord::Base
+  # relations
   has_many :products
 
   # validations
   validates :name, presence: true
+
+  # take any num products
+  def random_products(num)
+    if products_count > num
+      products.offset(Random.rand(products_count - num)).take(num)
+    elsif products_count > 1
+      products.take(num)
+    else
+      Product.none
+    end
+  end
 end

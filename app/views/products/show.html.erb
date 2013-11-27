@@ -1,5 +1,28 @@
-<h1>Product Detail</h1>
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li><%= link_to @product.category.name, @product.category %></li>
+  <li><%= link_to @product.manufacturer.name, @product.manufacturer %></li>
+</ol>
 
 <hr>
 
 <%= render @product %>
+
+<% unless @related_products.none? %>
+  <h2 class="text-muted">Related Products from <%= @product.category.name %></h2>
+  <hr>
+  <%=
+    render partial: "products/products_thumbnail",
+           locals: {
+             products: @related_products,
+             divider_num: 6,
+             options: {
+               type: "related-product-item",
+               no_buying: true,
+               no_category: true,
+               span: 2,
+               size: "100*100"
+             }
+           }
+  %>
+<% end %>

@@ -1,17 +1,28 @@
 <div class="product-detail">
   <div class="row">
     <div class="col-md-4">
-      <img data-src="holder.js/300x300" alt="View Details of <%= product.name %>">
+      <%= image_tag(product.image_path, size: "500x500", alt: product.name, class: "img-responsive") %>
     </div>
     <div class="col-md-8">
       <h2><%= product.name %></h2>
-      <h5><%= product.category.name %> - <%= product.manufacturer.name %></h5>
-      <h2>
-        <span class="label label-primary" id="price-tag"><%= number_to_currency product.daily_price %></span>
+      <dl class="dl-horizontal">
+        <dt><strong>Price</strong></dt>
+        <dd class="lead text-danger" id="price-tag"><%= number_to_currency product.daily_price %></dd>
         <% if product.bundle_unit > 0 %>
-          <small>Buy <%= product.bundle_unit %> Get 10% Discount!</small>
+          <dt><strong>Discount</strong></dt>
+          <dd>10% for <%= product.bundle_unit %> and more</small>
         <% end %>
-      </h2>
+        <dt><strong>Barcode</strong></dt>
+        <dd><%= product.barcode %></dd>
+        <dt>
+          <strong>Popularity</strong>
+          <dd><%= display_popularity_stars(product.weekly_sell) %></dd>
+        </dt>
+        <dt><strong>Category</strong></dt>
+        <dd><%= link_to product.category.name, product.category %></dd>
+        <dt><strong>Manufacturer</strong></dt>
+        <dd><%= link_to product.manufacturer.name, product.manufacturer %></dd>
+      </dl>
 
       <div class="buy-cart row">
         <div class="col-md-6">
@@ -24,13 +35,10 @@
           </div>
         </div>
         <div class="col-md-6">
-          <p>Sold <%= pluralize(product.monthly_sell, 'unit') %> this month.</p>
         </div>
       </div> <!-- buy-cart -->
 
       <p>
-        <strong>Barcode:</strong>
-        <%= product.barcode %>
       </p>
 
       <% if can? :view, Product %>
