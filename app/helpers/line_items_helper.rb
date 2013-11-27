@@ -16,4 +16,16 @@ module LineItemsHelper
     end
   end
 
+  # display discount info
+  def display_line_item_discount(item)
+    unless item.discount < 0.01
+      content_tag :small, class: "text-muted" do
+        %{
+          You Saved: <br> #{number_to_currency item.discount_value}
+          (#{number_to_percentage(item.discount * 100, precision: 0)})
+        }.html_safe
+      end
+    end
+  end
+
 end

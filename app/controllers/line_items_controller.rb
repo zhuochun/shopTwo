@@ -29,7 +29,7 @@ class LineItemsController < ApplicationController
 
     respond_to do |format|
       if @line_item.save
-        format.html { redirect_to @cart, notice: 'Product was successfully added to your Cart.' }
+        format.html { redirect_to @cart, notice: line_item_created_message }
         format.json { render action: 'show', status: :created, location: @line_item }
       else
         format.html { redirect_to @product, notice: 'Product was not added to your Cart.' }
@@ -76,5 +76,13 @@ class LineItemsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def line_item_params
       params.require(:line_item).permit(:product_id, :cart_id, :order_id, :quantity)
+    end
+
+    # Added to Cart message
+    def line_item_created_message
+      %{
+        <p>Product was successfully added to your Cart.</p>
+        <p><a class='btn btn-success' href='/'>Continue Shopping</a></p>
+      }.html_safe
     end
 end

@@ -37,8 +37,18 @@ class Cart < ActiveRecord::Base
     quantity < 1
   end
 
-  # get sub total
+  # get subtotal
   def subtotal
-    line_items.inject(0.0) { |sum, item| sum + item.subtotal } || 0.0
+    line_items.to_a.sum { |item| item.subtotal }
+  end
+
+  # get sub total without discount
+  def subtotal_without_discount
+    line_items.to_a.sum { |item| item.subtotal_without_discount }
+  end
+
+  # get discount value subtotal
+  def discount_subtotal
+    line_items.to_a.sum { |item| item.discount_value }
   end
 end
