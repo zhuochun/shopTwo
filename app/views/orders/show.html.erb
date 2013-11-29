@@ -1,29 +1,56 @@
-<p id="notice"><%= notice %></p>
+<h1>
+  Your Order
+  <small><%= timezone_date(@order.created_at) %></small>
+</h1>
 
-<p>
-  <strong>User:</strong>
-  <%= @order.user %>
-</p>
+<div class="row">
+  <div class="col-sm-4">
+    <h2>Shipping To</h2>
 
-<p>
-  <strong>Name:</strong>
-  <%= @order.name %>
-</p>
+    <h3>
+      <%= @order.name %><br>
+      <small><%= @order.email %></small>
+    </h3>
+    <p class="text-muted">
+      <%=  @order.address %><br>
+      <abbr title="Phone">P:</abbr> <%= number_to_phone @order.phone %>
+    </p>
+  </div>
+  <div class="col-sm-4 col-sm-offset-4">
+    <div class="panel panel-info order-summary-panel">
+      <div class="panel-heading">
+        <h3 class="panel-title panel-warning">Order Summary</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table">
+          <tr>
+            <td>Items:</td>
+            <td class="text-right"><%= number_to_currency @order.subtotal_without_discount %></td>
+          </tr>
+          <tr>
+            <td>Discount:</td>
+            <td class="text-right text-success">-<%= number_to_currency @order.discount_subtotal %></td>
+          </tr>
+          <tr class="lead text-danger">
+            <td>Order Total:</td>
+            <td class="text-right"><%= number_to_currency @order.subtotal %></td>
+          </tr>
+        </table>
+      </div> <!-- body -->
+      <div class="panel-footer text-muted text-right">
+        You earned <%= number_with_delimiter @order.credits %> credits.
+      </div>
+    </div> <!-- panel -->
+  </div>
+</div>
 
-<p>
-  <strong>Email:</strong>
-  <%= @order.email %>
-</p>
+<h2>Items</h2>
 
-<p>
-  <strong>Phone:</strong>
-  <%= @order.phone %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @order.address %>
-</p>
-
-<%= link_to 'Edit', edit_order_path(@order) %> |
-<%= link_to 'Back', orders_path %>
+<table class="table">
+  <tr>
+    <th colspan="2">Items</th>
+    <th>Price</th>
+    <th>Quantity</th>
+  </tr>
+  <%= render @order.line_items, no_edit: true %>
+</table>

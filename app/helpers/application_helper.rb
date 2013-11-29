@@ -22,4 +22,8 @@ module ApplicationHelper
     content_tag :i, "", class: "glyphicon glyphicon-#{name}"
   end
 
+  def timezone_date(datetime)
+    datetime.in_time_zone.strftime("%B %d, %Y") 
+  end
+
 end

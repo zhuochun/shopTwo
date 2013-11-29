@@ -10,7 +10,9 @@
       <br>
       <%= display_line_item_availability(line_item.product) %>
       <br>
-      <%= link_to "Delete", line_item, method: :delete, confirm: "Are you sure?" %>
+      <% unless defined?(no_edit) && no_edit %>
+        <%= link_to "Delete", line_item, method: :delete, confirm: "Are you sure?" %>
+      <% end %>
     </p>
   </td>
   <td class="text-danger">
@@ -22,7 +24,11 @@
       <%= display_line_item_discount(line_item) %>
     </p>
   </td>
-  <td>
-    <%= render partial: "line_items/update_form", locals: { item: line_item } %>
+  <td class="lead">
+    <% if defined?(no_edit) && no_edit %>
+      <%= line_item.quantity %>
+    <% else %>
+      <%= render partial: "line_items/update_form", locals: { item: line_item } %>
+    <% end %>
   </td>
 </tr>
