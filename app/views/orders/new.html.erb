@@ -1,5 +1,57 @@
-<h1>New order</h1>
+<ol class="breadcrumb">
+  <li><%= link_to "Home", root_path %></li>
+  <li><%= link_to "Shopping", current_cart %></li>
+  <li class="active">Place Order</li>
+  <li class="active">Review</li>
+</ol>
 
-<%= render 'form' %>
+<h1>Review Your Order</h1>
 
-<%= link_to 'Back', orders_path %>
+<div class="row">
+  <div class="col-sm-8">
+    <div class="delivery-form well">
+      <%= render 'form' %>
+    </div> <!-- delivery-form -->
+    <div class="order-items panel panel-default">
+      <table class="table">
+        <tr>
+          <th colspan="2">Items</th>
+          <th>Price</th>
+          <th>Quantity</th>
+        </tr>
+        <%= render @order.line_items %>
+      </table>
+    </div> <!-- order-items-panel -->
+  </div>
+  <div class="col-sm-4">
+    <%= render 'order_summary' %>
+  </div>
+</div>
+
+<script>
+  $(function() {
+    $(".line-item-quantity").on("change", function() {
+      var $this = $(this),
+          new_quantity = parseInt($this.val(), 10),
+          old_quantity = parseInt($this.data("quantity"), 10);
+
+      // quantity range
+      if (new_quantity > 99) {
+        $this.val(new_quantity = 99);
+      } else if (new_quantity < 1) {
+        $this.val(new_quantity = 1);
+      }
+
+      // update link button
+      if (new_quantity != old_quantity) {
+        $this.parents("td").find(".update-line-item-quantity").removeClass("hidden");
+      } else {
+        $this.parents("td").find(".update-line-item-quantity").addClass("hidden");
+      }
+    });
+
+    $("#place-order-btn").on("click", function() {
+       $("#new_order").submit();
+    });
+  });
+</script>

@@ -1,0 +1,25 @@
+<div class="panel panel-info" data-spy="affix" data-offset-top="0">
+  <div class="panel-heading">
+    <h3 class="panel-title panel-warning">Order Summary</h3>
+  </div>
+  <div class="panel-body">
+    <table class="table">
+      <tr>
+        <td>Items:</td>
+        <td class="text-right"><%= number_to_currency @order.subtotal_without_discount %></td>
+      </tr>
+      <tr>
+        <td>Discount:</td>
+        <td class="text-right text-success">-<%= number_to_currency @order.discount_subtotal %></td>
+      </tr>
+      <tr class="lead text-danger">
+        <td>Order Total:</td>
+        <td class="text-right"><%= number_to_currency @order.subtotal %></td>
+      </tr>
+    </table>
+    <button type="button" class="btn btn-primary btn-lg btn-block" id="place-order-btn">Place Your Order</button>
+  </div> <!-- body -->
+  <div class="panel-footer text-muted">
+    You will earn <%= number_with_delimiter @order.credits %> credits.
+  </div>
+</div>

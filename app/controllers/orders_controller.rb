@@ -27,7 +27,8 @@ class OrdersController < ApplicationController
       return
     end
 
-    @order = current_user.create_order(@cart)
+    @order = current_user.orders.new
+    @order.add_user_info(current_user)
     @order.add_items_from_cart(@cart)
   end
 
@@ -38,7 +39,9 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    @order = Order.new(order_params)
+    @order = current_user.orders.new(order_params)
+    @order.add_user_info(current_user)
+    @order.add_items_from_cart(current_cart)
 
     respond_to do |format|
       if @order.save
@@ -83,6 +86,6 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:user_id, :name, :email, :phone, :address)
+      params.require(:order).permit(:name, :email, :phone, :address, :pay_type)
     end
 end
