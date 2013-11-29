@@ -22,6 +22,11 @@ class LineItem < ActiveRecord::Base
   # delegate
   delegate :name, :barcode, :image_path, :daily_price, :bundle_unit, to: :product
 
+  # has sufficient stock for quantity
+  def sufficient_stock?
+    quantity <= product.available_stock
+  end
+
   # get discount rate
   def discount
     @discount = discount_rate ||

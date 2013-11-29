@@ -9,6 +9,11 @@ module Payable
     quantity < 1
   end
 
+  # is all products out of stock
+  def out_of_stocks?
+    line_items.any?(&:sufficient_stock?) == false
+  end
+
   # get subtotal
   def subtotal
     line_items.to_a.sum(&:subtotal)

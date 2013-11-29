@@ -25,6 +25,9 @@ class OrdersController < ApplicationController
     if @cart.empty?
       redirect_to root_url, notice: "Your cart is empty."
       return
+    elsif @cart.out_of_stocks?
+      redirect_to @cart, alert: "Items are out of stocks."
+      return
     end
 
     @order = current_user.orders.new
@@ -45,7 +48,7 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
-        format.html { redirect_to @order, notice: 'Order was successfully created.' }
+        format.html { redirect_to @order, notice: 'Your order was successfully created.' }
         format.json { render action: 'show', status: :created, location: @order }
       else
         format.html { render action: 'new' }
