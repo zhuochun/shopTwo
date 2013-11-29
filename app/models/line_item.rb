@@ -22,19 +22,10 @@ class LineItem < ActiveRecord::Base
   # delegate
   delegate :name, :barcode, :image_path, :daily_price, :bundle_unit, to: :product
 
-  # get price at selling
-  def sell_price
-    if price < 0.01
-      product.daily_price
-    else
-      price
-    end
-  end
-
-  # get discount
+  # get discount rate
   def discount
-    discount_rate ||
-      if bundle_unit > 0 && quantity > bundle_unit
+    @discount = discount_rate ||
+      if bundle_unit > 0 && quantity >= bundle_unit
         0.1
       else
         0.0
@@ -46,19 +37,28 @@ class LineItem < ActiveRecord::Base
     sell_price * discount
   end
 
-  # get actual price
-  def actual_price
+  # get price after discount
+  def discount_price
     sell_price * (1 - discount)
   end
 
-  # get sub total
-  def subtotal
-    actual_price * quantity
+  # get price at selling
+  def sell_price
+    @sell_price = price || product.daily_price
   end
 
-  # get sub total without discount
+  # get subtotal
+  def subtotal
+    discount_price * quantity
+  end
+
+  # get subtotal without discount
   def subtotal_without_discount
     sell_price * quantity
   end
 
+  # get subtotal of discount value
+  def discount_subtotal
+    discount_value * quantity
+  end
 end

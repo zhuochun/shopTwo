@@ -11,16 +11,21 @@ module Payable
 
   # get subtotal
   def subtotal
-    line_items.to_a.sum { |item| item.subtotal }
+    line_items.to_a.sum(&:subtotal)
   end
 
   # get sub total without discount
   def subtotal_without_discount
-    line_items.to_a.sum { |item| item.subtotal_without_discount }
+    line_items.to_a.sum(&:subtotal_without_discount)
   end
 
   # get discount value subtotal
   def discount_subtotal
-    line_items.to_a.sum { |item| item.discount_value }
+    line_items.to_a.sum(&:discount_subtotal)
+  end
+
+  # calculate credits earned
+  def credits
+    (subtotal * 0.1).to_i
   end
 end
