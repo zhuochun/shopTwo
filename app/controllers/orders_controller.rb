@@ -15,6 +15,7 @@ class OrdersController < ApplicationController
   # GET /orders/new
   def new
     unless user_signed_in?
+      store_location_for(:user, new_order_path)
       redirect_to new_user_session_url, alert: "Please login before proceeds to Checkout."
       return
     end
@@ -26,7 +27,8 @@ class OrdersController < ApplicationController
       return
     end
 
-    @order = Order.new
+    @order = current_user.create_order(@cart)
+    @order.add_items_from_cart(@cart)
   end
 
   # GET /orders/1/edit
