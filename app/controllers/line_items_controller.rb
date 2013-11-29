@@ -45,9 +45,11 @@ class LineItemsController < ApplicationController
       if @line_item.update(line_item_params)
         format.html { redirect_to @line_item.cart, notice: 'Cart was successfully updated.' }
         format.json { head :no_content }
+        format.js
       else
         format.html { redirect_to @line_item.cart }
         format.json { render json: @line_item.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end

@@ -51,23 +51,20 @@ class User < ActiveRecord::Base
   scope :managers,  -> { where(role: [MANAGER, ADMIN]) }
 
   # Relationship
-  belongs_to :store
+  belongs_to :store # managers/employees
+  has_many :orders  # customers
 
-  # Public: is the user manage the store
+  # is the user manage the store
   def manage?(store)
     role == MANAGER && self.store == store
   end
 
-  # Public: is this a management role
+  # is this a management role
   def management?
-    if role == MANAGER || role == ADMIN
-      true
-    else
-      false
-    end
+    role == MANAGER || role == ADMIN
   end
 
-  # Public: role? methods
+  # is role? methods
   ROLES.each do |role|
     define_method "#{role}?" do
       self.role == role
