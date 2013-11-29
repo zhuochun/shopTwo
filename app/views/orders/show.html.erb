@@ -11,13 +11,13 @@
       <%= @order.name %><br>
       <small><%= @order.email %></small>
     </h3>
-    <p class="text-muted">
+    <p>
       <%=  @order.address %><br>
       <abbr title="Phone">P:</abbr> <%= number_to_phone @order.phone %>
     </p>
   </div>
   <div class="col-sm-4 col-sm-offset-4">
-    <div class="panel panel-info order-summary-panel">
+    <div class="panel panel-success order-summary-panel">
       <div class="panel-heading">
         <h3 class="panel-title panel-warning">Order Summary</h3>
       </div>
