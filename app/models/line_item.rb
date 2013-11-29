@@ -7,7 +7,7 @@
 #  cart_id       :integer
 #  order_id      :integer
 #  quantity      :integer          default(1)
-#  price         :decimal(9, 2)    default(0.0)
+#  price         :decimal(9, 2)
 #  created_at    :datetime
 #  updated_at    :datetime
 #  discount_rate :decimal(3, 2)

@@ -1,0 +1,15 @@
+<tr>
+  <td><%= timezone_date(order.created_at) %></td>
+  <% if can? :view, Order %>
+  <td><%= order.name %></td>
+  <td><%= order.email %></td>
+  <td><%= order.phone %></td>
+  <% end %>
+  <td><%= order.size %></td>
+  <td><%= number_to_currency order.price %></td>
+  <td><%= link_to 'Show', order %></td>
+  <% if can? :view, Order %>
+    <td><%= link_to 'Edit', edit_order_path(order) %></td>
+    <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  <% end %>
+</tr>

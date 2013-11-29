@@ -1,35 +1,31 @@
-<h1>Listing orders</h1>
+<% if can? :view, Order %>
+  <h1>Orders</h1>
+<% else %>
+  <h1>Your Orders</h1>
+<% end %>
 
-<table>
+<table class="table table-striped table-hover table-responsive">
   <thead>
     <tr>
-      <th>User</th>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>Address</th>
+      <th>Date</th>
+      <% if can? :view, Order %>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+      <% end %>
+      <th>Quantity</th>
+      <th>Price</th>
       <th></th>
-      <th></th>
-      <th></th>
+      <% if can? :view, Order %>
+        <th></th>
+        <th></th>
+      <% end %>
     </tr>
   </thead>
 
   <tbody>
-    <% @orders.each do |order| %>
-      <tr>
-        <td><%= order.user %></td>
-        <td><%= order.name %></td>
-        <td><%= order.email %></td>
-        <td><%= order.phone %></td>
-        <td><%= order.address %></td>
-        <td><%= link_to 'Show', order %></td>
-        <td><%= link_to 'Edit', edit_order_path(order) %></td>
-        <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
+    <%= render @orders %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Order', new_order_path %>
+<%= will_paginate @settlements %>

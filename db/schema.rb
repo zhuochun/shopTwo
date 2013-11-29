@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20131129093829) do
     t.string   "pay_type",   default: "Cash"
     t.decimal  "price"
     t.decimal  "discount"
+    t.integer  "size"
   end
 
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree

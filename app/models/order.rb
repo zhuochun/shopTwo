@@ -13,6 +13,7 @@
 #  pay_type   :string(255)      default("Cash")
 #  price      :decimal(, )
 #  discount   :decimal(, )
+#  size       :integer
 #
 
 class Order < ActiveRecord::Base
@@ -37,8 +38,9 @@ class Order < ActiveRecord::Base
   end
   # save the data at point of purchase
   def save_local_data_to_order_and_items
-    @price    = subtotal
-    @discount = discount_subtotal
+    self.price    = subtotal
+    self.discount = discount_subtotal
+    self.size     = quantity
 
     line_items.each do |i|
       i.price = i.sell_price

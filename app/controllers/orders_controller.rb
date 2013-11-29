@@ -4,7 +4,11 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    @orders = Order.all
+    if can? :view, Order
+      @orders = Order.includes(:user).paginate(page: params[:page], per_page: 50)
+    else
+      @orders = current_user.orders.paginate(page: params[:page], per_page: 50)
+    end
   end
 
   # GET /orders/1
