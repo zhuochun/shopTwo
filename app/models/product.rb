@@ -38,6 +38,14 @@ class Product < ActiveRecord::Base
   validates :current_stock, :minimum_stock, :bundle_unit, numericality: { greater_than_or_equal_to: 0 }
   validates :daily_price, :cost_price, numericality: { greater_than_or_equal_to: 0 }
   validates :barcode, format: { with: /\A\d{8}\z/, message: "invalid barcode" }
+  # custom validate
+  validate  :current_stock_larger_than_available_stock
+  # update and check quantity
+  def current_stock_larger_than_available_stock
+    if available_stock < 0
+      errors.add(:current_stock, "is less than available stock")
+    end
+  end
 
   # hooks
   before_validation -> { self.daily_price = cost_price * 1.3 if cost_price && !daily_price }
