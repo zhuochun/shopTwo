@@ -1,5 +1,7 @@
 <h1>Search for '<%= @query %>'</h1>
 
+<hr>
+
 <% if @products.empty? %>
 
   <p>Nothing is found.</p>
@@ -10,6 +12,17 @@
 
 <% else %>
 
+<% if administrative_view? %>
   <%= render partial: 'products/products', locals: { products: @products } %>
+<% else %>
+  <%=
+    render partial: "products/products_thumbnail",
+           locals: {
+             products: @products,
+             divider_num: 4,
+             options: { type: "search-product-item" }
+           }
+  %>
+<% end %>
 
 <% end %>

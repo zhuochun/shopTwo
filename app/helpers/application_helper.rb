@@ -26,4 +26,12 @@ module ApplicationHelper
     datetime.in_time_zone.strftime("%B %d, %Y") 
   end
 
+  def administrative_view?
+    user_signed_in? && current_user.management?
+  end
+
+  def customer_view?
+    !administrative_view?
+  end
+
 end
