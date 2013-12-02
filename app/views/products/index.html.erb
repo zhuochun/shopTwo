@@ -7,6 +7,17 @@
 
 <hr>
 
-<%= render "products" %>
+<% if administrative_view? %>
+  <%= render "products" %>
+<% else %>
+  <%=
+    render partial: "products/products_thumbnail",
+           locals: {
+             products: @products,
+             divider_num: 4,
+             options: { type: "product-page-item" }
+           }
+  %>
+<% end %>
 
 <%= will_paginate @products %>

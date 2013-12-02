@@ -27,7 +27,7 @@
 
       <%= display_product_availability(product) %>
 
-      <% unless product.available_stock < 1 %>
+      <% if product.in_stock? && customer_view? %>
         <div class="buy-cart-panel panel panel-success">
           <div class="panel-heading">
             <h3 class="panel-title">Purchase</h3>
