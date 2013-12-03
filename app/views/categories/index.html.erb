@@ -6,38 +6,52 @@
 
 <hr>
 
-<div class="row">
-  <div class="col-md-6">
-    <table class="table table-striped table-hover table-responsive col-md-6">
-      <thead>
-        <tr>
-          <th>No.</th>
-          <th>Name</th>
-          <th>Products</th>
-          <th></th>
-          <% if can? :manage, Category %>
-            <th></th>
-            <th></th>
+<% if customer_view? %>
+  <div class="row">
+    <% @categories.in_groups(3, false) do |group| %>
+      <div class="col-md-4">
+        <div class="list-group">
+          <% group.each do |item| %>
+            <%= link_to item.name, item, class: "list-group-item" %>
           <% end %>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @categories.each_with_index do |category, idx| %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="row">
+    <div class="col-md-6">
+      <table class="table table-striped table-hover table-responsive col-md-6">
+        <thead>
           <tr>
-            <td><%= idx + 1 %></td>
-            <td><%= category.name %></td>
-            <td><%= category.products_count %></td>
-            <td><%= link_to 'Show', category %></td>
+            <th>No.</th>
+            <th>Name</th>
+            <th>Products</th>
+            <th></th>
             <% if can? :manage, Category %>
-              <td><%= link_to 'Edit', edit_category_path(category) %></td>
-              <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <th></th>
+              <th></th>
             <% end %>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
 
-    <%= will_paginate @categories %>
+        <tbody>
+          <% @categories.each_with_index do |category, idx| %>
+            <tr>
+              <td><%= idx + 1 %></td>
+              <td><%= category.name %></td>
+              <td><%= category.products_count %></td>
+              <td><%= link_to 'Show', category %></td>
+              <% if can? :manage, Category %>
+                <td><%= link_to 'Edit', edit_category_path(category) %></td>
+                <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
+<% end %>
+
+<%= will_paginate @categories %>

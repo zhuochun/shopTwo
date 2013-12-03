@@ -6,38 +6,52 @@
 
 <hr>
 
-<div class="row">
-  <div class="col-md-6">
-    <table class="table table-striped table-hover table-responsive col-md-6">
-      <thead>
-        <tr>
-          <th>No.</th>
-          <th>Name</th>
-          <th>Products</th>
-          <th></th>
-          <% if can? :manage, Manufacturer %>
-            <th></th>
-            <th></th>
+<% if customer_view? %>
+  <div class="row">
+    <% @manufacturers.in_groups(3, false) do |group| %>
+      <div class="col-md-4">
+        <div class="list-group">
+          <% group.each do |item| %>
+            <%= link_to item.name, item, class: "list-group-item" %>
           <% end %>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @manufacturers.each_with_index do |manufacturer, idx| %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="row">
+    <div class="col-md-6">
+      <table class="table table-striped table-hover table-responsive col-md-6">
+        <thead>
           <tr>
-            <td><%= idx + 1 %></td>
-            <td><%= manufacturer.name %></td>
-            <td><%= manufacturer.products_count %></td>
-            <td><%= link_to 'Show', manufacturer %></td>
+            <th>No.</th>
+            <th>Name</th>
+            <th>Products</th>
+            <th></th>
             <% if can? :manage, Manufacturer %>
-              <td><%= link_to 'Edit', edit_manufacturer_path(manufacturer) %></td>
-              <td><%= link_to 'Destroy', manufacturer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <th></th>
+              <th></th>
             <% end %>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
 
-    <%= will_paginate @manufacturers %>
+        <tbody>
+          <% @manufacturers.each_with_index do |manufacturer, idx| %>
+            <tr>
+              <td><%= idx + 1 %></td>
+              <td><%= manufacturer.name %></td>
+              <td><%= manufacturer.products_count %></td>
+              <td><%= link_to 'Show', manufacturer %></td>
+              <% if can? :manage, Manufacturer %>
+                <td><%= link_to 'Edit', edit_manufacturer_path(manufacturer) %></td>
+                <td><%= link_to 'Destroy', manufacturer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
+<% end %>
+
+<%= will_paginate @manufacturers %>
