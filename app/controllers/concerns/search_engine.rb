@@ -56,7 +56,16 @@ module SearchEngine
 
     # search by name
     def by_name
-      @items.where('lower(name) LIKE ?', "%#{@query.downcase}%")
+      if @items.column_names.include?("category_id")
+        @items.includes(:category, :manufacturer)
+              .where(%{lower(products.name) LIKE :q
+                       OR lower(categories.name) LIKE :q
+                       OR lower(manufacturers.name) LIKE :q},
+                 q: "%#{@query.downcase}%")
+              .references(:category)
+      else
+        @items.where('lower(name) LIKE ?', "%#{@query.downcase}%")
+      end
     end
 
     # search by price

@@ -8,11 +8,10 @@ class ApplicationController < ActionController::Base
 
   # Get current cart or create a new cart
   def current_cart
-    @cart ||= Cart.find(session[:cart_id])
+    @current_cart ||= Cart.find(session[:cart_id])
   rescue ActiveRecord::RecordNotFound
-    cart = Cart.create
-    session[:cart_id] = cart.id
-    @cart = cart
+    @current_cart = Cart.create
+    session[:cart_id] = @current_cart.id
   end
   # Add it as a helper as well
   helper_method :current_cart

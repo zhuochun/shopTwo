@@ -21,6 +21,6 @@ class HomeController < ApplicationController
   def search
     @engine = SearchEngine::Searchable.new(Product, params[:q], all: true)
     @query  = @engine.query
-    @products = @engine.lookup.paginate(page: params[:page], per_page: 50).reorder(:daily_price)
+    @products = @engine.lookup.paginate(page: params[:page], per_page: 48).reorder(:daily_price)
   end
 end
