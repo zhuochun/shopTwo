@@ -8,36 +8,6 @@
 
 <%= render @product %>
 
-<% if @related_products.none? %>
-  <h2 class="text-muted">Popular Products</h2>
-  <hr>
-  <%=
-    render partial: "products/products_thumbnail",
-           locals: {
-             products: Product.popular(6),
-             divider_num: 6,
-             options: {
-               no_category: true,
-               type: "popular-product-item",
-               span: 2,
-               size: "100x100"
-             }
-           }
-  %>
-<% else %>
-  <h2 class="text-muted">Related Products from <%= @product.category.name %></h2>
-  <hr>
-  <%=
-    render partial: "products/products_thumbnail",
-           locals: {
-             products: @related_products,
-             divider_num: 6,
-             options: {
-               no_category: true,
-               type: "related-product-item",
-               span: 2,
-               size: "100x100"
-             }
-           }
-  %>
-<% end %>
+<%= render 'product_comments' %>
+
+<%= render 'product_related' %>

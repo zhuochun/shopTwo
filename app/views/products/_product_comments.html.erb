@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-sm-12">
+    <h2 class="text-muted">Customer Reviews</h2>
+    <hr>
+    <% if @comments_presenter.empty? %>
+      <p class="lead text-muted">No customer reviews.</p>
+    <% else %>
+      <div class="rating-summary">
+        <%= display_ratings(@comments_presenter.average) %>
+      </div>
+
+      <div class="customer-reviews">
+        <%= render @comments_presenter.comments %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% if @product.can_user_comment?(current_user) %>
+<div class="row">
+  <div class="col-sm-12">
+    <%= render partial: "comments/form", locals: { comment: @comments_presenter.new_comment(@product, current_user) } %>
+  </div>
+</div>
+<% end %>

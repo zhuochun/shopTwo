@@ -18,12 +18,19 @@ module ApplicationHelper
     end
   end
 
-  def button(name)
-    content_tag :i, "", class: "glyphicon glyphicon-#{name}"
+  # display ratings
+  def display_ratings(rating, max = 5, icon = 'heart')
+    result = []
+    empty, filled  = max - rating.to_i, rating.to_i
+
+    filled.times { result << "<i class='glyphicon glyphicon-#{icon}'></i>" }
+    empty.times { result << "<i class='glyphicon glyphicon-#{icon}-empty'></i>" }
+
+    result.join('').html_safe
   end
 
   def timezone_date(datetime)
-    datetime.in_time_zone.strftime("%B %d, %Y") 
+    datetime.in_time_zone.strftime("%B %d, %Y")
   end
 
   def administrative_view?
