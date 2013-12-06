@@ -29,6 +29,17 @@ module ApplicationHelper
     result.join('').html_safe
   end
 
+  # display filter nav pills
+  def display_filters(options, active)
+    content_tag :ul, class: "nav nav-pills" do
+      options.map do |option|
+        content_tag :li, class: ('active' if active == option) do
+          link_to option.titleize, url_for(filter: "#{option}")
+        end
+      end.join('').html_safe
+    end
+  end
+
   def timezone_date(datetime)
     datetime.in_time_zone.strftime("%B %d, %Y")
   end

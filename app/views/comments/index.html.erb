@@ -1,33 +1,16 @@
-<h1>Listing comments</h1>
+<% if can? :view, Comment %>
+  <h1>Reviews</h1>
+  <%= display_filters(@filters, @filter) %>
+<% else %>
+  <h1>Your Reviews</h1>
+<% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Product</th>
-      <th>Rating</th>
-      <th>Content</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+<hr>
 
-  <tbody>
-    <% @comments.each do |comment| %>
-      <tr>
-        <td><%= comment.user %></td>
-        <td><%= comment.product %></td>
-        <td><%= comment.rating %></td>
-        <td><%= comment.content %></td>
-        <td><%= link_to 'Show', comment %></td>
-        <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
-        <td><%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% if @comments.empty? %>
+  <p class="lead text-muted">No Reviews yet.</p>
+<% else %>
+  <%= render @comments %>
+<% end %>
 
-<br>
-
-<%= link_to 'New Comment', new_comment_path %>
+<%= will_paginate @comments %>

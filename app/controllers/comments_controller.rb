@@ -5,8 +5,9 @@ class CommentsController < ApplicationController
   # GET /comments.json
   def index
     if can? :view, Comment
-      filter = [Comment::APPROVED, Comment::SPAM].include? params[:filter] ? params[:filter] : Comment::APPROVED
-      @comments = Comment.where(flag: filter).includes(:user).paginate(page: params[:page], per_page: 50)
+      @filters  = [Comment::APPROVED, Comment::SPAM]
+      @filter   = @filters.include?(params[:filter]) ? params[:filter] : Comment::APPROVED
+      @comments = Comment.where(flag: @filter).includes(:user).paginate(page: params[:page], per_page: 50)
     else
       @comments = current_user.comments.approved.paginate(page: params[:page], per_page: 50)
     end
