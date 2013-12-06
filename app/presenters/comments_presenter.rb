@@ -3,6 +3,7 @@ class CommentsPresenter
 
   def initialize(comments)
     @comments = comments
+    @rating_count = {}
   end
 
   def size
@@ -14,11 +15,15 @@ class CommentsPresenter
   end
 
   def count_rating(rating)
-    @comments.where(rating: rating).size
+    @rating_count[rating] ||= @comments.where(rating: rating).size
+  end
+
+  def proportional_rating(rating, scale = 100)
+    (count_rating(rating) / size.to_f * scale).ceil
   end
 
   def average_rating
-    @comments.average(:rating)
+    @average_rating ||= @comments.average(:rating)
   end
 
   def new_comment(product, user)

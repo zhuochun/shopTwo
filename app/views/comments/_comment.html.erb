@@ -1,1 +1,23 @@
-comment 1
+<div class="panel panel-warning" id="<%= dom_id(comment) %>">
+  <div class="panel-heading">
+    <span class="text-danger">
+      <%= display_ratings(comment.rating) %>
+    </span>
+    <br>
+    <small class="text-muted">
+      From <%= link_to comment.user.username, comment.user %>
+      on <%= timezone_date(comment.updated_at) %>
+    </small>
+  </div>
+  <% unless comment.content.empty? %>
+    <div class="panel-body">
+      <%= comment.content %>
+    </div>
+  <% end %>
+  <% if user_signed_in? && (comment.user == current_user || current_user.admin?) %>
+    <div class="panel-footer">
+      <%= link_to "Edit Review", edit_comment_path(comment) %> |
+      <%= link_to "Delete", comment, method: :delete, confirm: "Are you sure?", remote: true %>
+    </div>
+  <% end %>
+</div>
