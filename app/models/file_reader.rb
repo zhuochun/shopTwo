@@ -34,7 +34,7 @@ class FileReader
     manufacturers_count = 1
 
     File.foreach(file) do |line|
-      product = line.chomp.force_encoding("UTF-8").split(':')
+      product = line.chomp.force_encoding('UTF-8').split(':')
 
       if categories[product[1]]
         categories[product[1]][:count] += 1
@@ -77,7 +77,7 @@ class FileReader
     products = []
 
     File.foreach(file) do |line|
-      barcode, quantity, price, date = line.chomp.force_encoding("UTF-8").split(':')
+      barcode, quantity, price, date = line.chomp.force_encoding('UTF-8').split(':')
       total_price = quantity.to_i * price.to_f
 
       settlement.total_count += quantity.to_i
@@ -85,22 +85,29 @@ class FileReader
       settlement.created_at   = date
 
       values << [settlement.id, barcode, store.id, quantity, price, total_price]
-      stocks << "UPDATE stocks SET quantity = quantity - #{quantity} " +
-                "WHERE store_id = #{store.id} AND product_id = #{barcode}"
-      products << "UPDATE products SET current_stock = current_stock - #{quantity} " +
-                  "WHERE id = #{barcode}"
+      stocks << %(
+        UPDATE stocks
+        SET quantity = quantity - #{sanitize(quantity)}
+        WHERE store_id = #{sanitize(store.id)} AND
+              product_id = #{sanitize(barcode)})
+      products << %(
+        UPDATE products
+        SET current_stock = current_stock - #{sanitize(quantity)}
+        WHERE id = #{sanitize(barcode)})
     end
 
     # import settle items
     SettleItem.import columns, values, validate: false
     # update settle items date
-    ActiveRecord::Base.connection().execute("UPDATE settle_items SET created_at = '#{settlement.created_at}' " +
-                                            "WHERE settlement_id = #{settlement.id}")
+    ActiveRecord::Base.connection().execute(%(
+      UPDATE settle_items
+      SET created_at = #{sanitize(settlement.created_at)}
+      WHERE settlement_id = #{sanitize(settlement.id)}))
 
     # update stocks and products
     unless options[:skip_deduction]
-      ActiveRecord::Base.connection().execute(stocks.join(";"))
-      ActiveRecord::Base.connection().execute(products.join(";"))
+      ActiveRecord::Base.connection().execute(stocks.join(';'))
+      ActiveRecord::Base.connection().execute(products.join(';'))
     end
 
     # save settlement
@@ -114,7 +121,7 @@ class FileReader
     values  = []
 
     File.foreach(file) do |line|
-      barcode, quantity, minimum = line.chomp.force_encoding("UTF-8").split(':')
+      barcode, quantity, minimum = line.chomp.force_encoding('UTF-8').split(':')
 
       values << [barcode.to_i, store.id, quantity.to_i, minimum.to_i]
     end
@@ -128,22 +135,21 @@ class FileReader
     updates = []
 
     File.foreach(file) do |line|
-      phone, _, credit, _ = line.chomp.force_encoding("UTF-8").split(':')
+      phone, _, credit, _ = line.chomp.force_encoding('UTF-8').split(':')
 
       updates << %(
         UPDATE users
         SET credits = credits + #{sanitize(credit.to_f)}
-        WHERE phone = #{sanitize(phone)}
-      )
+        WHERE phone = #{sanitize(phone)})
     end
 
-    ActiveRecord::Base.connection().execute(updates.join(";"))
+    ActiveRecord::Base.connection().execute(updates.join(';'))
   end
 
   private
 
   def valid_file?
-    @file && @file.content_type == "text/plain"
+    @file && @file.content_type == 'text/plain'
   end
 
   def sanitize(*args)
