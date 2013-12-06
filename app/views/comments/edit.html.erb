@@ -1,6 +1,10 @@
-<h1>Editing comment</h1>
+<h1>Editing Review</h1>
+<hr>
 
-<%= render 'form' %>
+<div class="row">
+  <div class="col-sm-12">
+    <%= render partial: 'form', locals: { comment: @comment } %>
+  </div>
+</div>
 
-<%= link_to 'Show', @comment %> |
-<%= link_to 'Back', comments_path %>
+<%= link_to 'Back', @comment.product %>

@@ -1,18 +1,20 @@
-<p id="notice"><%= notice %></p>
+<h1>View Review</h1>
+
+<hr>
 
 <p>
   <strong>User:</strong>
-  <%= @comment.user %>
+  <%= @comment.user.username %>
 </p>
 
 <p>
   <strong>Product:</strong>
-  <%= @comment.product %>
+  <%= @comment.product.name %>
 </p>
 
 <p>
   <strong>Rating:</strong>
-  <%= @comment.rating %>
+  <%= display_ratings(@comment.rating) %>
 </p>
 
 <p>
