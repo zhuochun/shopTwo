@@ -37,8 +37,25 @@ class ApiController < ApplicationController
     end
   end
 
-  # GET /api/customers
-  def customers
+  # GET /api/members
+  def members
     @users = User.where(role: User::CUSTOMER)
+  end
+
+  # POST /api/:store_id/members
+  def member_spendings
+    reader = FileReader.new(params[:spending], FileReader::SPENDING)
+
+    if params[:store_id]
+      store = Store.find(params[:store_id])
+
+      if reader.process(store)
+        render json: { succeed: true, message: 'Spending file uploaded.' }, status: :created
+      else
+        render json: { succeed: false, message: 'Invalid spending file uploaded.' }, status: :unprocessable_entity
+      end
+    else
+      render json: { succeed: false, message: 'No store information provided.' }, status: :unprocessable_entity
+    end
   end
 end

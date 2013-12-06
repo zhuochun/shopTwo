@@ -58,13 +58,15 @@ ServerRails::Application.routes.draw do
   get '/deals', to: 'home#today_deals', as: 'deals'
   get '/search', to: 'home#search', as: 'search'
 
-  # api gets
-  get '/api/customers', to: 'api#customers'
+  # api price_lists
   get '/api/price_list', to: 'api#price_list'
   get '/api/stores/:store_id/price_list', to: 'api#price_list'
-  # api posts
+  # api transactions/settlements
   post '/api/transaction', to: 'api#settlement'
   post '/api/stores/:store_id/transaction', to: 'api#settlement'
+  # api members
+  get '/api/members', to: 'api#members'
+  post '/api/:store_id/members', to: 'api#member_spendings'
 
   root 'home#index'
 end

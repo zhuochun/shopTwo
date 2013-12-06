@@ -1,6 +1,6 @@
 class FileReader
   # Type of files supported
-  INVENTORY, SETTLEMENT, STOCK = %w(inventory settlement stock)
+  INVENTORY, SETTLEMENT, STOCK, SPENDING = %w(inventory settlement stock spending)
 
   def initialize(file, type)
     @file = file
@@ -122,10 +122,32 @@ class FileReader
     Stock.import columns, values, validate: false
   end
 
+  # Spending Format: phone:spending:credits_earned:date
+  # 42345670:20.0:2.0:1/9/2013
+  def process_spending(file, store)
+    updates = []
+
+    File.foreach(file) do |line|
+      phone, _, credit, _ = line.chomp.force_encoding("UTF-8").split(':')
+
+      updates << %(
+        UPDATE users
+        SET credits = credits + #{sanitize(credit.to_f)}
+        WHERE phone = #{sanitize(phone)}
+      )
+    end
+
+    ActiveRecord::Base.connection().execute(updates.join(";"))
+  end
+
   private
 
   def valid_file?
     @file && @file.content_type == "text/plain"
+  end
+
+  def sanitize(*args)
+    ActiveRecord::Base.sanitize(*args)
   end
 
 end
