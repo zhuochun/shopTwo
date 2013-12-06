@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131206082538) do
+ActiveRecord::Schema.define(version: 20131206094109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,19 @@ ActiveRecord::Schema.define(version: 20131206082538) do
     t.datetime "updated_at"
     t.integer  "products_count"
   end
+
+  create_table "comments", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "product_id"
+    t.integer  "rating",     default: 3
+    t.string   "flag",       default: "approved"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["product_id"], name: "index_comments_on_product_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false

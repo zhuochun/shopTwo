@@ -47,6 +47,7 @@ ServerRails::Application.routes.draw do
   end
   resources :manufacturers
   resources :categories
+  resources :comments
 
   # online shop
   resources :carts

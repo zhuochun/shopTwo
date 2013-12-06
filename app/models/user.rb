@@ -43,6 +43,7 @@ class User < ActiveRecord::Base
   validates :username, presence: true, uniqueness: true
   validates :credits, presence: true
   validates :phone, presence: true, uniqueness: true
+  validates :role, inclusion: { in: ROLES }
 
   # Scopes
   default_scope -> { order("username ASC") }
@@ -51,9 +52,12 @@ class User < ActiveRecord::Base
   scope :managers,  -> { where(role: [MANAGER, ADMIN]) }
 
   # Relationship
-  belongs_to :store  # managers/employees
-  has_one    :cart   # customers
-  has_many   :orders # customers
+  # managers/employees
+  belongs_to :store
+  # customers
+  has_one    :cart
+  has_many   :orders
+  has_many   :comments
 
   # is the user manage the store
   def manage?(store)
