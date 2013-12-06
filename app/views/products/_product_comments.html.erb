@@ -6,7 +6,7 @@
       <p class="lead text-muted">No customer reviews.</p>
     <% else %>
       <div class="rating-summary">
-        <%= display_ratings(@comments_presenter.average) %>
+        <%= display_ratings(@comments_presenter.average_rating) %>
       </div>
 
       <div class="customer-reviews">
@@ -16,9 +16,10 @@
   </div>
 </div>
 
-<% if @product.can_user_comment?(current_user) %>
+<% if @product.can_user_comment?(current_user) && !@product.has_commented_by(current_user) %>
 <div class="row">
-  <div class="col-sm-12">
+  <div class="col-sm-6">
+    <h3>Write a Review</h3>
     <%= render partial: "comments/form", locals: { comment: @comments_presenter.new_comment(@product, current_user) } %>
   </div>
 </div>

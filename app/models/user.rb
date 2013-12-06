@@ -57,6 +57,7 @@ class User < ActiveRecord::Base
   # customers
   has_one    :cart
   has_many   :orders
+  has_many   :bought_items, through: :orders, source: :line_items
   has_many   :comments
 
   # is the user manage the store

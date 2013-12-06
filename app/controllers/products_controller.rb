@@ -10,6 +10,7 @@ class ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.json
   def show
+    @comments_presenter = CommentsPresenter.new(@product.comments.approved)
     @related_products = @product.related_products
   end
 

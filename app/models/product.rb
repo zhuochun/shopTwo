@@ -69,6 +69,7 @@ class Product < ActiveRecord::Base
   # properties
   include ActivePricing
   include Stockable
+  include Commentable
 
   # image
   def image_path

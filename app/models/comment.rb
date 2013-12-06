@@ -21,10 +21,17 @@ class Comment < ActiveRecord::Base
   APPROVED, SPAM, VERIFY = FLAGS
 
   # Validations
-  validates :content, inclusion: { in: RATING }
+  validates :rating, inclusion: { in: RATING }, presence: true
   validates :flag, inclusion: { in: FLAGS }
 
   # Relationship
   belongs_to :user
   belongs_to :product
+
+  # Scopes
+  default_scope -> { order(rating: :desc, created_at: :desc) }
+  scope :approved, -> { where(flag: APPROVED) }
+  scope :spam, -> { where(flag: SPAM) }
+  scope :verify, -> { where(flag: VERIFY) }
+
 end

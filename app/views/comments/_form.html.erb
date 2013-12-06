@@ -1,14 +1,58 @@
-<%= simple_form_for(@comment) do |f| %>
+<%= simple_form_for(comment, defaults: { wrapper_html: {class: 'form-group'}, input_html: {class: 'form-control'} }) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :user %>
-    <%= f.association :product %>
-    <%= f.input :rating %>
-    <%= f.input :content %>
+    <%= f.association :user, as: :hidden %>
+    <%= f.association :product, as: :hidden %>
+    <%= f.input :rating, as: :hidden %>
+    <strong>Click the stars to rate it</strong>
+    <p class="star-rating-picker text-danger" data-rating="<%= comment.rating %>">
+      <%= display_ratings(comment.rating) %>
+    </p>
+    <%= f.input :content, label: "Tell us why you chose this rating" %>
   </div>
 
   <div class="form-actions">
     <%= f.button :submit %>
   </div>
 <% end %>
+
+<script>
+  $(function() {
+    $picker = $(".star-rating-picker");
+
+    $picker.on("click", "i", change_stars)
+           .on("mouseenter", "i", update_stars)
+           .on("mouseleave", "i", reset_stars);
+
+    function change_stars() {
+      new_rating = $(this).index() + 1;
+      $picker.data("rating", new_rating);
+      $("#comment_rating").val(new_rating);
+      star_rating(new_rating);
+    }
+
+    function update_stars() {
+      star_rating($(this).index() + 1);
+    }
+
+    function reset_stars() {
+      star_rating($picker.data('rating'));
+    }
+
+    function star_rating(rating) {
+      $picker.find("i").each(function(idx, el) {
+        if (idx < rating) {
+          star(el, true);
+        } else {
+          star(el, false);
+        }
+      });
+    }
+
+    function star(el, empty) {
+      $(el).removeClass("glyphicon-heart glyphicon-heart-empty")
+           .addClass("glyphicon-heart" + (empty ? "" : "-empty"));
+    }
+  });
+</script>
