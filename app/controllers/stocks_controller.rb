@@ -8,6 +8,16 @@ class StocksController < ApplicationController
     @stocks = @store.stocks.includes(:product).paginate(page: params[:page], per_page: 50)
   end
 
+  # GET /stocks/auto
+  # GET /stocks/auto.json
+  def restock
+    @stocks = if params[:all]
+      @store.stocks.includes(:product).paginate(page: params[:page], per_page: 50)
+    else
+      @store.stocks.less_than_min.includes(:product).paginate(page: params[:page], per_page: 50)
+    end
+  end
+
   # GET /stocks/1
   # GET /stocks/1.json
   def show

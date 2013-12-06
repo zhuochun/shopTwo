@@ -2,6 +2,7 @@
 
 <% if can? :manage, Stock %>
   <%= link_to 'New Stock', new_stock_path %> |
+  <%= link_to 'Mass Restock', mass_stocks_path %> |
   <%= link_to 'Upload Stocks', batch_new_stocks_path %> |
   <%= link_to 'Download Stock List', download_stocks_path("txt") %>
 <% end %>
@@ -44,4 +45,4 @@
   </tbody>
 </table>
 
-<%= will_paginate @products %>
+<%= will_paginate @stocks %>

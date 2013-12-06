@@ -19,6 +19,7 @@ ServerRails::Application.routes.draw do
 
   resources :stocks do
     collection do
+      get 'mass', to: "stocks#restock"
       get 'download'
       get 'batch_new'
       post 'batch_create'

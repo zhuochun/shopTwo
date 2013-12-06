@@ -1,0 +1,151 @@
+<h1>Mass Restocking in <%= @store.name %></h1>
+
+<% if can? :manage, Stock %>
+  <%= link_to 'Back', stocks_path %> |
+  <% if params[:all] %>
+    <%= link_to 'View stocks below minimum stock level', mass_stocks_path %>
+  <% else %>
+    <%= link_to 'View all stocks', mass_stocks_path(all: 1) %>
+  <% end %>
+<% end %>
+
+<hr>
+
+<% if @stocks.empty? %>
+  <% if params[:all] %>
+    <p class="lead text-muted">There is nothing to restock.</p>
+  <% else %>
+    <p class="lead text-muted">Great! Nothing is below the minimum stock level.</p>
+  <% end %>
+<% else %>
+  <p class="lead text-muted">
+    <% if params[:all] %>
+      Select the items to restock.
+    <% else %>
+      <% if @stocks.total_entries > 1 %>
+        <%= @stocks.total_entries %> stocks are below their minimum stock levels.
+      <% else %>
+        One stock is below its minimum stock level.
+      <% end %>
+    <% end %>
+    <%= link_to "Restock!", "#", class: "btn btn-primary", id: "restock-btn", "data-loading-text" => "Restocking..." %>
+  </p>
+
+  <hr>
+
+  <table class="table table-striped table-hover table-responsive">
+    <thead>
+      <tr>
+        <td><input id="checkbox-all" type="checkbox" <%= "checked" if params[:all].nil? %>></td>
+        <th>No.</th>
+        <th>Product</th>
+        <th>Barcode</th>
+        <th>Price</th>
+        <th>Minimum</th>
+        <th>Current</th>
+        <th>Restock</th>
+        <th>Available</th>
+        <% if can? :manage, Stock %>
+          <th></th>
+          <th></th>
+          <th></th>
+        <% end %>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @stocks.each_with_index do |stock, idx| %>
+        <tr id="<%= dom_id(stock) %>">
+          <td><input type="checkbox" value="<%= stock.id %>" <%= "checked" if params[:all].nil? %>></td>
+          <td><%= idx + 1 %></td>
+          <td><%= stock.product.name %></td>
+          <td><%= stock.product.barcode %></td>
+          <td><%= number_to_currency stock.product.daily_price %></td>
+          <td><%= stock.minimum %></td>
+          <td><%= stock.quantity %></td>
+          <td><input class="form-control" type="number" data-original="<%= stock.quantity %>"
+            value="<%= params[:all] ? stock.quantity : [stock.minimum, stock.available_stock].min %>"
+            min="0" max="<%= stock.available_stock %>"/></td>
+          <td><%= stock.available_stock %></td>
+        <% if can? :manage, Stock %>
+          <td><%= link_to 'Show', stock %></td>
+          <td><%= link_to 'Edit', edit_stock_path(stock) %></td>
+          <td><%= link_to 'Destroy', stock, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= will_paginate @stocks %>
+
+  <script>
+    // toggle checkboxes
+    $("#checkbox-all").on("click", function() {
+      var checked = $(this).prop("checked");
+      $("tbody").find("input[type=checkbox]").prop("checked", checked)
+    });
+
+    // restock button click
+    $("#restock-btn").on("click", function(e) {
+      e.preventDefault();
+
+      var $btn = $(this),
+          total = 0;
+
+      // disable all input states
+      $btn.button("loading");
+      $("table").find("input").prop("disabled", true);
+
+      // loop all rows
+      $("tbody").find("tr").each(function(idx) {
+        var $el = $(this);
+
+        // must be selected
+        if ($el.find("input[type=checkbox]").prop("checked") == false) { return; }
+        // must not be uploaded already
+        if ($el.hasClass("success")) { return; }
+
+        var $input = $el.find("input[type=number]"),
+            sid = $el.find("input[type=checkbox]").val(),
+            original = parseInt($input.data("original"), 10),
+            quantity = parseInt($input.val(), 10),
+            max = parseInt($input.prop("max"), 10);
+
+        // check quantity
+        if (isNaN(quantity) || quantity > max) {
+          return $el.addClass("danger");
+        }
+        // no change update
+        if (quantity === original) {
+          return $el.addClass("success");
+        }
+        // do ajax requests
+        total++;
+
+        $.ajax({
+          type: "PATCH",
+          url: "/stocks/" + sid + ".json",
+          data: { stock: { quantity: quantity } }
+        }).done(function() {
+          $el.addClass("success");
+          $input.replaceWith(quantity);
+        }).fail(function() {
+          $el.addClass("danger");
+        }).always(function() {
+          total--;
+          // all requests done, enable inputs
+          if (total === 0) {
+            $btn.button("reset");
+            $("table").find("input").prop("enabled", true);
+          }
+        });
+      });
+
+      if (total === 0) {
+        $btn.button("reset");
+        $("table").find("input").prop("enabled", true);
+      }
+    });
+  </script>
+<% end %>

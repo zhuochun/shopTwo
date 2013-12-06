@@ -11,7 +11,7 @@ module Stockable
 
   # stocks available for stores to restock
   def available_stock
-    current_stock - stocks.sum('quantity')
+    @available_stock ||= current_stock - stocks.sum('quantity')
   end
 
   # available for sell

@@ -27,7 +27,8 @@ class Stock < ActiveRecord::Base
   validate  :quantity_is_less_than_available_stock
 
   # scope
-  default_scope -> { order('quantity DESC') }
+  default_scope -> { order(quantity: :desc) }
+  scope :less_than_min, -> { where("quantity < minimum").reorder(quantity: :asc) }
 
   # update and check quantity
   def quantity_is_less_than_available_stock
