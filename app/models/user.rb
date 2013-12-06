@@ -51,8 +51,9 @@ class User < ActiveRecord::Base
   scope :managers,  -> { where(role: [MANAGER, ADMIN]) }
 
   # Relationship
-  belongs_to :store # managers/employees
-  has_many :orders  # customers
+  belongs_to :store  # managers/employees
+  has_one    :cart   # customers
+  has_many   :orders # customers
 
   # is the user manage the store
   def manage?(store)
