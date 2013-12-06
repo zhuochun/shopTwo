@@ -22,6 +22,7 @@ class Comment < ActiveRecord::Base
 
   # Validations
   validates :rating, inclusion: { in: RATING }, presence: true
+  validates :content, length: { in: 10..500, allow_nil: true, allow_blank: true }
   validates :flag, inclusion: { in: FLAGS }
 
   # Relationship
@@ -33,5 +34,10 @@ class Comment < ActiveRecord::Base
   scope :approved, -> { where(flag: APPROVED) }
   scope :spam, -> { where(flag: SPAM) }
   scope :verify, -> { where(flag: VERIFY) }
+
+  # Mark this comment spam (lazy delete)
+  def mark_spam
+    self.update(flag: SPAM)
+  end
 
 end

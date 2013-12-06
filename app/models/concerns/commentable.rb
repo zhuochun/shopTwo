@@ -11,7 +11,7 @@ module Commentable
 
   # select the comment by user
   def comment_from(user)
-    user ? user.comments.where(product: self) : nil
+    user ? user.comments.where(product: self).take : nil
   end
 
 end

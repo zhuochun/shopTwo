@@ -1,9 +1,9 @@
 <div class="row">
-  <div class="col-sm-12">
+  <div class="col-sm-12" id="customer-reviews-list">
     <h2 class="text-muted">Customer Reviews</h2>
     <hr>
     <% if @comments_presenter.empty? %>
-      <p class="lead text-muted">No customer reviews.</p>
+      <p class="lead text-muted" id="no-customer-review">No customer reviews.</p>
     <% else %>
       <div class="panel panel-default">
         <div class="rating-summary panel-body">
@@ -41,7 +41,7 @@
 </div>
 
 <% if @product.can_user_comment?(current_user) && !@product.has_commented_by(current_user) %>
-<div class="row">
+<div class="row" id="write-review-form">
   <div class="col-sm-6">
     <h3>Write a Review</h3>
     <%= render partial: "comments/form", locals: { comment: @comments_presenter.new_comment(@product, current_user) } %>

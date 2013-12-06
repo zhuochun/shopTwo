@@ -4,12 +4,12 @@
 
 <p>
   <strong>User:</strong>
-  <%= @comment.user.username %>
+  <%= link_to @comment.user.username, @comment.user %>
 </p>
 
 <p>
   <strong>Product:</strong>
-  <%= @comment.product.name %>
+  <%= link_to @comment.product.name, @comment.product %>
 </p>
 
 <p>
@@ -22,5 +22,4 @@
   <%= @comment.content %>
 </p>
 
-<%= link_to 'Edit', edit_comment_path(@comment) %> |
-<%= link_to 'Back', comments_path %>
+<%= link_to 'Edit', edit_comment_path(@comment) %>

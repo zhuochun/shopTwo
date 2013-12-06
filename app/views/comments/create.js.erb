@@ -1,0 +1,7 @@
+<% if @comment.valid? %>
+  $("#no-customer-review").remove();
+  $("#write-review-form").remove();
+  $("#customer-reviews-list").append("<%=j render(@comment) %>");
+<% else %>
+  $("#new_comment").replaceWith("<%=j render(partial: "form", locals: { comment: @comment }) %>");
+<% end %>

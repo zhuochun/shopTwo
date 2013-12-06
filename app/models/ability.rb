@@ -72,8 +72,9 @@ class Ability
   end
 
   def online_shop_power_ability
-    can :manage, Cart
+    can :manage, Cart, user_id: @user.id
     can :manage, Order, user_id: @user.id
     can :manage, LineItem
+    can :manage, Comment, user_id: @user.id
   end
 end

@@ -4,7 +4,12 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.all
+    if can? :view, Comment
+      filter = [Comment::APPROVED, Comment::SPAM].include? params[:filter] ? params[:filter] : Comment::APPROVED
+      @comments = Comment.where(flag: filter).includes(:user).paginate(page: params[:page], per_page: 50)
+    else
+      @comments = current_user.comments.approved.paginate(page: params[:page], per_page: 50)
+    end
   end
 
   # GET /comments/1
@@ -24,15 +29,32 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
+    @product = Product.find(comment_params[:product_id])
+
+    # prevent submit multiple comments
+    if (@product.has_commented_by(current_user))
+      @comment = @product.comment_from(current_user)
+
+      respond_to do |format|
+        format.html { redirect_to @comment, notice: 'Review was created before.' }
+        format.json { render json: { error: "Review was created before." }, status: :unprocessable_entity }
+        format.js
+      end
+
+      return
+    end
+
     @comment = Comment.new(comment_params)
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
+        format.html { redirect_to @comment, notice: 'Review was successfully created.' }
         format.json { render action: 'show', status: :created, location: @comment }
+        format.js
       else
         format.html { render action: 'new' }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -54,10 +76,16 @@ class CommentsController < ApplicationController
   # DELETE /comments/1
   # DELETE /comments/1.json
   def destroy
-    @comment.destroy
+    if params[:delete] == '1'
+      @comment.destroy
+    else
+      @comment.mark_spam
+    end
+
     respond_to do |format|
       format.html { redirect_to comments_url }
       format.json { head :no_content }
+      format.js
     end
   end
 
