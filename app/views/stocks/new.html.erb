@@ -4,21 +4,26 @@
 
 <hr>
 
-<form method="get" action="<%= new_stock_path %>">
-  <div class="input-group input-group-lg">
-    <input type="text" class="form-control" name="product_id" placeholder="Find Product Id">
-    <span class="input-group-btn">
-      <button type="submit" class="btn btn-default">Find</button>
-    </span>
+<div class="row">
+  <div class="col-xs-12">
+    <form method="get" action="<%= new_stock_path %>">
+      <div class="input-group input-group-lg">
+        <input type="text" class="form-control" name="q" placeholder="Find Product">
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-default">Search</button>
+        </span>
+      </div>
+    </form>
   </div>
-</form>
+</div>
 
-<% unless @stock.product_id.nil? %>
+<% unless @stock.product_id.nil? and @products.empty? %>
   <div class="row">
-    <div class="col-md-6">
+    <h2>Stock</h2>
+    <div class="col-sm-6" id="stock-form">
       <%= render 'form' %>
     </div>
-    <div class="col-md-6">
+    <div class="col-sm-6" id="stock-info">
       <%= render "stock_information" %>
     </div>
   </div>

@@ -3,7 +3,7 @@
 
   <div class="form-inputs">
     <% if @stock.product.nil? %>
-      <%= f.association :product, include_blank: false %>
+      <%= f.association :product, collection: @products, include_blank: false %>
     <% else %>
       <%= f.input :product_id, as: :hidden %>
       <p><strong>Product:</strong> <%= @stock.product.name %></p>
@@ -16,4 +16,16 @@
   <div class="form-actions">
     <%= f.button :submit %>
   </div>
+<% end %>
+
+<% if @stock.product.nil? %>
+  <script>
+    $("#stock_product_id").on("change", function() {
+      var id = $(this).val();
+
+      $("#stock-info").load("/stocks/new?q=" + id + " #stock-info > *");
+      $(".stock_quantity").load("/stocks/new?q=" + id + " .stock_quantity > *");
+      $(".stock_minimum").load("/stocks/new?q=" + id + " .stock_minimum > *");
+    });
+  </script>
 <% end %>

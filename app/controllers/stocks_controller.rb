@@ -35,11 +35,20 @@ class StocksController < ApplicationController
 
   # GET /stocks/new
   def new
-    @stock = @store.stocks.find_or_initialize_by(product_id: params[:product_id])
+    @engine = SearchEngine::Searchable.new(Product, params[:q], all: true)
+    @products = @engine.lookup.take(10)
+
+    @product = @products.first
+    @stock= if @products.empty? || @products.size > 1
+              @store.stocks.new
+            else
+              @store.stocks.find_or_initialize_by(product_id: @product.id)
+            end
   end
 
   # GET /stocks/1/edit
   def edit
+    @product = @stock.product
   end
 
   # POST /stocks
