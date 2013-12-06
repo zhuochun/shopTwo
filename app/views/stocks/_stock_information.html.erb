@@ -1,7 +1,7 @@
-    <% unless @stock.product.nil? %>
-      <h2>Product Infomation</h2>
-      <p>Name: <%= @stock.name %>
-      <p>Barcode: <%= @stock.product_id %>
-      <p>Current Price: <%= number_to_currency @stock.product.daily_price %></p>
-      <p>Available Stock: <%= @stock.available_stock %></p>
-    <% end %>
+<% unless @stock.product.nil? %>
+  <h2>Product Infomation</h2>
+  <p>Name: <%= @stock.name %>
+  <p>Barcode: <%= @stock.product_id %>
+  <p>Current Price: <%= number_to_currency @stock.product.daily_price %></p>
+  <p>Available Stock: <%= @stock.available_stock %></p>
+<% end %>

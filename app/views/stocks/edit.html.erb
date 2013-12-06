@@ -1,5 +1,10 @@
 <h1>Editing stock</h1>
 
+<%= link_to 'Show', @stock %> |
+<%= link_to 'Back', stocks_path %>
+
+<hr>
+
 <div class="row">
   <div class="col-md-6">
     <%= render 'form' %>
@@ -8,6 +13,3 @@
     <%= render "stock_information" %>
   </div>
 </div>
-
-<%= link_to 'Show', @stock %> |
-<%= link_to 'Back', stocks_path %>
