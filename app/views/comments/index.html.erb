@@ -10,7 +10,7 @@
 <% if @comments.empty? %>
   <p class="lead text-muted">No Reviews yet.</p>
 <% else %>
-  <%= render @comments %>
+  <%= render partial: "comments/comment_thumbnail", collection: @comments, as: "comment" %>
 <% end %>
 
 <%= will_paginate @comments %>

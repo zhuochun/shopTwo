@@ -1,0 +1,22 @@
+<div class="media">
+  <a class="pull-left" href="<%= product_path(product) %>">
+    <%= image_tag(product.image_path, size: "64x64", alt: product.name, class: "media-object") %>
+  </a>
+  <div class="media-body">
+    <h4 class="media-heading"><%= link_to product.name, product %></h4>
+    <ul class="list-unstyled">
+      <li>
+        <strong>Barcode</strong>
+        <%= product.barcode %>
+      </li>
+      <li>
+        <strong>Category</strong>
+        <%= link_to product.category.name, product.category %>
+      </li>
+      <li>
+        <strong>Manufacturer</strong>
+        <%= link_to product.manufacturer.name, product.manufacturer %>
+      </li>
+    </ul>
+</div>
+</div>

@@ -21,6 +21,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    @comments = @user.comments.approved.paginate(page: params[:page], per_page: 50)
   end
 
   # PATCH/PUT /users/1

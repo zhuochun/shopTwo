@@ -2,9 +2,12 @@
 <hr>
 
 <div class="row">
-  <div class="col-sm-12">
-    <%= render partial: 'form', locals: { comment: @comment } %>
+  <div class="col-sm-6">
+    <%= render partial: "form", locals: { comment: @comment } %>
+  </div>
+  <div class="col-sm-6">
+    <%= render partial: "products/product_sidebar_thumbnail", object: @comment.product, as: "product" %>
   </div>
 </div>
 
-<%= link_to 'Back', @comment.product %>
+<%= link_to 'Back', url_for(:back) %>
