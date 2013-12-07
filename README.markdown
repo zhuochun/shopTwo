@@ -13,8 +13,9 @@ Course CG3002 Server-side, built with Ruby on Rails. [Some screenshots in Wiki](
 - `bundle install`
 - `rake db:create`
 - `rake db:migrate`
-- `rake db:seed` default stores and accounts
-- `rake import:dev` create default inventories (size 100)
+- `rake db:seed` seed default stores and accounts
+- `rake import:dev` import small inventories (size 100), and one store's stocks
+- `rake import:prod_test` import standard inventories (size 5000), and 1 store's stocks + transactions
 - `rails server`
 
 # Setup on Heroku
@@ -23,6 +24,7 @@ Course CG3002 Server-side, built with Ruby on Rails. [Some screenshots in Wiki](
 - `git push heroku master`
 - `heroku pg:reset DATABASE` if necessary
 - `heroku run rake db:migrate`
-- `heroku run rake db:seed` create default stores and accounts
-- `heroku run rake import:production` create default inventories (size 5000)
+- `heroku run rake db:seed` seed default stores and accounts
+- `heroku run rake import:prod_test` import standard inventories (size 5000), and 1 store's stocks + transactions
+- `heroku run rake import:prod_demo` import standard inventories (size 5000), and 5 stores' stocks + transactions
 - `heroku ps:scale web=1`

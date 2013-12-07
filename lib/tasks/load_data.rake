@@ -75,10 +75,27 @@ namespace :import do
   end
 
   # ========================================
-  # to populate stocks and transactions in production
+  # to populate stocks and transactions in production (demo)
   # ========================================
   desc 'Load inventory, stocks and transactions into database (in production)'
-  task production: [:inventory, :stocks, :transactions]
+  task prod_demo: [:inventory, :stocks, :transactions]
+
+  # ========================================
+  # to populate stocks and transactions in production (test)
+  # ========================================
+  desc 'Load inventory, and stocks, transactions for one store (in production)'
+  task prod_test: [:environment, :inventory] do
+    store = Store.find(1)
+    puts "=== Store #{store.name} is used for testing ==="
+
+    puts "==== Load Stocks (Production - Test) to Database ===="
+    load_stocks([store])
+    puts "==== Stocks Loaded to Database ===="
+
+    puts "==== Load Transactions (Production - Test) to Database ===="
+    load_transactions([store])
+    puts "==== Transactions Loaded to Database ===="
+  end
 
   # ========================================
   # to populate stocks and transactions in development
