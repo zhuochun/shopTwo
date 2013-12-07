@@ -1,2 +1,21 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<h1>Profile</h1>
+<hr>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="well">
+      <h2><%= @user.username %></h2>
+      <p>Member for <%= time_ago_in_words(@user.created_at) %></p>
+    </div>
+  </div>
+  <div class="col-sm-8">
+    <h2>Reviews</h2>
+
+    <% if @comments.empty? %>
+      <p>No reviews yet.</p>
+    <% else %>
+      <%= render partial: "comments/comment_thumbnail", collection: @comments, as: "comment" %>
+    <% end %>
+
+    <%= will_paginate @comments %>
+  </div>
+</div>

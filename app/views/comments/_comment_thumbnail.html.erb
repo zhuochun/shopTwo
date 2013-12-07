@@ -1,0 +1,34 @@
+<div class="panel panel-warning" id="<%= dom_id(comment) %>">
+  <div class="panel-heading">
+    <div class="media">
+      <a class="pull-left" href="<%= product_path(comment.product) %>">
+        <%= image_tag(comment.product.image_path, size: "64x64", alt: comment.product.name, class: "media-object") %>
+      </a>
+      <div class="media-body">
+        <h4 class="media-heading"><%= link_to comment.product.name, comment.product %></h4>
+        <span class="text-danger">
+          <%= display_ratings(comment.rating) %>
+        </span>
+        <br>
+        <small class="text-muted">
+          From <%= link_to comment.user.username, comment.user %>
+          on <%= timezone_date(comment.updated_at) %>
+        </small>
+      </div>
+    </div>
+  </div>
+  <% unless comment.content.empty? %>
+    <div class="panel-body">
+      <%= comment.content %>
+    </div>
+  <% end %>
+  <% if user_signed_in? && (comment.user == current_user || current_user.administrater?) %>
+    <div class="panel-footer">
+      <%= link_to "Edit Review", edit_comment_path(comment) %> |
+      <% if current_user.administrater? %>
+      <%= link_to "Spam", comment, method: :delete, confirm: "Are you sure?", remote: true %> |
+      <% end %>
+      <%= link_to "Delete", comment_path(comment, delete: 1), method: :delete, confirm: "Are you sure?", remote: true %>
+    </div>
+  <% end %>
+</div>
