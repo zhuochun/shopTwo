@@ -14,11 +14,11 @@
       </tr>
       <tr>
         <td>Credits:</td>
-        <td class="text-right text-success order-credit-text">-$0.00</td>
+        <td class="text-right text-success order-credit-text">-<%= number_to_currency @order.used_credit.to_f %></td>
       </tr>
       <tr class="lead text-danger">
         <td>Total:</td>
-        <td class="text-right order-total-text" data-value="<%= @order.subtotal %>"><%= number_to_currency @order.subtotal %></td>
+        <td class="text-right order-total-text" data-value="<%= @order.subtotal %>"><%= number_to_currency (@order.subtotal - @order.used_credit.to_f) %></td>
       </tr>
     </table>
     <button type="button" class="btn btn-primary btn-lg btn-block" id="place-order-btn">Place Your Order</button>

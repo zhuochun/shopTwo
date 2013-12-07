@@ -62,6 +62,16 @@
         $total  = $(".order-summary-panel").find(".order-total-text"),
         $order_credit = $("#order_used_credit"),
         credit_max = parseFloat($order_credit.prop("max"), 10);
+    // determine max credits
+    (function() {
+      var total_price = parseFloat($total.data("value"));
+
+      if (total_price + 0.1 < credit_max) {
+        credit_max = total_price - 0.1;
+      }
+
+      $order_credit.prop("max", credit_max.toFixed(2));
+    })();
     // credit change
     $order_credit.on("change", function() {
       var input = parseFloat($order_credit.val(), 10),
@@ -73,8 +83,9 @@
       } else if (input > credit_max) {
         input = credit_max;
       }
+
       // assign back input
-      $order_credit.val(input.toFixed(1));
+      $order_credit.val(input.toFixed(2));
       // update credit text
       $credit.html("-$" + input.toFixed(2));
       // update summary text
