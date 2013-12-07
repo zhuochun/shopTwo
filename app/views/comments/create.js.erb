@@ -1,10 +1,10 @@
 <% if @comment.valid? %>
   $("#no-customer-review").remove();
   $("#write-review-form").remove();
-  $("#customer-reviews-list").append("<%=j render(@comment) %>");
   if ($("#product-review-summary").size() === 0) {
-    $("#customer-reviews-list").before('<div class="panel panel-default" id="product-review-summary"></div>');
+    $("#customer-reviews-list").append('<div class="panel panel-default" id="product-review-summary"></div>');
   }
+  $("#customer-reviews-list").append("<%=j render(@comment) %>");
   $("#product-review-summary").load("<%= @comment.product %> #product-review-summary > *");
 <% else %>
   $("#new_comment").replaceWith("<%= render(partial: "form", locals: { comment: @comment }) %>");

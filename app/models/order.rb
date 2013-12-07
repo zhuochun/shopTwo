@@ -33,6 +33,11 @@ class Order < ActiveRecord::Base
   belongs_to :user
   has_many   :line_items, dependent: :destroy
 
+  # scope
+  default_scope -> { order(created_at: :desc) }
+  scope :last_week, -> { where('created_at >= ?', 1.week.ago) }
+  scope :last_month, -> { where('created_at >= ?', 1.month.ago) }
+
   # hooks
   before_create :remove_items_from_cart
   before_create :save_local_data_to_order_and_items
