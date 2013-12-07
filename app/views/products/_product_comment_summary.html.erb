@@ -1,0 +1,27 @@
+<div class="panel panel-default" id="product-review-summary">
+  <div class="panel-body">
+    <p>
+      <strong>Average Rating: </strong>
+      <%= display_ratings(@comments_presenter.average_rating) %>
+      (<%= @comments_presenter.size %>)
+      <br><%= number_with_precision(@comments_presenter.average_rating, precision: 2) %> out of 5 stars
+    </p>
+
+    <% 5.downto(1) do |rating| %>
+      <div class="row">
+        <div class="col-xs-3 col-sm-2 col-md-1">
+          <%= rating %> Star
+        </div>
+        <div class="col-xs-5 col-sm-3 col-md-3">
+          <div class="progress">
+            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<%= @comments_presenter.proportional_rating(rating) %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= @comments_presenter.proportional_rating(rating) %>%">
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-4 col-sm-7 col-md-8">
+          (<%= @comments_presenter.count_rating(rating) %>/<%= @comments_presenter.size %>)
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
