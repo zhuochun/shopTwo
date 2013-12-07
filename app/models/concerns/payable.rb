@@ -31,6 +31,6 @@ module Payable
 
   # calculate credits earned
   def credits
-    (subtotal * 0.1).to_i
+    subtotal * 0.1
   end
 end

@@ -38,7 +38,7 @@
         </table>
       </div> <!-- body -->
       <div class="panel-footer text-muted text-right">
-        You earned <%= number_with_delimiter @order.credits %> credits.
+        You earned <%= number_with_precision @order.credits, precision: 2 %> credits.
       </div>
     </div> <!-- panel -->
   </div>
