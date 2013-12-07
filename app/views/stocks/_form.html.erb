@@ -1,4 +1,4 @@
-<%= simple_form_for(@stock) do |f| %>
+<%= simple_form_for(@stock, defaults: { wrapper_html: {class: 'form-group'}, input_html: {class: 'form-control'} }) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">

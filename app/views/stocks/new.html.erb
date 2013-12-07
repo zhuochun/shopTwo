@@ -1,6 +1,6 @@
 <h1>Add a New Stock</h1>
 
-<%= link_to 'Back', url_for(:back) %>
+<%= link_to 'Back', stocks_path %>
 
 <hr>
 
@@ -19,9 +19,9 @@
 
 <% unless @stock.product_id.nil? and @products.empty? %>
   <div class="row">
-    <h2>Stock</h2>
     <div class="col-sm-6" id="stock-form">
-      <%= render 'form' %>
+      <h2>Stock</h2>
+      <%= render "form" %>
     </div>
     <div class="col-sm-6" id="stock-info">
       <%= render "stock_information" %>

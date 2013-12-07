@@ -35,7 +35,7 @@ class StocksController < ApplicationController
 
   # GET /stocks/new
   def new
-    @engine = SearchEngine::Searchable.new(Product, params[:q], all: true)
+    @engine = SearchEngine::Searchable.new(Product, params[:q] || params[:product_id], all: true)
     @products = @engine.lookup.take(10)
 
     @product = @products.first
@@ -54,7 +54,8 @@ class StocksController < ApplicationController
   # POST /stocks
   # POST /stocks.json
   def create
-    @stock = @store.stocks.find_or_initialize_by(product_id: params[:stock][:product_id])
+    @product = Product.find(stock_params[:product_id])
+    @stock = @store.stocks.find_or_initialize_by(product_id: @product.id)
 
     respond_to do |format|
       if @stock.update(stock_params)
