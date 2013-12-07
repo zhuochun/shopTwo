@@ -1,9 +1,7 @@
 <div class="col-sm-6 col-md-3 secondary">
   <div class="panel panel-<%= current_user.role %>">
     <div class="panel-heading">
-      <h3 class="panel-title">
-        Hi, <%= current_user.username %>
-      </h3>
+      <h3 class="panel-title">Hi, <%= current_user.username %></h3>
     </div>
     <table class="table">
       <tr>
@@ -35,69 +33,81 @@
 </div>
 
 <div class="col-sm-6 col-md-9 primary">
-  <h2>Local Shops</h2><hr>
   <div class="row">
-    <div class="col-sm-12 col-md-4">
-      <div class="panel panel-info">
-        <div class="panel-heading">Summary</div>
-        <table class="table">
-          <tr><th>Stores</th><td><%= Store.count %></td>
-        </table>
-      </div> <!-- .panel -->
-      <div class="panel panel-danger">
-        <div class="panel-heading">Revenue</div>
-        <table class="table">
-          <tr><th>This Week</th><td><%= number_to_currency Settlement.last_week.sum(:total_price) %></td>
-          <tr><th>This Month</th><td><%= number_to_currency Settlement.last_month.sum(:total_price) %></td>
-        </table>
-      </div> <!-- .panel -->
-      <div class="panel panel-danger">
-        <div class="panel-heading">Transactions</div>
-        <table class="table">
-          <tr><th>This Week</th><td><%= number_with_delimiter Settlement.last_week.sum(:total_count) %></td>
-          <tr><th>This Month</th><td><%= number_with_delimiter Settlement.last_month.sum(:total_count) %></td>
-        </table>
-      </div> <!-- .panel -->
-    </div>
-    <div class="col-sm-12 col-md-8">
-      <div class="panel panel-default">
-        <div class="panel-heading">Revenue</div>
-        <div class="panel-body">
-          <%= pie_chart Store.all.map { |s| [s.name, s.settlements.last_month.sum(:total_price)] } %>
+    <div class="col-sm-12">
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#local-shops" data-toggle="tab">Local Shops</a></li>
+        <li><a href="#online-shops" data-toggle="tab">Online Shops</a></li>
+      </ul>
+      <!-- Tab panes -->
+      <div class="tab-content dashboard-tab-content">
+        <div class="tab-pane active row" id="local-shops">
+          <div class="col-sm-12 col-md-4">
+            <div class="panel panel-info">
+              <div class="panel-heading">Summary</div>
+              <table class="table">
+                <tr><th>Stores</th><td><%= Store.count %></td></tr>
+              </table>
+            </div> <!-- .panel -->
+            <div class="panel panel-danger">
+              <div class="panel-heading">Revenue</div>
+              <table class="table">
+                <tr><th>This Week</th><td><%= number_to_currency Settlement.last_week.sum(:total_price) %></td></tr>
+                <tr><th>This Month</th><td><%= number_to_currency Settlement.last_month.sum(:total_price) %></td></tr>
+              </table>
+            </div> <!-- .panel -->
+            <div class="panel panel-danger">
+              <div class="panel-heading">Transactions</div>
+              <table class="table">
+                <tr><th>This Week</th><td><%= number_with_delimiter Settlement.last_week.sum(:total_count) %></td></tr>
+                <tr><th>This Month</th><td><%= number_with_delimiter Settlement.last_month.sum(:total_count) %></td></tr>
+              </table>
+            </div> <!-- .panel -->
+          </div> <!-- .col -->
+          <div class="col-sm-12 col-md-8">
+            <div class="panel panel-default">
+              <div class="panel-heading">Revenue</div>
+              <div class="panel-body">
+                <%= pie_chart Store.all.map { |s| [s.name, s.settlements.last_month.sum(:total_price)] } %>
+              </div>
+            </div> <!-- .panel -->
+          </div> <!-- col -->
         </div>
-      </div> <!-- .panel -->
-    </div>
-  </div> <!-- .row -->
-  <h2>Online Shops</h2><hr>
-  <div class="row">
-    <div class="col-sm-4">
-      <div class="panel panel-info">
-        <div class="panel-heading">Summary</div>
-        <table class="table">
-          <tr><th>Orders</th><td><%= Order.count %></td>
-          <tr><th>Reviews</th><td><%= Comment.approved.count %></td>
-          <tr><th>Spams</th><td><%= Comment.spam.count %></td>
-        </table>
-      </div> <!-- .panel -->
-      <div class="panel panel-danger">
-        <div class="panel-heading">Revenue</div>
-        <table class="table">
-          <tr><th>This Week</th><td><%= number_to_currency Order.last_week.sum(:price) %></td>
-          <tr><th>This Month</th><td><%= number_to_currency Order.last_month.sum(:price) %></td>
-        </table>
-      </div> <!-- .panel -->
-    </div>
-    <div class="col-sm-8">
-      <div class="panel panel-default">
-        <div class="panel-heading">Trending</div>
-        <div class="panel-body">
-          <%= line_chart [
-            { name: "Order", data: Order.unscoped.group_by_day(:created_at).count },
-            { name: "Review", data: Comment.unscoped.approved.group_by_day(:created_at).count },
-            { name: "Spam", data: Comment.unscoped.spam.group_by_day(:created_at).count }
-          ] %>
+        <div class="tab-pane row" id="online-shops">
+          <div class="col-sm-12 col-md-4">
+            <div class="panel panel-info">
+              <div class="panel-heading">Summary</div>
+              <table class="table">
+                <tr><th>Orders</th><td><%= Order.count %></td></tr>
+                <tr><th>Reviews</th><td><%= Comment.approved.count %></td></tr>
+                <tr><th>Spams</th><td><%= Comment.spam.count %></td></tr>
+              </table>
+            </div> <!-- .panel -->
+            <div class="panel panel-danger">
+              <div class="panel-heading">Revenue</div>
+              <table class="table">
+                <tr><th>This Week</th><td><%= number_to_currency Order.last_week.sum(:price) %></td></tr>
+                <tr><th>This Month</th><td><%= number_to_currency Order.last_month.sum(:price) %></td></tr>
+              </table>
+            </div> <!-- .panel -->
+          </div> <!-- col -->
+          <div class="col-sm-12 col-md-8">
+            <div class="panel panel-default">
+              <div class="panel-heading">Trending</div>
+              <div class="panel-body">
+                <%=
+                  line_chart [
+                    { name: "Order", data: Order.unscoped.group_by_day(:created_at).count },
+                    { name: "Review", data: Comment.unscoped.approved.group_by_day(:created_at).count },
+                    { name: "Spam", data: Comment.unscoped.spam.group_by_day(:created_at).count }
+                  ]
+                %>
+              </div>
+            </div> <!-- .panel -->
+          </div> <!-- col -->
         </div>
-      </div> <!-- .panel -->
+      </div>
     </div>
   </div>
 </div>
