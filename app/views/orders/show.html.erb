@@ -29,11 +29,11 @@
           </tr>
           <tr>
             <td>Discount:</td>
-            <td class="text-right text-success">-<%= number_to_currency @order.discount_subtotal %></td>
+            <td class="text-right text-success">-<%= number_to_currency @order.discount %></td>
           </tr>
           <tr class="lead text-danger">
-            <td>Order Total:</td>
-            <td class="text-right"><%= number_to_currency @order.subtotal %></td>
+            <td>Total:</td>
+            <td class="text-right"><%= number_to_currency @order.price %></td>
           </tr>
         </table>
       </div> <!-- body -->

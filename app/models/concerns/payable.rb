@@ -31,6 +31,6 @@ module Payable
 
   # calculate credits earned
   def credits
-    subtotal * 0.1
+    subtotal * 0.05
   end
 end

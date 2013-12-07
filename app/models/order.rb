@@ -21,11 +21,13 @@ class Order < ActiveRecord::Base
   PAYMENT_TYPES = ["MasterCard", "Visa", "American Express"]
 
   # dummy attributes
-  attr_accessor :credit, :credit_card
+  attr_accessor :used_credit, :credit_card
 
   # validations
-  validates :name, :email, :phone, :address, :pay_type, presence: true
+  validates :name, :email, :phone, :address, :pay_type, :credit_card, presence: true
   validates :pay_type, inclusion: { in: PAYMENT_TYPES }
+  validates :credit_card, format: { with: /\A[0-9]{16}\z/i }
+  validates :used_credit, numericality: { greater_than_or_equal_to: 0.0, less_than_or_equal_to: proc { |o| o.user.credits } }
 
   # relationships
   belongs_to :user
@@ -41,8 +43,8 @@ class Order < ActiveRecord::Base
   end
   # save the data at point of purchase
   def save_local_data_to_order_and_items
-    self.price    = subtotal
-    self.discount = discount_subtotal
+    self.price    = subtotal - self.used_credit.to_f
+    self.discount = discount_subtotal + self.used_credit.to_f
     self.size     = quantity
 
     line_items.each do |i|
@@ -52,8 +54,14 @@ class Order < ActiveRecord::Base
   end
   # update user credits, clean up cart
   def update_user_credits
-    user.credits += credits
+    user.credits += credits - used_credit.to_f
     user.save
+  end
+
+  # init
+  def initialize(*args)
+    @used_credit = 0.0
+    super(*args)
   end
 
   # properties
