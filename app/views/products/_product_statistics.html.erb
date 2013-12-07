@@ -83,10 +83,13 @@
   </tr>
 
   <% if current_user.manager? %>
-    <%= render partial: "stocks/stock_in_store", locals: { stock: product.stock_in_store(current_user.store) } %>
+    <%= render partial: "stocks/stock_in_store",
+                locals: { store: current_user.store,
+                          stock: product.stock_in_store(current_user.store) } %>
   <% else %>
     <% product.stocks.each do |stock| %>
-      <%= render partial: "stocks/stock_in_store", locals: { stock: stock } %>
+      <%= render partial: "stocks/stock_in_store",
+                  locals: { store: stock.store, stock: stock } %>
     <% end %>
   <% end %>
 

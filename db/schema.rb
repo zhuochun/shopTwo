@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 20131206094109) do
     t.text     "address"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "pay_type",   default: "Cash"
+    t.string   "pay_type"
     t.decimal  "price"
     t.decimal  "discount"
     t.integer  "size"
