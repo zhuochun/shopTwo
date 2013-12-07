@@ -1,5 +1,11 @@
-<%= simple_form_for(@category) do |f| %>
+<%= simple_form_for(@category, defaults: { wrapper_html: {class: 'form-group'}, input_html: {class: 'form-control'} }) do |f| %>
   <%= f.error_notification %>
-  <%= f.input :name %>
-  <%= f.submit %>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <%= f.input :name %>
+    </div>
+  </div>
+
+  <%= f.submit class: "btn btn-primary" %>
 <% end %>

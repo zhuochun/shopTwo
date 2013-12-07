@@ -82,8 +82,8 @@
       <div class="panel panel-danger">
         <div class="panel-heading">Revenue</div>
         <table class="table">
-          <tr><th>This Week</th><td><%= Order.last_week.sum(:price) %></td>
-          <tr><th>This Month</th><td><%= Order.last_month.sum(:price) %></td>
+          <tr><th>This Week</th><td><%= number_to_currency Order.last_week.sum(:price) %></td>
+          <tr><th>This Month</th><td><%= number_to_currency Order.last_month.sum(:price) %></td>
         </table>
       </div> <!-- .panel -->
     </div>

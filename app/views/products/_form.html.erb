@@ -1,15 +1,21 @@
-<%= simple_form_for(@product) do |f| %>
+<%= simple_form_for(@product, defaults: { wrapper_html: {class: 'form-group'}, input_html: {class: 'form-control'} }) do |f| %>
   <%= f.error_notification %>
 
-  <%= f.input :name %><br>
-  <%= f.input :barcode, disabled: !@product.new_record? %><br>
-  <%= f.association :category %><br>
-  <%= f.association :manufacturer %><br>
-  <%= f.input :daily_price %><br>
-  <%= f.input :cost_price %><br>
-  <%= f.input :current_stock %><br>
-  <%= f.input :minimum_stock %><br>
-  <%= f.input :bundle_unit %><br>
+  <div class="row">
+    <div class="col-sm-6">
+      <%= f.input :name %><br>
+      <%= f.input :barcode, disabled: !@product.new_record? %><br>
+      <%= f.input :daily_price %><br>
+      <%= f.input :cost_price %><br>
+      <%= f.input :bundle_unit %><br>
+    </div>
+    <div class="col-sm-6">
+      <%= f.association :category, include_blank: false %><br>
+      <%= f.association :manufacturer, include_blank: false %><br>
+      <%= f.input :current_stock %><br>
+      <%= f.input :minimum_stock %><br>
+    </div>
+  </div>
 
-  <%= f.submit %>
+  <%= f.button :submit, class: "btn btn-primary" %>
 <% end %>
