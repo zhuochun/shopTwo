@@ -12,9 +12,13 @@
         <td>Discount:</td>
         <td class="text-right text-success">-<%= number_to_currency @order.discount_subtotal %></td>
       </tr>
+      <tr>
+        <td>Credits:</td>
+        <td class="text-right text-success order-credit-text">-$0.00</td>
+      </tr>
       <tr class="lead text-danger">
-        <td>Order Total:</td>
-        <td class="text-right"><%= number_to_currency @order.subtotal %></td>
+        <td>Total:</td>
+        <td class="text-right order-total-text" data-value="<%= @order.subtotal %>"><%= number_to_currency @order.subtotal %></td>
       </tr>
     </table>
     <button type="button" class="btn btn-primary btn-lg btn-block" id="place-order-btn">Place Your Order</button>

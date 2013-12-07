@@ -7,11 +7,12 @@
 
 <h1>Review Your Order</h1>
 
+<div class="delivery-form well">
+  <%= render 'form' %>
+</div>
+
 <div class="row">
   <div class="col-sm-8">
-    <div class="delivery-form well">
-      <%= render 'form' %>
-    </div> <!-- delivery-form -->
     <div class="order-items panel panel-default">
       <table class="table">
         <tr>
@@ -30,6 +31,7 @@
 
 <script>
   $(function() {
+    // item quantity change
     $(".line-item-quantity").on("change", function() {
       var $this = $(this),
           new_quantity = parseInt($this.val(), 10),
@@ -50,8 +52,34 @@
       }
     });
 
+    // form submit
     $("#place-order-btn").on("click", function() {
        $("#new_order").submit();
+    });
+
+    // credits apply
+    var $credit = $(".order-summary-panel").find(".order-credit-text"),
+        $total  = $(".order-summary-panel").find(".order-total-text"),
+        $order_credit = $("#order_credit"),
+        credit_max = parseFloat($order_credit.prop("max"), 10);
+    // credit change
+    $order_credit.on("change", function() {
+      var input = parseFloat($order_credit.val(), 10),
+          total_price = parseFloat($total.data("value"));
+
+      // check range
+      if (input < 0) {
+        input = 0;
+      } else if (input > credit_max) {
+        input = credit_max;
+      }
+      // assign back input
+      $order_credit.val(input.toFixed(1));
+      // update credit text
+      $credit.html("-$" + input.toFixed(2));
+      // update summary text
+      total_price = "$" + (total_price - input).toFixed(2);
+      $total.html(total_price);
     });
   });
 </script>

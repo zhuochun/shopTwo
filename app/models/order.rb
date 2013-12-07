@@ -18,7 +18,10 @@
 
 class Order < ActiveRecord::Base
   # payment method
-  PAYMENT_TYPES = ["Credit Card", "Cash"]
+  PAYMENT_TYPES = ["MasterCard", "Visa", "American Express"]
+
+  # dummy attributes
+  attr_accessor :credit, :credit_card
 
   # validations
   validates :name, :email, :phone, :address, :pay_type, presence: true

@@ -29,9 +29,7 @@
 
     function update_total_price() {
       var quantity = $(this).val(),
-          total_price = "$" + price * quantity;
-
-      total_price = total_price.substring(0, total_price.indexOf('.') + 3);
+          total_price = "$" + (price * quantity).toFixed(2);
 
       $("#line-item-purchase-quantity").html(quantity);
       $("#line-item-purchase-total-price").html(total_price);
