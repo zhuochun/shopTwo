@@ -1,7 +1,7 @@
 <h1><%= @user.username.titleize %>'s Profile</h1>
 <hr>
 <div class="row">
-  <div class="col-sm-4">
+  <div class="col-sm-3">
     <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title">Public Info</h3>
@@ -35,15 +35,21 @@
       </div>
     <% end %>
   </div>
-  <div class="col-sm-8">
+  <div class="col-sm-9">
     <h2>Reviews</h2>
     <hr>
     <% if @comments.empty? %>
       <p>No reviews yet.</p>
     <% else %>
-      <%= render partial: "comments/comment_thumbnail", collection: @comments, as: "comment" %>
-    <% end %>
+      <div class="row">
+        <% @comments.in_groups(2, false) do |group| %>
+          <div class="col-sm-6">
+            <%= render partial: "comments/comment_thumbnail", collection: group, as: "comment" %>
+          </div>
+        <% end %>
+      </div>
 
-    <%= will_paginate @comments %>
+      <%= will_paginate @comments %>
+    <% end %>
   </div>
 </div>

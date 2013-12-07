@@ -10,7 +10,10 @@ class ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.json
   def show
-    @comments_presenter = CommentsPresenter.new(@product.comments.approved.includes(:user))
+    @comments = @product.comments.approved
+                        .includes(:user)
+                        .paginate(page: params[:page], per_page: 6)
+    @comments_presenter = CommentsPresenter.new(@product.comments.approved)
     @related_products = @product.related_products
   end
 

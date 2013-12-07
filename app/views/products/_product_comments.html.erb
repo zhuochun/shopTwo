@@ -7,8 +7,12 @@
     <% else %>
       <%= render 'product_comment_summary' %>
 
-      <div class="customer-reviews">
-        <%= render @comments_presenter.comments %>
+      <div class="customer-reviews row">
+        <% @comments.in_groups(2, false) do |group| %>
+          <div class="col-sm-6">
+            <%= render group %>
+          </div>
+        <% end %>
       </div>
     <% end %>
   </div>
@@ -22,3 +26,5 @@
   </div>
 </div>
 <% end %>
+
+<%= will_paginate @comments %>
