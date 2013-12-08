@@ -2,6 +2,8 @@
 
 <% if can? :update, Store %>
   <%= link_to 'Edit', edit_store_path(@store) %> |
+  <%= link_to 'View Stocks', store_stocks_path(@store) %> |
+  <%= link_to 'View Transactions', store_settlements_path(@store) %> |
 
   <% if @store.closed? %>
     Closed <%= link_to 'Reopen', reopen_store_path(@store), method: :patch, data: { confirm: 'Are you sure?' } %> |

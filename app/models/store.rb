@@ -30,7 +30,7 @@ class Store < ActiveRecord::Base
   validates :geo_longitude, numericality: { greater_than_or_equal_to: -180, less_than_or_equal_to: 180 }
 
   # scope
-  default_scope -> { order(:size) }
+  default_scope -> { order(:closed, :size) }
 
   def location
     [geo_latitude, geo_longitude]
@@ -38,14 +38,19 @@ class Store < ActiveRecord::Base
 
   # reopen a store
   def reopen
-    self.closed = false
-    self.save
+    self.update(closed: false)
   end
 
   # close down a store
   def close_down
-    self.closed = true
-    self.stocks.destroy_all
-    self.save
+    # reset all stores
+    update_command = %(
+        UPDATE stocks
+        SET quantity = 0
+        WHERE store_id = #{id})
+
+    ActiveRecord::Base.connection().execute(update_command)
+    # set to closed
+    self.update(closed: true)
   end
 end
