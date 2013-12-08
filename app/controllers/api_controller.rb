@@ -44,7 +44,7 @@ class ApiController < ApplicationController
 
   # POST /api/:store_id/members
   def member_spendings
-    reader = FileReader.new(params[:spending], FileReader::SPENDING)
+    reader = FileReader.new(params[:file], FileReader::SPENDING)
 
     if params[:store_id]
       store = Store.find(params[:store_id])
