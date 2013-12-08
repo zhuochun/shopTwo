@@ -5,8 +5,20 @@ class ApiController < ApplicationController
   skip_before_action :verify_authenticity_token
   # Setup store
   before_action :set_store, except: [:members]
+  #before_action :auth_and_set_store, except: [:authenticate]
 
-  # TODO add in custom authentications
+  # POST /api/authenticate
+  def authenticate
+    @store = Store.find(params[:store_id])
+
+    if @store.users.managers.exists?(email: params[:password])
+      token = Devise.friendly_token.first(9)
+      @store.update(auth_token: token)
+      render json: { succeed: true, token: token, store: @store.as_json(only: [:name, :id]) }
+    else
+      render json: { succeed: false, token: '' }
+    end
+  end
 
   # POST /api/:store_id/transaction
   def settlement
@@ -66,6 +78,10 @@ class ApiController < ApplicationController
 
   def set_store
     @store = Store.find(params[:store_id])
+  end
+
+  def auth_and_set_store
+    @store = Store.where(id: params[:store_id], auth_token: params[:auth_token]).take
   end
 
 end
