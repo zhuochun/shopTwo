@@ -17,8 +17,9 @@
       <%= f.input :username, required: true, disabled: true %>
       <%= f.input :email, required: true, autofocus: true %>
       <%= f.input :phone, required: true %>
-      <%= f.input :birthday, as: :date, 
-                  hint: "Enjoy 10% more discount on your birthday."%>
+      <%= f.input :birthday, as: :date,
+                             disabled: (!resource.birthday.nil?),
+                             hint: "Enjoy 10% more discount on your birthday." %>
       <%= f.input :location, label: "Default location" %>
     </div>
 

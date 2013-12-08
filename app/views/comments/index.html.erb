@@ -8,7 +8,7 @@
 <hr>
 
 <% if @comments.empty? %>
-  <p class="lead text-muted">No Reviews yet.</p>
+  <p class="lead text-muted">No reviews yet.</p>
 <% else %>
   <%= render partial: "comments/comment_thumbnail", collection: @comments, as: "comment" %>
 <% end %>
