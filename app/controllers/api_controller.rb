@@ -38,9 +38,9 @@ class ApiController < ApplicationController
                     .paginate(page: params[:page], per_page: 500)
 
     if params[:active] == '1'
-      render 'active_price_list_paged'
+      render 'active_price_list'
     else
-      render 'price_list_paged'
+      render 'price_list'
     end
   end
 
