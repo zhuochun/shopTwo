@@ -3,11 +3,11 @@ class CommentsPresenter
 
   def initialize(comments)
     @comments = comments
-    @rating_count = {}
+    @count_rating = {}
   end
 
   def size
-    @comments.size
+    @size ||= @comments.size
   end
 
   def empty?
@@ -15,7 +15,7 @@ class CommentsPresenter
   end
 
   def count_rating(rating)
-    @rating_count[rating] ||= @comments.where(rating: rating).size
+    @count_rating[rating] ||= @comments.where(rating: rating).size
   end
 
   def proportional_rating(rating, scale = 100)
