@@ -1,4 +1,5 @@
 class SettlementsController < ApplicationController
+  before_action :authorize_management
   before_action :set_settlement, only: [:edit, :update, :destroy]
   before_action :set_store, only: [:index, :show, :create]
 

@@ -1,4 +1,6 @@
 class OrdersController < ApplicationController
+  before_action :authorize_owner_or_administrater, only: [:show]
+  before_action :authorize_administrater, only: [:edit, :update, :destroy]
   before_action :set_order, only: [:show, :edit, :update, :destroy]
 
   # GET /orders
@@ -98,5 +100,10 @@ class OrdersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
       params.require(:order).permit(:name, :email, :phone, :address, :pay_type, :used_credit, :credit_card)
+    end
+
+    # Authorization
+    def authorize_owner_or_administrater
+      authorize_user { |u| u.orders.exists?(id: params[:id]) || u.administrater? }
     end
 end

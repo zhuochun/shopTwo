@@ -1,4 +1,5 @@
 class StoresController < ApplicationController
+  before_action :authorize_management, except: [:index, :show]
   before_action :set_store, except: [:index, :new, :create]
 
   # GET /stores

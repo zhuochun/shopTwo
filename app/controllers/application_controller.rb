@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   # Add additional parameters to devise user
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
+  include Authorization
   include Shopping
   helper_method :current_cart
 

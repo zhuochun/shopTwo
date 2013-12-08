@@ -1,4 +1,5 @@
 class ManufacturersController < ApplicationController
+  before_action :authorize_administrater, except: [:index, :show]
   before_action :set_manufacturer, only: [:show, :edit, :update, :destroy]
 
   # GET /manufacturers

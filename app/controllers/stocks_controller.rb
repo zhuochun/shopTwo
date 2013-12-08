@@ -1,4 +1,5 @@
 class StocksController < ApplicationController
+  before_action :authorize_management
   before_action :set_stock, only: [:show, :edit, :update, :destroy]
   before_action :set_store
 

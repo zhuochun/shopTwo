@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+  before_action :authorize_owner_or_administrater, only: [:edit, :update, :destroy]
+  before_action :authorize_owner, only: [:new]
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
   # GET /comments
@@ -99,5 +101,10 @@ class CommentsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
       params.require(:comment).permit(:user_id, :product_id, :rating, :content)
+    end
+
+    # Authorization
+    def authorize_owner_or_administrater
+      authorize_user { |u| u.comments.exists?(id: params[:id]) || u.administrater? }
     end
 end
