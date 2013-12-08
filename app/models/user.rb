@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
   # Validations
   validates :username, presence: true, uniqueness: true
   validates :credits, presence: true
-  validates :phone, presence: true, uniqueness: true
+  validates :phone, presence: true, uniqueness: true, format: { with: /\A[0-9]{8}\z/i, message: "must be an 8 digits phone number" }
   validates :role, inclusion: { in: ROLES }
 
   # Scopes
