@@ -3,7 +3,7 @@
 
 <div class="row">
   <div class="col-sm-6">
-    <%= render partial: "form", locals: { comment: @comment } %>
+    <%= render partial: "form", locals: { comment: @comment, remote: false } %>
   </div>
   <div class="col-sm-6">
     <%= render partial: "products/product_sidebar_thumbnail", object: @comment.product, as: "product" %>

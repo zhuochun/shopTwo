@@ -22,7 +22,9 @@
 <div class="row" id="write-review-form">
   <div class="col-sm-6">
     <h3>Write a Review</h3>
-    <%= render partial: "comments/form", locals: { comment: @comments_presenter.new_comment(@product, current_user) } %>
+    <%= render partial: "comments/form", 
+                locals: { comment: @comments_presenter.new_comment(@product, current_user),
+                          remote: true } %>
   </div>
 </div>
 <% end %>

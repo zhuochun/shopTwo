@@ -1,4 +1,4 @@
-<%= simple_form_for(comment, defaults: { wrapper_html: {class: 'form-group'}, input_html: {class: 'form-control'} }, remote: true) do |f| %>
+<%= simple_form_for(comment, defaults: { wrapper_html: {class: 'form-group'}, input_html: {class: 'form-control'} }, remote: remote) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">

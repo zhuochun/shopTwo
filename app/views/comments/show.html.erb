@@ -1,25 +1,5 @@
 <h1>View Review</h1>
-
+<%= link_to 'Back', comments_path %>
 <hr>
 
-<p>
-  <strong>User:</strong>
-  <%= link_to @comment.user.username, @comment.user %>
-</p>
-
-<p>
-  <strong>Product:</strong>
-  <%= link_to @comment.product.name, @comment.product %>
-</p>
-
-<p>
-  <strong>Rating:</strong>
-  <%= display_ratings(@comment.rating) %>
-</p>
-
-<p>
-  <strong>Content:</strong>
-  <%= @comment.content %>
-</p>
-
-<%= link_to 'Edit', edit_comment_path(@comment) %>
+<%= render partial: "comments/comment_thumbnail", locals: { comment: @comment } %>
