@@ -64,8 +64,8 @@ namespace :member do
     puts "==== Fake reviewing items in online shops ===="
     puts "=== #{Comment.count} reviews in database ==="
 
-    users = User.where(encrypted_password: "12345678").take(10)
-    reviews = []
+    users = User.where(encrypted_password: "12345678").take(50)
+    reviews = [nil]
 
     # read in fake reviews
     File.foreach(path_to("reviews")) do |line|
@@ -85,7 +85,7 @@ namespace :member do
         print '.'
       end
 
-      print '\n'
+      print "\n"
     end
 
     puts "=== #{Comment.count} reviews now ==="
