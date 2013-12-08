@@ -4,12 +4,13 @@
   <%= link_to 'Edit', edit_store_path(@store) %> |
 
   <% if @store.closed? %>
-    Closed <%= link_to 'Reopen', reopen_store_path(@store), method: :patch, data: { confirm: 'Are you sure?' } %>
+    Closed <%= link_to 'Reopen', reopen_store_path(@store), method: :patch, data: { confirm: 'Are you sure?' } %> |
   <% else %>
-    <%= link_to 'Close Down', @store, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <%= link_to 'Close Down', @store, method: :delete, data: { confirm: 'Are you sure?' } %> |
   <% end %>
 <% end %>
 
+<%= link_to "Back", stores_path %>
 <hr />
 
 <div class="row">

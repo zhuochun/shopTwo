@@ -1,0 +1,17 @@
+<div class="col-md-4">
+  <h2><%= store.name %></h2>
+
+  <p>
+    <strong>Address:</strong> <br>
+    <%= escape_once(store.address).gsub(/\n/, "<br>").html_safe %>
+  </p>
+
+  <p>
+    <strong>Operation hours:</strong>
+    <%= store.operation_hours %>
+  </p>
+
+  <p>
+    <%= link_to "View Detail &#x2192;".html_safe, store, "data-no-turbolink" => true %>
+  </p>
+</div>
