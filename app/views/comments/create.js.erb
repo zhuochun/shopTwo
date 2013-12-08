@@ -7,5 +7,5 @@
   $("#customer-reviews-list").append("<%=j render(@comment) %>");
   $("#product-review-summary").load("<%= @comment.product %> #product-review-summary > *");
 <% else %>
-  $("#new_comment").replaceWith("<%= render(partial: "form", locals: { comment: @comment }) %>");
+  $("#new_comment").replaceWith("<%=j render(partial: "form", locals: { comment: @comment }) %>");
 <% end %>
