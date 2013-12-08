@@ -14,7 +14,7 @@
 <hr />
 
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-6 col-sm-4">
     <h2><%= @store.name %></h2>
 
     <p>
@@ -39,21 +39,16 @@
 
     <div class="store-managers">
       <h2>Managers</h2>
-
-      <ul>
-        <% @managers.each do |manager| %>
-          <li>
-            <h3>
-              <%= manager.username %>
-              <span class="label label-primary"><%= manager.email %></span>
-            </h3>
-          </li>
-        <% end %>
-      </ul>
+      <% @managers.each do |manager| %>
+        <p>
+          <%= manager.username %>
+          <span class="label label-primary"><%= manager.email %></span>
+        </p>
+      <% end %>
     </div>
   </div>
 
-  <div class="col-md-6">
+  <div class="col-md-6 col-sm-8">
     <div class="store-map">
       <h2>Location</h2>
       <div id="store-gmap"></div>
