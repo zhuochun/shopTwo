@@ -149,7 +149,7 @@ class FileReader
   private
 
   def valid_file?
-    @file && @file.content_type == 'text/plain'
+    @file && (@file.content_type == 'text/plain' || @file.content_type == "application/octet-stream")
   end
 
   def sanitize(*args)
