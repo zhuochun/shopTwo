@@ -88,7 +88,11 @@ class OrdersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order
-      @order = Order.find(params[:id])
+      if current_user.management?
+        @order = Order.find(params[:id])
+      else
+        @order = current_user.orders.find(params[:id])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
