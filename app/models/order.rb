@@ -26,8 +26,9 @@ class Order < ActiveRecord::Base
   # validations
   validates :name, :email, :phone, :address, :pay_type, :credit_card, presence: true
   validates :pay_type, inclusion: { in: PAYMENT_TYPES }
-  validates :credit_card, format: { with: /\A[0-9]{16}\z/i }
-  validates :used_credit, numericality: { greater_than_or_equal_to: 0.0, less_than: proc { |o| o.user.credits } }
+  validates :credit_card, format: { with: /\A[0-9]{16}\z/i, message: "must be a 16 digits credit card number" }
+  validates :used_credit, numericality: { greater_than_or_equal_to: 0.0,
+                                          less_than_or_equal_to: proc { |o| o.user.credits } }
 
   # relationships
   belongs_to :user
