@@ -33,7 +33,7 @@
 
   <hr>
 
-  <table class="table table-striped table-hover table-responsive">
+  <table class="table table-hover table-responsive">
     <thead>
       <tr>
         <td><input id="checkbox-all" type="checkbox" <%= "checked" if params[:all].nil? %>></td>
@@ -92,6 +92,8 @@
 
       var $btn = $(this),
           total = 0;
+          failed = 0;
+          success = 0;
 
       // disable all input states
       $btn.button("loading");
@@ -128,23 +130,27 @@
           url: "/stocks/" + sid + ".json",
           data: { stock: { quantity: quantity } }
         }).done(function() {
+          success++;
           $el.addClass("success");
           $input.replaceWith(quantity);
         }).fail(function() {
+          faled++;
           $el.addClass("danger");
         }).always(function() {
           total--;
           // all requests done, enable inputs
           if (total === 0) {
             $btn.button("reset");
-            $("table").find("input").prop("enabled", true);
+            $("table").find("input").prop("disabled", false);
+            window.alert((success + failed) + " stocks updated. " + success + " succeed, " + failed + " failed.");
           }
         });
       });
 
       if (total === 0) {
         $btn.button("reset");
-        $("table").find("input").prop("enabled", true);
+        $("table").find("input").prop("disabled", false);
+        window.alert("Nothing is updated. Please verify your selections.");
       }
     });
   </script>
