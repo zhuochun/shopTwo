@@ -4,7 +4,7 @@ class ApiController < ApplicationController
   # Skip default authentications
   skip_before_action :verify_authenticity_token
   # Setup store
-  before_action :set_store, only: [:settlement, :price_list, :member_spendings]
+  before_action :set_store, except: [:members]
 
   # TODO add in custom authentications
 
@@ -29,6 +29,18 @@ class ApiController < ApplicationController
       render 'active_price_list'
     else
       render 'price_list'
+    end
+  end
+
+  # GET /api/:store_id/price_list_paged/:page
+  def price_list_paged
+    @stocks = @store.stocks.includes(:product)
+                    .paginate(page: params[:page], per_page: 500)
+
+    if params[:active] == '1'
+      render 'active_price_list_paged'
+    else
+      render 'price_list_paged'
     end
   end
 
