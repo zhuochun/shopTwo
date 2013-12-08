@@ -1,5 +1,5 @@
 class CartsController < ApplicationController
-  before_action :authorize_administrater, except: [:show]
+  before_action :authorize_administrater, except: [:show, :destroy]
   before_action :set_cart, only: [:show, :edit, :update, :destroy]
 
   # GET /carts
