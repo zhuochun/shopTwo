@@ -1,13 +1,13 @@
 module ActivePricing
   # dynamic pricing upper bound
-  STOCK_UPPER_LIMIT = 1
-  SELL_UPPER_LIMIT  = 2
+  STOCK_UPPER_LIMIT = ENV['STOCK_UPPER_LIMIT'] ? ENV['STOCK_UPPER_LIMIT'].to_f : 1
+  SELL_UPPER_LIMIT  = ENV['SELL_UPPER_LIMIT']  ? ENV['SELL_UPPER_LIMIT'].to_f  : 2
   # price weight of each part
-  TOTAL_WEIGHT      = 3.0
-  MINIMUM_PROFIT    = 0.3
-  COST_WEIGHT       = 1.0
-  SELL_WEIGHT       = 1.7
-  STOCK_WEIGHT      = 0.3
+  TOTAL_WEIGHT      = ENV['TOTAL_WEIGHT']      ? ENV['TOTAL_WEIGHT'].to_f      : 3.0
+  MINIMUM_PROFIT    = ENV['MINIMUM_PROFIT']    ? ENV['MINIMUM_PROFIT'].to_f    : 0.3
+  COST_WEIGHT       = ENV['COST_WEIGHT']       ? ENV['COST_WEIGHT'].to_f       : 1.0
+  SELL_WEIGHT       = ENV['SELL_WEIGHT']       ? ENV['SELL_WEIGHT'].to_f       : 1.7
+  STOCK_WEIGHT      = ENV['STOCK_WEIGHT']      ? ENV['STOCK_WEIGHT'].to_f      : 0.3
 
   # active price result
   def new_daily_price
@@ -35,7 +35,7 @@ module ActivePricing
     if minimum_stock == 0
       0
     else
-      [STOCK_UPPER_LIMIT, ((current_stock - minimum_stock) / minimum_stock)].min
+      [STOCK_UPPER_LIMIT, ((current_stock - minimum_stock) / minimum_stock.to_f)].min
     end
   end
 
@@ -46,7 +46,7 @@ module ActivePricing
     if week_sell.nil? || month_sell.nil? || month_sell == 0
       0
     else
-      [SELL_UPPER_LIMIT, ((week_sell - month_sell) / month_sell)].min
+      [SELL_UPPER_LIMIT, ((week_sell - month_sell) / month_sell.to_f)].min
     end
   end
 
