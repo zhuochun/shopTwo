@@ -22,7 +22,7 @@ class Comment < ActiveRecord::Base
 
   # Validations
   validates :rating, inclusion: { in: RATING }, presence: true
-  validates :content, length: { in: 10..500, allow_nil: true, allow_blank: true }
+  validates :content, length: { in: 3..500, allow_nil: true, allow_blank: true }
   validates :flag, inclusion: { in: FLAGS }
 
   # Relationship

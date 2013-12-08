@@ -1,7 +1,7 @@
 <div class="product-detail">
   <div class="row">
     <div class="col-xm-12 col-sm-4">
-      <%= image_tag(product.image_path, size: "500x500", alt: product.name, class: "img-responsive") %>
+      <%= link_to(image_tag(product.image_path, size: "500x500", alt: product.name, class: "img-responsive"), product)  %>
     </div>
     <div class="col-xm-12 col-sm-7 col-sm-offset-1">
       <h2><%= product.name %></h2>
@@ -14,7 +14,7 @@
           <dd>10% for <%= product.bundle_unit %> and more</small>
         <% end %>
         <dt><strong>Barcode</strong></dt>
-        <dd><%= product.barcode %></dd>
+        <dd><%= link_to product.barcode, product %></dd>
         <dt>
           <strong>Popularity</strong>
           <dd><%= display_popularity_stars(product.weekly_sell) %></dd>
