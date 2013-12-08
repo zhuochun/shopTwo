@@ -9,7 +9,7 @@ class ApiController < ApplicationController
   # POST /api/transaction
   # POST /api/stores/:store_id/transaction
   def settlement
-    reader = FileReader.new(params[:settlement], FileReader::SETTLEMENT)
+    reader = FileReader.new(params[:file], FileReader::SETTLEMENT)
 
     if params[:store_id]
       store = Store.find(params[:store_id])
@@ -24,7 +24,6 @@ class ApiController < ApplicationController
     end
   end
 
-  # GET /api/price_list
   # GET /api/stores/:store_id/price_list
   def price_list
     @store = Store.find(params[:store_id]) if params[:store_id]
