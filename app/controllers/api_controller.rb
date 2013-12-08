@@ -3,36 +3,32 @@ class ApiController < ApplicationController
 
   # Skip default authentications
   skip_before_action :verify_authenticity_token
+  # Setup store
+  before_action :set_store, only: [:settlement, :price_list, :member_spendings]
 
   # TODO add in custom authentications
 
-  # POST /api/transaction
-  # POST /api/stores/:store_id/transaction
+  # POST /api/:store_id/transaction
   def settlement
     reader = FileReader.new(params[:file], FileReader::SETTLEMENT)
 
-    if params[:store_id]
-      store = Store.find(params[:store_id])
-
-      if reader.process(store)
-        render json: { succeed: true, message: 'Transaction file uploaded.' }, status: :created
-      else
-        render json: { succeed: false, message: 'Invalid Transaction file uploaded.' }, status: :unprocessable_entity
-      end
+    if reader.process(@store)
+      render json: { succeed: true, message: 'Transaction file uploaded.' },
+             status: :created
     else
-      render json: { succeed: false, message: 'No store information provided.' }, status: :unprocessable_entity
+      render json: { succeed: false, message: 'Invalid Transaction file uploaded.' },
+             status: :unprocessable_entity
     end
   end
 
-  # GET /api/stores/:store_id/price_list
+  # GET /api/:store_id/price_list
   def price_list
-    @store = Store.find(params[:store_id]) if params[:store_id]
+    @stocks = @store.stocks.includes(:product)
 
-    if @store
-      @stocks = @store.stocks.includes(:product)
-      render 'price_list_store'
+    if params[:active] == '1'
+      render 'active_price_list'
     else
-      @products = Product.all.includes(:category, :manufacturer)
+      render 'price_list'
     end
   end
 
@@ -45,16 +41,19 @@ class ApiController < ApplicationController
   def member_spendings
     reader = FileReader.new(params[:file], FileReader::SPENDING)
 
-    if params[:store_id]
-      store = Store.find(params[:store_id])
-
-      if reader.process(store)
-        render json: { succeed: true, message: 'Spending file uploaded.' }, status: :created
-      else
-        render json: { succeed: false, message: 'Invalid spending file uploaded.' }, status: :unprocessable_entity
-      end
+    if reader.process(@store)
+      render json: { succeed: true, message: 'Spending file uploaded.' },
+             status: :created
     else
-      render json: { succeed: false, message: 'No store information provided.' }, status: :unprocessable_entity
+      render json: { succeed: false, message: 'Invalid spending file uploaded.' },
+             status: :unprocessable_entity
     end
   end
+
+  private
+
+  def set_store
+    @store = Store.find(params[:store_id])
+  end
+
 end
