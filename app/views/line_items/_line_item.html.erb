@@ -11,7 +11,7 @@
       <%= display_line_item_availability(line_item.product) %>
       <br>
       <% unless defined?(no_edit) && no_edit %>
-        <%= link_to "Delete", line_item, method: :delete, confirm: "Are you sure?" %>
+        <%= link_to "Delete", line_item, method: :delete, data: { confirm: "Are you sure?" } %>
       <% end %>
     </p>
   </td>

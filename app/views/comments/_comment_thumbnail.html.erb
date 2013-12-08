@@ -26,9 +26,9 @@
     <div class="panel-footer">
       <%= link_to "Edit Review", edit_comment_path(comment) %> |
       <% if current_user.administrater? %>
-      <%= link_to "Spam", comment, method: :delete, confirm: "Are you sure?", remote: true %> |
+        <%= link_to "Spam", comment, method: :delete, data: { confirm: "Are you sure?" }, remote: true %> |
       <% end %>
-      <%= link_to "Delete", comment_path(comment, delete: 1), method: :delete, confirm: "Are you sure?", remote: true %>
+      <%= link_to "Delete", comment_path(comment, delete: 1), method: :delete, data: { confirm: "Are you sure?" }, remote: true %>
     </div>
   <% end %>
 </div>
