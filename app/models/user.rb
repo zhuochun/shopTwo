@@ -60,6 +60,35 @@ class User < ActiveRecord::Base
   has_many   :bought_items, through: :orders, source: :line_items
   has_many   :comments
 
+  # promotable by a user
+  def promotable_by?(user)
+    if user == self
+      false
+    elsif user.role == ADMIN
+      role != ADMIN
+    elsif user.role == MANAGER
+      role == CUSTOMER
+    else
+      false
+    end
+  end
+
+  # promote
+  def promote_by(user)
+    return false unless promotable_by?(user)
+
+    new_role = case role
+               when CUSTOMER
+                 EMPLOYEE
+               when EMPLOYEE
+                 MANAGER
+               when MANAGER
+                 ADMIN
+               end
+
+    self.update(role: new_role, store_id: 1)
+  end
+
   # is the user manage the store
   def manage?(store)
     role == MANAGER && self.store == store

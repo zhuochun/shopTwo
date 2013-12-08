@@ -27,15 +27,16 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    if current_user.role == User::MANAGER
-      @user.update(role: User::EMPLOYEE)
-    elsif current_user.role == User::ADMIN
-      @user.update(role: User::MANAGER)
-    end
-
-    respond_to do |format|
-      format.html { redirect_to @user, notice: 'User was successfully promoted.' }
-      format.json { head :no_content }
+    if @user.promote_by(current_user)
+      respond_to do |format|
+        format.html { redirect_to @user, notice: 'User was successfully promoted.' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to @user, alert: 'You cannot promote this user.' }
+        format.json { head :no_content }
+      end
     end
   end
 
