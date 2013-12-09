@@ -9,6 +9,7 @@
       <div class="panel-body">
         <p>Member for <%= time_ago_in_words(@user.created_at) %></p>
         <% if administrative_view? %>
+          <p>Total Credits: <%= number_with_precision @user.credits, precision: 2 %></p>
           <p>Role: <%= @user.role.titleize %></p>
           <% if @user.promotable_by?(current_user) %>
             <%= link_to "Promote", @user, method: :patch, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
