@@ -86,7 +86,7 @@ namespace :import do
   desc 'Load inventory, and stocks, transactions for one store (in production)'
   task prod_test: [:environment, :inventory] do
     store = Store.find(1)
-    puts "=== Store #{store.name} is used for testing ==="
+    puts "=== Store #{store.name} is used ==="
 
     puts "==== Load Stocks (Production - Test) to Database ===="
     load_stocks([store])
@@ -95,6 +95,19 @@ namespace :import do
     puts "==== Load Transactions (Production - Test) to Database ===="
     load_transactions([store])
     puts "==== Transactions Loaded to Database ===="
+  end
+
+  # ========================================
+  # to populate 2 stocks in production (light)
+  # ========================================
+  desc 'Load inventory, and stocks for 2 stores (in production)'
+  task prod_light: [:environment, :inventory] do
+    stores = Store.find([1, 2])
+    puts "=== Store #{stores[0].name} and #{stores[1].name} are used ==="
+
+    puts "==== Load Stocks (Production - Test) to Database ===="
+    load_stocks(stores)
+    puts "==== Stocks Loaded to Database ===="
   end
 
   # ========================================
