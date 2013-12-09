@@ -13,6 +13,7 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #  closed          :boolean
+#  auth_token      :string(255)
 #
 
 class Store < ActiveRecord::Base

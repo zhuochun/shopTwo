@@ -10,7 +10,7 @@
 #  address    :text
 #  created_at :datetime
 #  updated_at :datetime
-#  pay_type   :string(255)      default("Cash")
+#  pay_type   :string(255)
 #  price      :decimal(, )
 #  discount   :decimal(, )
 #  size       :integer
