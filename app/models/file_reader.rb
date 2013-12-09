@@ -129,21 +129,36 @@ class FileReader
     Stock.import columns, values, validate: false
   end
 
-  # Spending Format: phone:spending:credits_earned:date
-  # 42345670:20.0:2.0:1/9/2013
+  # Spending Format: phone:spending:credits_earned:quantity:date
+  # 42345670:20.0:2.0:10:1/9/2013
   def process_spending(file, store)
-    updates = []
+    updates, users, orders = [], {}, []
 
     File.foreach(file) do |line|
-      phone, _, credit, _ = line.chomp.force_encoding('UTF-8').split(':')
+      phone, total, credit, quantity, date = line.chomp.force_encoding('UTF-8').split(':')
 
       updates << %(
         UPDATE users
         SET credits = credits + #{sanitize(credit.to_f)}
         WHERE phone = #{sanitize(phone)})
+
+      orders << [phone, total, credit, quantity, date]
     end
 
+    # update credits
     ActiveRecord::Base.connection().execute(updates.join(';'))
+
+    # process order
+    User.where(phone: orders.map { |order| order[0] }.uniq)
+        .pluck(:id, :phone).map { |id, phone| users[phone] = id }
+
+    orders.each do |order|
+      store.shop_orders.create user_id: users[order[0]],
+                               subtotal: order[1],
+                               credits: order[2],
+                               quantity: order[3],
+                               created_at: order[4]
+    end
   end
 
   private

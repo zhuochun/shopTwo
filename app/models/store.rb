@@ -22,6 +22,7 @@ class Store < ActiveRecord::Base
   has_many :settlements
   has_many :stocks
   has_many :products, through: :stocks
+  has_many :shop_orders
 
   # valiations
   validates :name, presence: true

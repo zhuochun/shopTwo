@@ -1,13 +1,13 @@
 <% if can? :view, Order %>
-  <h1>Orders</h1>
+  <h1>Online Orders</h1>
 <% else %>
-  <h1>Your Orders</h1>
+  <h1>Your Online Orders</h1>
 <% end %>
 
 <hr>
 
 <% if @orders.empty? %>
-  <p class="lead text-muted">No orders yet.</p>
+  <p class="lead text-muted">No online orders yet.</p>
 <% else %>
   <table class="table table-striped table-hover table-responsive">
     <thead>
@@ -19,7 +19,7 @@
           <th>Phone</th>
         <% end %>
         <th>Quantity</th>
-        <th>Price</th>
+        <th>Total</th>
         <th></th>
         <% if can? :view, Order %>
           <th></th>
@@ -33,5 +33,7 @@
     </tbody>
   </table>
 <% end %>
+
+<%= render "shop_orders/orders" %>
 
 <%= will_paginate @orders %>

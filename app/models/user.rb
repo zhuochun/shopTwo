@@ -58,6 +58,7 @@ class User < ActiveRecord::Base
   has_one    :cart
   has_many   :orders
   has_many   :bought_items, through: :orders, source: :line_items
+  has_many   :shop_orders
   has_many   :comments
 
   # promotable by a user
