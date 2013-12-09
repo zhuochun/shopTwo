@@ -83,10 +83,15 @@ class Product < ActiveRecord::Base
 
   # dynamic pricing
   def self.active_pricing
-    Product.transaction do
-      self.find_each(batch_size: 500) do |product|
-        product.update_price
-      end
+    queries = []
+
+    Product.pluck(:id, :cost_price, :current_stock, :minimum_stock).each do |product|
+      queries << %(
+       UPDATE products
+       SET daily_price = #{ActivePricingCalculator.new_daily_price(*product)}
+       WHERE id = #{product[0]})
     end
+
+    ActiveRecord::Base.connection().execute(queries.join(';'))
   end
 end
