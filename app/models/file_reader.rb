@@ -137,12 +137,14 @@ class FileReader
     File.foreach(file) do |line|
       phone, total, credit, quantity, date = line.chomp.force_encoding('UTF-8').split(':')
 
-      updates << %(
-        UPDATE users
-        SET credits = credits + #{sanitize(credit.to_f)}
-        WHERE phone = #{sanitize(phone)})
+      unless quantity == '0'
+        updates << %(
+          UPDATE users
+          SET credits = credits + #{sanitize(credit.to_f)}
+          WHERE phone = #{sanitize(phone)})
 
-      orders << [phone, total, credit, quantity, date]
+        orders << [phone, total, credit, quantity, date]
+      end
     end
 
     # update credits
