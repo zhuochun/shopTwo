@@ -40,19 +40,25 @@ module ActivePricing
   end
 
   def sell_difference
-    week_sell  = settle_items.last_week.average('quantity')
-    month_sell = settle_items.last_month.average('quantity')
+    query = %(
+      SELECT (AVG(week.quantity) - AVG(month.quantity)) / AVG(month.quantity) as diff
+      FROM settle_items AS week, settle_items AS month
+      WHERE week.barcode = #{id}
+        AND month.barcode = #{id}
+        AND week.created_at >= '#{Settlement.get_from_time(1.week).to_s(:db)}'
+        AND month.created_at >= '#{Settlement.get_from_time(1.month).to_s(:db)}';)
 
-    if week_sell.nil? || month_sell.nil? || month_sell == 0
+    @sell_difference_fast ||= ActiveRecord::Base.connection().select_value(query)
+
+    if @sell_difference_fast.nil?
       0
     else
-      [SELL_UPPER_LIMIT, ((week_sell - month_sell) / month_sell.to_f)].min
+      [SELL_UPPER_LIMIT, @sell_difference_fast.to_f].min
     end
   end
 
   # update to active price
   def update_price
-    self.daily_price = new_daily_price
-    self.save
+    self.update(daily_price: new_daily_price)
   end
 end
