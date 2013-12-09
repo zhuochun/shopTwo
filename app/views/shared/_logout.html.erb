@@ -12,7 +12,7 @@
         <li class="divider"></li>
       <% end %>
       <li><%= link_to "Settings", edit_user_registration_path, class: "navbar-link" %></li>
-      <li><%= link_to "Logout", destroy_user_session_path, method: :delete, class: "navbar-link" %></li>
+      <li><%= link_to "Logout", destroy_user_session_path, method: :delete, class: "navbar-link", "data-turbolinks-track" => true %></li>
     </ul>
   </li>
 </ul>
