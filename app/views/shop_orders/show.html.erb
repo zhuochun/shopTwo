@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @shop_order.user %>
+</p>
+
+<p>
+  <strong>Store:</strong>
+  <%= @shop_order.store %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @shop_order.quantity %>
+</p>
+
+<p>
+  <strong>Subtotal:</strong>
+  <%= @shop_order.subtotal %>
+</p>
+
+<p>
+  <strong>Credits:</strong>
+  <%= @shop_order.credits %>
+</p>
+
+<%= link_to 'Edit', edit_shop_order_path(@shop_order) %> |
+<%= link_to 'Back', shop_orders_path %>

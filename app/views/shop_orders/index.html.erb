@@ -1,0 +1,35 @@
+<h1>Listing shop_orders</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Store</th>
+      <th>Quantity</th>
+      <th>Subtotal</th>
+      <th>Credits</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @shop_orders.each do |shop_order| %>
+      <tr>
+        <td><%= shop_order.user %></td>
+        <td><%= shop_order.store %></td>
+        <td><%= shop_order.quantity %></td>
+        <td><%= shop_order.subtotal %></td>
+        <td><%= shop_order.credits %></td>
+        <td><%= link_to 'Show', shop_order %></td>
+        <td><%= link_to 'Edit', edit_shop_order_path(shop_order) %></td>
+        <td><%= link_to 'Destroy', shop_order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Shop order', new_shop_order_path %>

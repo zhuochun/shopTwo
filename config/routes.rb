@@ -53,6 +53,7 @@ ServerRails::Application.routes.draw do
   # online shop
   resources :carts
   resources :orders
+  resources :shop_orders
   resources :line_items
 
   # custom pages
