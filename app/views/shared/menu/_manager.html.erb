@@ -2,7 +2,7 @@
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Store <b class="caret"></b></a>
     <ul class="dropdown-menu">
-      <li><%= link_to "Page", store_path(current_user.store) %></li>
+      <li><%= link_to "Page", store_path(current_user.store), "data-no-turbolink" => true %></li>
       <li class="divider"></li>
       <li class="dropdown-header">Administrative</li>
       <li><%= link_to "Edit", edit_store_path(current_user.store) %></li>
