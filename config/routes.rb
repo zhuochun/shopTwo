@@ -67,9 +67,8 @@ ServerRails::Application.routes.draw do
   get  '/api/:store_id/price_list_paged', to: 'api#price_list_paged'
   # api transactions/settlements
   post '/api/:store_id/transaction', to: 'api#settlement'
-
   # api members
-  get  '/api/members', to: 'api#members'
+  get  '/api/:store_id/members', to: 'api#members'
   post '/api/:store_id/members', to: 'api#member_spendings'
 
   root 'home#index'

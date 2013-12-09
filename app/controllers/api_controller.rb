@@ -4,8 +4,7 @@ class ApiController < ApplicationController
   # Skip default authentications
   skip_before_action :verify_authenticity_token
   # Setup store
-  before_action :set_store, except: [:members]
-  #before_action :auth_and_set_store, except: [:authenticate]
+  before_action :auth_and_set_store, except: [:authenticate]
 
   # POST /api/authenticate
   def authenticate
@@ -14,9 +13,9 @@ class ApiController < ApplicationController
     if @store.users.managers.exists?(email: params[:password])
       token = Devise.friendly_token.first(9)
       @store.update(auth_token: token)
-      render json: { succeed: true, token: token, store: @store.as_json(only: [:name, :id]) }
+      render json: "#{token}|#{@store.name}", status: :created
     else
-      render json: { succeed: false, token: '' }
+      render json: '', status: :unprocessable_entity
     end
   end
 
@@ -76,12 +75,13 @@ class ApiController < ApplicationController
 
   private
 
-  def set_store
-    @store = Store.find(params[:store_id])
-  end
-
   def auth_and_set_store
     @store = Store.where(id: params[:store_id], auth_token: params[:auth_token]).take
+
+    if @store.nil?
+      render json: 'Invalid token.', status: :unauthorized
+      return
+    end
   end
 
 end
