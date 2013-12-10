@@ -44,6 +44,7 @@ class Order < ActiveRecord::Base
   before_create :remove_items_from_cart
   before_create :save_local_data_to_order_and_items
   after_create  :update_user_credits
+  after_create  :deduct_quantity
   # remove items from cart
   def remove_items_from_cart
     line_items.each { |i| i.cart = nil }
@@ -63,6 +64,13 @@ class Order < ActiveRecord::Base
   def update_user_credits
     user.credits += credits - used_credit.to_f
     user.save
+  end
+  # deduct order items from shop
+  def deduct_quantity
+    line_items.each do |i|
+      i.product.current_stock -= i.quantity
+      i.product.save
+    end
   end
 
   # init
